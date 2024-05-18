@@ -1,0 +1,79 @@
+import { ArticleHeader } from '../_components/ArticleHeader/ArticleHeader';
+import { ArticleIndex } from '../_components/ArticleIndex/ArticleIndex';
+import { ArticleCodeBlock } from '../_components/ArticleCodeBlock/ArticleCodeBlock';
+import { ARTICLE_INDEX, articleIndexHrefEnum } from './_static/static';
+
+<ArticleHeader 
+    title={'A multi-portal system'}
+    subtitle={'The necessity for planning and future proofing in building scalable software'}
+/>
+<ArticleIndex 
+    sections={ARTICLE_INDEX}
+/>
+<br />
+
+
+(but less cringe)
+
+Screenshots
+Login redirect
+Worksheet template builder
+Workpack page
+Report view
+Client portal project dashboard
+
+Index
+Intro
+System built for company Vertech
+Originally scoped as a simple reporting tool, but supporting system needed to be built in order to meet the client’s needs and use cases
+Largest-scale web application I’ve worked on
+
+Problem Statement
+Large safety training/inspection (among many other things) company looking to change how they handle reporting on safety inspections
+Requirements:
+User management system with 3 roles
+3 separate portals (Admin, Staff and Client)
+Android tablet application for use in-field
+Report generation microservice
+
+Thought Process
+Web Platform
+Needed a way to share componentry between applications, without maintaining multiple independent codebases
+Decided on NX as its powerful features and (mostly) automated setup streamlined the process
+
+Report Generator
+Microservice built in NodeJS, as there are a good number of PDF generation libraries
+
+
+Issues Faced
+Report Generator
+Data fed to report generator could be highly dynamic, with differently sized images, tables with lots of columns/rows
+Service needed to be fail-proof, and always generate a readable report regardless of how complex the data set
+Needed strong error handling and reporting
+
+Worksheet Builder
+Pre-existing worksheets existed as a mix of word documents, excel spreadsheets and PDF files
+System needed to have a complex, dynamic form which allowed the admin user to build custom worksheets
+Needed to be easy to navigate
+Needed to clearly display validation errors, despite much of the form’s content being deeply nested
+Table builder, with ability to have default values for cells, as well as entire columns
+
+Solutions
+Report Generator
+Max height/width for images to ensure they don’t overflow
+Make sure service always returns valid JSON, even on critical failure, to ensure proper integration/reporting with PHP backend
+Manual formula for generating table-style data (due to limitations with existing table package)
+Conversion of all normally synchronous PDF package APIs to promises, as image data is fetched asynchronously
+
+Worksheet Builder
+Used Yup for form validations, as it supports very custom methods via the ‘with’ and ‘test’ operators
+React Hook Form for form state management, and greater performance as components only need to be subscribed to the values they need to display/compute with
+
+Key Learnings/Takeaways
+NX is a powerful tool for building complex, multi-portal systems, if the setup time can be afforded
+Being able to share components between applications can be time saving, but shared components must be developed carefully to ensure they are portal-agnostic and generic enough
+
+Code Snippets to Include
+Report generator custom table grid
+Worksheet template builder yup schema
+Worksheet template builder data processor

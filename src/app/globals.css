@@ -1,0 +1,87 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+
+:root {
+  --foreground-rgb: 0, 0, 0;
+  --primary: rgb(175, 175, 175);
+
+  background: #fffbf7;
+  background-image: radial-gradient(rgb(175, 175, 175) 1px, transparent 0);
+  background-size: 40px 40px;
+  background-position: -19px -19px;
+
+  font-family: "futura-pt", sans-serif;
+  font-weight: 400;
+  font-style: normal;
+}
+
+svg {
+  color: #659e5b;
+}
+
+button {
+  background: #fffbf7;
+  border-radius: 4px;
+  /* background-color: var(--primary); */
+  border: 1px solid;
+  border-color: var(--primary);
+  /* color: tomato; */
+}
+
+@media (prefers-color-scheme: dark) {
+  :root {
+    background-color: #251e1e;
+  }
+  h1, h2, h3, h4, h5, h6, span, b, em, p {
+    color: #bebebe;
+  }
+  button {
+    background-color: #6d5353;
+  }
+  
+}
+
+body {
+  color: rgb(var(--foreground-rgb));
+}
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
+}
+
+/* TYPOGRAPHY */
+h1, h2, h3, h4, h5, h6 {
+  font-weight: 600;
+}
+h1 {
+  font-size: 2rem;
+}
+
+h2 {
+  font-size: 1.8rem;
+}
+
+h3 {
+  font-size: 1.4rem;
+}
+
+h4 {
+  font-size: 1.3rem;
+}
+
+h5 {
+  font-size: 1.2rem;
+}
+
+h6 {
+  font-size: 1.1rem;
+}
+
+code {
+  /* padding: 0 2rem; */
+  font-size: .8rem;
+}

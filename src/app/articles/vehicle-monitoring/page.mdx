@@ -1,0 +1,64 @@
+import { ArticleHeader } from '../_components/ArticleHeader/ArticleHeader';
+import { ArticleIndex } from '../_components/ArticleIndex/ArticleIndex';
+import { ArticleCodeBlock } from '../_components/ArticleCodeBlock/ArticleCodeBlock';
+import { ARTICLE_INDEX, articleIndexHrefEnum } from './_static/static';
+
+<ArticleHeader 
+    title={'Big, real time data processing'}
+    subtitle={'Dealing with complex real-time data in a system that needs to be accurate and dependable'}
+/>
+<ArticleIndex 
+    sections={ARTICLE_INDEX}
+/>
+<br />
+
+TYRE HERO
+
+Screenshots
+Monitoring page
+Truck builder page
+Truck builder tutorial
+
+
+Intro
+
+Problem Statement
+Company came to us for a web portal
+Software engineers themselves, had already built the truck side of the software, we were brought in to process and display the data as needed
+Core functionality of the system 
+Is a live truck monitoring page, with a 2D model of a truck and tyres that light up in different colours to indicate statuses
+And a custom truck builder, which allowed for creation of individual trucks, trailers and joining them all together, whilst assigning specific sensor IDs and other metadata to each tyre
+Truck monitoring page needed to be accurate and regularly refreshed, as the data could be imperative for the safety of the drivers (system caught a failed tyre not long after release)
+
+Thought Process
+NextJS used in order to leverage server side rendering and for dynamic routing (usual story)
+
+Monitoring Page
+Use of SVGs for each axle
+This way, trucks could be dynamically built, as there is a static number of axles in the system
+As SVGs can be accessed just like any other element via a ref, the system was able to dynamically highlight tyres based on their statuses, and use them as anchor elements for tooltips
+Keeps rendering quick as no graphics library or canvas is required, and allows for interfacing with other react components
+
+	Truck Builder
+React Hook Form for form state management
+DndKit for drag and drop
+Local storage for saving in-progress truck
+
+Issues Faced
+Truck Builder
+Performance became an issue, as some of the trucks could be quite complex in design
+Utilised memoisation to keep a cache of each ‘unit’s’ layout, in order to not have as complex of a redraw on completion of a drag
+Performance of form, as a lot of data could be held at once, and errors in react hook form became a bottleneck
+
+Solutions
+SVGs as an easy, and decently high-performance solution
+
+
+
+Key Takeaways
+First project using SWR and realised how invaluable of a tool it is
+No need to create custom refresh function, just call mutate()
+No need to make useEffects or callback functions to respond to search params updates - just add them as dependencies to an SWR hook
+By keeping each request as its only file, with its own hook, it improves maintainability as any route-specific logic can be kept inside the hook, and shared in every place it is called
+
+
