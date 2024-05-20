@@ -2,10 +2,18 @@
 @tailwind components;
 @tailwind utilities;
 
+html {
+  filter: url("#pixelate");
+}
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --primary: rgb(175, 175, 175);
+  --highlight: #659e5b;
+  --text: #000;
+  --border: #6d626d;
+  --tw-border-color: #6d626d;
+
+  list-style: unset;
 
   background: #fffbf7;
   background-image: radial-gradient(rgb(175, 175, 175) 1px, transparent 0);
@@ -15,10 +23,21 @@
   font-family: "futura-pt", sans-serif;
   font-weight: 400;
   font-style: normal;
+  
+  border-color: var(--border);
 }
 
+a {
+  /* color: var(--highlight); */
+  font-weight: 600;
+}
+
+/* code {
+  color: var(--primary);
+} */
+
 svg {
-  color: #659e5b;
+  color: var(--highlight);
 }
 
 button {
@@ -26,19 +45,25 @@ button {
   border-radius: 4px;
   /* background-color: var(--primary); */
   border: 1px solid;
-  border-color: var(--primary);
-  /* color: tomato; */
+  border-color: var(--highlight);
+  color: var(--text);
 }
 
 @media (prefers-color-scheme: dark) {
+
   :root {
-    background-color: #251e1e;
+    background-color: #261825;
+    background-image: radial-gradient(#443543 1px, transparent 0);
+    --highlight: #827882;
+    --text: #eae9ea;
   }
+
   h1, h2, h3, h4, h5, h6, span, b, em, p {
-    color: #bebebe;
+    color: #FFF;
   }
+
   button {
-    background-color: #6d5353;
+    background-color: #594b58;
   }
   
 }
@@ -58,7 +83,7 @@ h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
 }
 h1 {
-  font-size: 2rem;
+  font-size: 2.5rem;
 }
 
 h2 {

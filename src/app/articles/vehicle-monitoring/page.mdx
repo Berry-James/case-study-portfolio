@@ -1,64 +1,130 @@
 import { ArticleHeader } from '../_components/ArticleHeader/ArticleHeader';
 import { ArticleIndex } from '../_components/ArticleIndex/ArticleIndex';
 import { ArticleCodeBlock } from '../_components/ArticleCodeBlock/ArticleCodeBlock';
+import { ImgWrapper } from '../_components/ImgWrapper/ImgWrapper';
 import { ARTICLE_INDEX, articleIndexHrefEnum } from './_static/static';
 
 <ArticleHeader 
-    title={'Big, real time data processing'}
+    title={'Big, Real Time Data Processing'}
     subtitle={'Dealing with complex real-time data in a system that needs to be accurate and dependable'}
 />
+<br />
+
+<ImgWrapper 
+    src={'/assets/images/vehicle-monitoring/monitoring.png'} 
+/>
+<br />
+
 <ArticleIndex 
     sections={ARTICLE_INDEX}
 />
 <br />
 
-TYRE HERO
+###### Terminology
+Before we jump into this project breakdown, it’s necessary to go over a few terms that you’ll see popping up throughout.
 
-Screenshots
-Monitoring page
-Truck builder page
-Truck builder tutorial
+Prime Mover - A vehicle with an engine think a truck, which is pulling some trailers
+Unit - A trailer (or in fact, anything else) being pulled by a Prime Mover
+Sensor - This refers to an individual sensor, within the tyre of EITHER a unit or a prime mover
+<br />
 
+## Project Brief
+Our team was tasked with building a system that would digest and display real-time tyre data from heavy vehicles.  Our clients had come to us with the vehicle-side of the technology complete and required assistance in transforming this data into a pleasing UI.
 
-Intro
+The system would be comprised of 3 major sections:
+An overall ‘dashboard’ page, displaying useful information regarding the status of each vehicle and their current GPS locations on a map
+A monitoring page for a single vehicle, which displays the status of each tyre and is updated frequently
+A dynamic vehicle builder, with the ability to assign custom sensor IDs to specific tyres and update the composition of the vehicle (add/remove axles, trailers and prime movers)
 
-Problem Statement
-Company came to us for a web portal
-Software engineers themselves, had already built the truck side of the software, we were brought in to process and display the data as needed
-Core functionality of the system 
-Is a live truck monitoring page, with a 2D model of a truck and tyres that light up in different colours to indicate statuses
-And a custom truck builder, which allowed for creation of individual trucks, trailers and joining them all together, whilst assigning specific sensor IDs and other metadata to each tyre
-Truck monitoring page needed to be accurate and regularly refreshed, as the data could be imperative for the safety of the drivers (system caught a failed tyre not long after release)
+My role in this project would be as lead frontend developer and UX/UI designer.  
+<br />
 
-Thought Process
-NextJS used in order to leverage server side rendering and for dynamic routing (usual story)
+## ArchitectureTech Stack
+_Frontend_
+Next.JS
 
-Monitoring Page
-Use of SVGs for each axle
-This way, trucks could be dynamically built, as there is a static number of axles in the system
-As SVGs can be accessed just like any other element via a ref, the system was able to dynamically highlight tyres based on their statuses, and use them as anchor elements for tooltips
-Keeps rendering quick as no graphics library or canvas is required, and allows for interfacing with other react components
+_Backend_
+Laravel (primary backend)
+Go (Data ingestion layer)
+<br />
 
-	Truck Builder
-React Hook Form for form state management
-DndKit for drag and drop
-Local storage for saving in-progress truck
+## Dashboard
+The dashboard would need to provide a complete overview of every vehicle in the system - their GPS locations and current status (if applicable).  This was accomplished with a notification section in the top half of the page, and a map displaying vehicle locations in the bottom half.
+<br />
 
-Issues Faced
-Truck Builder
-Performance became an issue, as some of the trucks could be quite complex in design
-Utilised memoisation to keep a cache of each ‘unit’s’ layout, in order to not have as complex of a redraw on completion of a drag
-Performance of form, as a lot of data could be held at once, and errors in react hook form became a bottleneck
+<ImgWrapper 
+    src={'/assets/images/vehicle-monitoring/dashboard.png'} 
+    alt={'The Dashboard page'}
+    caption='Bold, traffic light colours immediately alert the user of possible issues with a vehicle.'
+/>
+<br />
 
-Solutions
-SVGs as an easy, and decently high-performance solution
+###### Real-time vehicle monitoring
+The first and decidedly daunting challenge was to come up with a method to display the ingested vehicle data.  The monitoring page would need to clearly display the status of each tyre as its primary objective, but provide the ability to drill further down into the specifics of each tyre, such as temperature and pressure.
+<br />
 
+<ImgWrapper 
+    src={'/assets/images/vehicle-monitoring/monitoring.png'} 
+    alt={'The Monitoring page'}
+    caption='Tyres are highlighted depending on their status (red for critical, yellow for warning).  Info about the vehicle is shown at the top of the screen.  Detailed information about each unit/axle/tyre is shown on the right.  Hovering over a tyre’s ‘row’ will highlight the respective tyre in the 2D mockup.'
+/>
+<br />
 
+Displaying a top-down mockup of the vehicle gives the user an immediate, visual overview.  Each tyre will be assigned a colour depending on its status (this status comes from the ‘black box’ inside each vehicle).
 
-Key Takeaways
-First project using SWR and realised how invaluable of a tool it is
-No need to create custom refresh function, just call mutate()
-No need to make useEffects or callback functions to respond to search params updates - just add them as dependencies to an SWR hook
-By keeping each request as its only file, with its own hook, it improves maintainability as any route-specific logic can be kept inside the hook, and shared in every place it is called
+- Yellow indicates a warning (for example, the temperature is below/above an expected range, but not yet considered dangerous)
+- Red indicates a critical issue (such as a rapid pressure leak, or a very high tyre temperature)
 
+Hover tooltips are used to display further information about the tyre.
+<br />
 
+###### Dynamically Generating the Vehicle
+The system should be able to handle vehicles of all different shapes and sizes, hence the need to dynamically generate these top-down mockups on the fly.  
+
+In order to do this, I chose to represent each axle as an svg image.  This presented three distinct advantages:
+
+1. Infinitely Extensible - By combining these combinations of axles into ‘units’, we’re able to generate a complete vehicle with any number of ‘units’, each with any number of axles.
+2. Performant -  By utilising React’s useRef hook to target individual `<path>` tags inside each svg , their colour could be updated in real-time to reflect the latest data from the backend API.  Not only are svg files tiny, updating the fill property on each ‘tyre’ does not need to trigger a state change, as we’re accessing the dom element directly.
+3. No Third-Party Library - This helps with performance and reliability by reducing npm package bloat and removing the learning curve of a graphics library (easier for any dev to maintain down the track).
+<br />
+
+###### Data Fetching
+We needed to ensure the data on the vehicle monitoring page was kept up to date automatically.  Ideally, this would’ve involved using Server Sent Events, however given time and budget constraints (classic), we decided to stick with a polling system as a short-ish term solution.
+
+In order to make the polling process as seamless as possible for the end user, the SWR npm package would be used.  It has built-in handlers for interval revalidation, along with some other fantastic quality of life utilities.  Furthermore, by keeping all logic for the vehicle monitoring API endpoint inside one file, it becomes easier to maintain.
+<br />
+
+###### Building The Vehicles
+One last section was required before this system could go live - a form to build and maintain existing vehicles.  The user will be able to:
+
+1. Select from existing units, or build a new unit from scratch out of predefined axles
+2. Arrange these units in any order, to build a unit set
+3. Assign sensor IDs to specific tyres
+<br />
+
+<ImgWrapper 
+    src={'/assets/images/vehicle-monitoring/unit_builder_unit.png'} 
+    alt={'The Unit Set Builder page'}
+    caption='A breakdown of each unit is shown on the left.  These can be dragged and dropped to re-arrange.  On the right, axles can be configured and re arranged with drag and drop.'
+/>
+<br />
+
+<ImgWrapper 
+    src={'/assets/images/vehicle-monitoring/unit_builder_sensors.png'} 
+    alt={'The Unit Set Builder page - sensors view'}
+    caption='An overview of all sensors assigned to the unit set.  They can be assigned and updated here.'
+/>
+<br />
+
+###### React Hook Form
+I chose to leverage the ease of use and performance of react-hook-form, a custom form engine built around react hooks (who would’ve guessed).  By taking advantage of useWatch and some careful field subscriptions, I was able to ensure that only the necessary components re-rendered on a value change.  Performance in large-scale forms in React can often be a challenge, especially when the structure of the form itself is largely dynamic.
+<br />
+
+###### DnDKit
+I chose to try DnDKit as a drag and drop library, as the user would need a way to rearrange the units within the unit set.
+<br />
+
+## The Final Product
+In software, nothing makes you more proud than knowing something you’ve worked hard to build, is being actively used by a company to a great deal of success.  Not more than a week into going live, our system had correctly identified a failing tyre on a heavy vehicle.  Dispatch were able to phone the driver and notify him of the issue only moments before the tyre had a blowout.
+
+From a technical perspective, this project taught me a great deal about building dynamic forms with react-hook-form, using svg files for providing visual updates in real-time and implementing drag and drop with dnd kit .

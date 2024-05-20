@@ -1,79 +1,130 @@
 import { ArticleHeader } from '../_components/ArticleHeader/ArticleHeader';
 import { ArticleIndex } from '../_components/ArticleIndex/ArticleIndex';
 import { ArticleCodeBlock } from '../_components/ArticleCodeBlock/ArticleCodeBlock';
+import { ImgWrapper } from '../_components/ImgWrapper/ImgWrapper';
 import { ARTICLE_INDEX, articleIndexHrefEnum } from './_static/static';
 
 <ArticleHeader 
     title={'A multi-portal system'}
     subtitle={'The necessity for planning and future proofing in building scalable software'}
 />
+<br />
+
+<ImgWrapper src={'/assets/images/anomaly-reporting/report_page.png'} />
+<br />
+
 <ArticleIndex 
     sections={ARTICLE_INDEX}
 />
 <br />
 
+## About The Project
+Specialising in Marine equipment inspection and maintenance, 
+our client, [Vertech Group](https://www.vertechgroup.com.au/) came to us with a (seemingly) simple request - to automate and digitise their inspection and reporting service.  Technicians are sent out to inspect various pieces of marine machinery (often on large oil rigs), and report back on the state of the item and suggest repairs if necessary.  This report is made accessible to onshore staff, who review and approve the report, before passing it to a representative from the machinery's maintainer.  A three step process, and one which would require three distinct web portals.
+<br />
 
-(but less cringe)
+<a href={articleIndexHrefEnum.monorepo} />
+## System Architecture
+All three portals would share a design language, and a set of common components.  As such, it made perfect sense to take advantage of a monorepo service such as [NX](https://nx.dev/), a powerful monorepo build system with out of the box support for Next.JS, our front end framework of choice.  By using NX, we were able to share a host of components inside libs/shared/internal .
+<br />
 
-Screenshots
-Login redirect
-Worksheet template builder
-Workpack page
-Report view
-Client portal project dashboard
+## Worksheet Templating Form
+Vertech came to us with hundreds of different 'worksheets'; documents with fields ranging from simple one-line question/answers, to complex tables and multi selects.  Our task was to build a dynamic form which could be used to recreate these worksheets in a way our system could understand.
+<br />
 
-Index
-Intro
-System built for company Vertech
-Originally scoped as a simple reporting tool, but supporting system needed to be built in order to meet the client’s needs and use cases
-Largest-scale web application I’ve worked on
+<ImgWrapper 
+    src={'/assets/images/anomaly-reporting/worksheet_template_modal.png'} 
+    caption={'A user can generate a template from scratch, or duplicate and build off an existing template.  This saved Vertech staff a heap of time, as many worksheets share common fields.'}
+/>
+<br />
 
-Problem Statement
-Large safety training/inspection (among many other things) company looking to change how they handle reporting on safety inspections
-Requirements:
-User management system with 3 roles
-3 separate portals (Admin, Staff and Client)
-Android tablet application for use in-field
-Report generation microservice
+<ImgWrapper 
+    src={'/assets/images/anomaly-reporting/worksheet_template.png'} 
+    alt={'An example of a worksheet template'}
+    caption={'An example of a worksheet template. The dropdown beside each field name is for selecting the field\'s type.'}
+/>
+<br />
 
-Thought Process
-Web Platform
-Needed a way to share componentry between applications, without maintaining multiple independent codebases
-Decided on NX as its powerful features and (mostly) automated setup streamlined the process
+[`React Hook Form`](https://react-hook-form.com/)
 
-Report Generator
-Microservice built in NodeJS, as there are a good number of PDF generation libraries
+I chose react-hook-form as the form engine, as it is perfectly suited to building complex, dynamic forms.  It easily supports dynamic arrays of fields with the `useFieldArray` hook and schema management with yup, our chosen validation library.
+<br />
 
+[`Yup`](https://github.com/jquense/yup)
 
-Issues Faced
-Report Generator
-Data fed to report generator could be highly dynamic, with differently sized images, tables with lots of columns/rows
-Service needed to be fail-proof, and always generate a readable report regardless of how complex the data set
-Needed strong error handling and reporting
+Support for complex form validation would be necessary, as validation rules would change depending on the type of field the user is trying to use.
+For example, a simple short-text field only requires a name, whereas a table requires a name, column headers and a default number of rows.  Fortunately, yup's when method suits this use case perfectly.
+<br />
 
-Worksheet Builder
-Pre-existing worksheets existed as a mix of word documents, excel spreadsheets and PDF files
-System needed to have a complex, dynamic form which allowed the admin user to build custom worksheets
-Needed to be easy to navigate
-Needed to clearly display validation errors, despite much of the form’s content being deeply nested
-Table builder, with ability to have default values for cells, as well as entire columns
+<ArticleCodeBlock 
+    code={
+        `columns: yup.mixed().when('type', {
+            is: 'table',
+            then: () => yup.array(updateWorksheetTemplateColumnSchema),
+            otherwise: (schema) => schema.nullable()
+        })`
+    }
+/>
+_An example of the when operator in `Yup`_
+<br />
 
-Solutions
-Report Generator
-Max height/width for images to ensure they don’t overflow
-Make sure service always returns valid JSON, even on critical failure, to ensure proper integration/reporting with PHP backend
-Manual formula for generating table-style data (due to limitations with existing table package)
-Conversion of all normally synchronous PDF package APIs to promises, as image data is fetched asynchronously
+<ArticleCodeBlock 
+    code={
+       `options: yup.mixed().when('type', (type, schema) => {
 
-Worksheet Builder
-Used Yup for form validations, as it supports very custom methods via the ‘with’ and ‘test’ operators
-React Hook Form for form state management, and greater performance as components only need to be subscribed to the values they need to display/compute with
+            if(FIELDS_WITH_OPTIONS.includes(type[0])) {
+                return yup
+                .array(updateWorksheetTemplateFieldOptionSchema)
+                .required('Options are required')
+            }
 
-Key Learnings/Takeaways
-NX is a powerful tool for building complex, multi-portal systems, if the setup time can be afforded
-Being able to share components between applications can be time saving, but shared components must be developed carefully to ensure they are portal-agnostic and generic enough
+            return schema.nullable()
+        }
+    )`
+    }
+/>
+_A slightly more complex use case.  The first argument given to the callback is always an array, so we access it at index 0._
+<br />
 
-Code Snippets to Include
-Report generator custom table grid
-Worksheet template builder yup schema
-Worksheet template builder data processor
+## Report Microservice
+
+###### Architecture
+Vertech requested their reports be generated in PDF format, so I undertook research into various PDF generation libraries, as well as which language would be most suitable for this service. I settled on Node.JS as the language and express as the framework, as I only needed a simple single-route service.
+For the PDF package, I went with pdfkit as it exposes a very low-level API for position elements on the page as well as high-level callbacks to perform common actions, like inject content onto each page as they're created (think page numbers and headers).
+<br />
+
+###### Requirements
+As the microservice operates entirely independently of the main Laravel backend, I would need to ensure it handled and returned any errors appropriately.  Furthermore, the service should always return a generated PDF, no matter how complex the data set.
+<br />
+
+###### Challenges
+The biggest issue faced with PDF generation was the handling of images.  Technicians have the ability to upload and attach images to their worksheets (such as diagrams, schematics, or photos of damage to a piece of equipment).  Not knowing the dimensions of these images posed an interesting challenge:
+1. I would have to ensure that there is enough space left on the page for the image to fit
+2. The image would not exceed the available width on the page
+3. The image's caption would not overflow
+<br />
+
+<ArticleCodeBlock 
+    code={
+        `// Determine the y coordinate where the next row starts.
+        let rowStart = doc.y;
+
+        // If we're too close to the bottom of the page
+        // 1. Create a new page
+        // 2. Update descriptions array (to indicate we've started a new page when rendering descriptions)
+        // 3. Set row Start to top of page (plus allow space for header content etc)
+        if(
+            rowStart > 700 ||
+            (row[0].type === 'file' && rowStart > 500) ||
+            (row[0].type === 'files' && rowStart > 500)
+        ) {
+            doc.addPage();
+            rowStart = PAGE.margin.top;
+        } else {
+            // Otherwise, move to rowStart
+            doc.moveTo(doc.x, rowStart);
+        }
+        `
+    }
+/>
+_If too close to the bottom of the page, add a new page and reset the rowStart variable.  Otherwise, move to rowStart._

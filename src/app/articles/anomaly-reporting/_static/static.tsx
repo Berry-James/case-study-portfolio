@@ -1,4 +1,4 @@
-import { FaCode } from "react-icons/fa";
+import { FaCode, FaWpforms } from "react-icons/fa";
 import { IArticleIndexSection } from "../../_components/ArticleIndex/ArticleIndex.types";
 import { MdMemory, MdOutlineDesignServices } from "react-icons/md";
 import { TbCloud } from "react-icons/tb";
@@ -11,9 +11,9 @@ import { TbCloud } from "react-icons/tb";
  * @member dataFetching
  */
 export enum articleIndexHrefEnum {
-    uxUi = 'uxUi',
-    webWorkers = 'webWorkers',
-    memoryManagement = 'memoryManagement',
+    dynamicForms = 'dynamicForms',
+    pdfGeneration = 'pdfGeneration',
+    monorepo = 'monorepo',
     dataFetching = 'dataFetching'
 }
 
@@ -22,19 +22,19 @@ export enum articleIndexHrefEnum {
  */
 export const ARTICLE_INDEX: IArticleIndexSection[] = [
     {
-        title: 'UX/UI',
-        hrefId: articleIndexHrefEnum.uxUi,
-        icon: <MdOutlineDesignServices fontSize={'1.5rem'} />
-    },
-    {
-        title: 'Web Workers',
-        hrefId: articleIndexHrefEnum.webWorkers,
-        icon: <FaCode fontSize={'1.5rem'} />
-    },
-    {
-        title: 'Memory Management',
-        hrefId: articleIndexHrefEnum.memoryManagement,
+        title: 'Monorepo Architecture',
+        hrefId: articleIndexHrefEnum.monorepo,
         icon: <MdMemory fontSize={'1.5rem'} />
+    },
+    {
+        title: 'Dynamic Forms',
+        hrefId: articleIndexHrefEnum.dynamicForms,
+        icon: <FaWpforms fontSize={'1.5rem'} />
+    },
+    {
+        title: 'PDF Generation',
+        hrefId: articleIndexHrefEnum.pdfGeneration,
+        icon: <FaCode fontSize={'1.5rem'} />
     },
     {
         title: 'Data Fetching',

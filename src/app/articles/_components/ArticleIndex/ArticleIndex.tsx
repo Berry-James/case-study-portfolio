@@ -9,8 +9,8 @@ export const ArticleIndex = ({ sections }: IArticleIndexProps) => {
 
     return (
         <div className='mb-6 mt-2'>
-            <p className='mb-2'>Jump to key learnings</p>
-            <div className='grid grid-cols-1 gap-4 sm:grid-cols-4 max-w-fit'>
+            {/* <p className='mb-2'>Jump to key learnings</p> */}
+            <div className='grid grid-cols-1 gap-4 sm:grid-cols-4 w-full sm:w-fit-content'>
                 {
                     sections.map((section, sectionIndex) => 
                         <ArticleIndexSection 

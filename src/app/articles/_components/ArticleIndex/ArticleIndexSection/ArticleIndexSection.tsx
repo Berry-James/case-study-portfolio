@@ -12,7 +12,7 @@ export const ArticleIndexSection = ({ section, index }: IArticleIndexSectionProp
                     animationDelay: `${100 * index}ms`
                 }}
             >
-                <div className='p-2 rounded-md  flex flex-col items-center'>
+                <div className='p-2 rounded-md flex flex-col items-center'>
                     { section.icon }
                     <code>{ section.title }</code>
                 </div>

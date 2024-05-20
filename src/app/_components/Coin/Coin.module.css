@@ -1,0 +1,48 @@
+.CoinFirst {
+    width: 32px;
+    height: 32px;
+    animation: CoinSpinFirst 2s linear forwards;
+}
+
+.CoinLast {
+    width: 32px;
+    height: 32px;
+    animation: CoinSpinLast 2s linear forwards;
+}
+
+.CoinIntro {
+    width: 32px;
+    height: 32px;
+    animation: CoinSpinIntro 2s ease-out forwards;
+}
+
+.ImgFlip {
+    /* transform: rotateY(180deg); */
+}
+
+@keyframes CoinSpinIntro {
+    from {
+        transform: rotateY(0deg);
+    }
+    to {
+        transform: rotateY(990deg);
+    }
+}
+
+@keyframes CoinSpinFirst {
+    from {
+        transform: rotateY(-90deg);
+    }
+    to {
+        transform: rotateY(90deg);
+    }
+}
+
+@keyframes CoinSpinLast {
+    from {
+        transform: rotateY(-90deg);
+    }
+    to {
+        transform: rotateY(90deg);
+    }
+}
