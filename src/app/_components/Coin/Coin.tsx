@@ -57,7 +57,6 @@ export const Coin = () => {
                     src={`${BASE_IMG_PATH}${IMG_SRC_ARR[imgIndex]}`}
                     height={64}
                     width={64}
-                    priority
                     // style={{ height: '64px', width: '64px' }} 
                 />
             </div>

@@ -5,7 +5,10 @@ import { CodeBlock, paraisoLight, paraisoDark } from 'react-code-blocks';
 
 export const ArticleCodeBlock = ({ code }: IArticleCodeBlockProps) => {
 
-    const prefersDarkMode = window.matchMedia('(prefers-color-scheme: dark)').matches;
+    const prefersDarkMode = 
+        typeof window !== 'undefined' ? 
+        window.matchMedia('(prefers-color-scheme: dark)').matches
+        : false;
 
     console.log('prefers dark mode', prefersDarkMode);
 
