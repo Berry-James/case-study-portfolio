@@ -1,0 +1,11 @@
+.TaskbarItem {
+    height: 100%;
+    width: max-content;
+    min-width: 60px;
+    border: 2px solid steelblue;
+    padding: 4px;
+    display: grid;
+    grid-template-columns: 24px auto;
+    align-content: center;
+    align-items: center;
+}

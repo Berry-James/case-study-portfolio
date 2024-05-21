@@ -3,6 +3,14 @@ import { ArticleIndex } from '../_components/ArticleIndex/ArticleIndex';
 import { ArticleCodeBlock } from '../_components/ArticleCodeBlock/ArticleCodeBlock';
 import { ImgWrapper } from '../_components/ImgWrapper/ImgWrapper';
 import { ARTICLE_INDEX, articleIndexHrefEnum } from './_static/static';
+import ImgMonitoringPage from '../../../../public/assets/images/vehicle-monitoring/monitoring.png'
+import ImgDashboardPage from '../../../../public/assets/images/vehicle-monitoring/dashboard.png'
+import ImgUnitBuilderUnit from '../../../../public/assets/images/vehicle-monitoring/unit_builder_unit.png'
+import ImgUnitBuilderSensors from '../../../../public/assets/images/vehicle-monitoring/unit_builder_sensors.png'
+
+export const metadata = {
+  title: "Vehicle Monitoring"
+};
 
 <ArticleHeader 
     title={'Big, Real Time Data Processing'}
@@ -11,7 +19,8 @@ import { ARTICLE_INDEX, articleIndexHrefEnum } from './_static/static';
 <br />
 
 <ImgWrapper 
-    src={'/assets/images/vehicle-monitoring/monitoring.png'} 
+    src={ImgMonitoringPage} 
+    alt='The monitoring page'
 />
 <br />
 
@@ -53,7 +62,7 @@ The dashboard would need to provide a complete overview of every vehicle in the 
 <br />
 
 <ImgWrapper 
-    src={'/assets/images/vehicle-monitoring/dashboard.png'} 
+    src={ImgDashboardPage} 
     alt={'The Dashboard page'}
     caption='Bold, traffic light colours immediately alert the user of possible issues with a vehicle.'
 />
@@ -64,7 +73,7 @@ The first and decidedly daunting challenge was to come up with a method to displ
 <br />
 
 <ImgWrapper 
-    src={'/assets/images/vehicle-monitoring/monitoring.png'} 
+    src={ImgMonitoringPage} 
     alt={'The Monitoring page'}
     caption='Tyres are highlighted depending on their status (red for critical, yellow for warning).  Info about the vehicle is shown at the top of the screen.  Detailed information about each unit/axle/tyre is shown on the right.  Hovering over a tyre’s ‘row’ will highlight the respective tyre in the 2D mockup.'
 />
@@ -103,14 +112,14 @@ One last section was required before this system could go live - a form to build
 <br />
 
 <ImgWrapper 
-    src={'/assets/images/vehicle-monitoring/unit_builder_unit.png'} 
+    src={ImgUnitBuilderUnit} 
     alt={'The Unit Set Builder page'}
     caption='A breakdown of each unit is shown on the left.  These can be dragged and dropped to re-arrange.  On the right, axles can be configured and re arranged with drag and drop.'
 />
 <br />
 
 <ImgWrapper 
-    src={'/assets/images/vehicle-monitoring/unit_builder_sensors.png'} 
+    src={ImgUnitBuilderSensors} 
     alt={'The Unit Set Builder page - sensors view'}
     caption='An overview of all sensors assigned to the unit set.  They can be assigned and updated here.'
 />

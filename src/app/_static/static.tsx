@@ -3,10 +3,11 @@ import { IArticleListItem } from "../_components/ArticlesList/ArticlesList.types
 import { IconBaseProps, IconType } from "react-icons";
 import { PAGE_ROUTES } from "@/network/pageRoutes";
 import { MdMemory, MdOutlineDesignServices } from "react-icons/md";
-import { TbCloud } from "react-icons/tb";
+import { TbCloud, TbPuzzle } from "react-icons/tb";
 import { BiTimer } from "react-icons/bi";
 import { LuClipboardEdit, LuPaintbrush } from "react-icons/lu";
 import { FiTruck } from "react-icons/fi";
+import { RiDragDropLine } from "react-icons/ri";
 
 const PROPS: IconBaseProps = {
     fontSize: '1.5rem',
@@ -59,6 +60,19 @@ export const ARTICLES: IArticleListItem[] = [
         title: 'Vehicle Monitoring',
         icon: <FiTruck {...PROPS} />,
         href: PAGE_ROUTES.articles.vehicleMonitoring,
-        skills: []
+        skills: [
+            {
+                title: 'Drag and Drop',
+                icon: <RiDragDropLine />
+            },
+            {
+                title: 'Real Time Data',
+                icon: <BiTimer />
+            },
+            {
+                title: 'Interactive Builder',
+                icon: <TbPuzzle />
+            }
+        ]
     }
 ]

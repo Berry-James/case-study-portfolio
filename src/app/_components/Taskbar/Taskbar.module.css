@@ -1,0 +1,19 @@
+.Taskbar {
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    height: 40px;
+    background: lightsteelblue;
+    border-top: 3px solid steelblue;
+    padding: 4px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+}
+
+.TaskbarHomeButton {
+    width: 64px;
+    height: 100%;
+}

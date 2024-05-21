@@ -3,6 +3,13 @@ import { ArticleIndex } from '../_components/ArticleIndex/ArticleIndex';
 import { ArticleCodeBlock } from '../_components/ArticleCodeBlock/ArticleCodeBlock';
 import { ImgWrapper } from '../_components/ImgWrapper/ImgWrapper';
 import { ARTICLE_INDEX, articleIndexHrefEnum } from './_static/static';
+import ImgReportPage from '../../../../public/assets/images/anomaly-reporting/report_page.png'
+import ImgWorksheetTemplateModal from '../../../../public/assets/images/anomaly-reporting/worksheet_template_modal.png'
+import ImgWorksheetTemplate from '../../../../public/assets/images/anomaly-reporting/worksheet_template.png'
+
+export const metadata = {
+  title: "Anomaly Reporting"
+};
 
 <ArticleHeader 
     title={'A multi-portal system'}
@@ -10,7 +17,9 @@ import { ARTICLE_INDEX, articleIndexHrefEnum } from './_static/static';
 />
 <br />
 
-<ImgWrapper src={'/assets/images/anomaly-reporting/report_page.png'} />
+<ImgWrapper 
+    src={ImgReportPage} 
+/>
 <br />
 
 <ArticleIndex 
@@ -33,13 +42,13 @@ Vertech came to us with hundreds of different 'worksheets'; documents with field
 <br />
 
 <ImgWrapper 
-    src={'/assets/images/anomaly-reporting/worksheet_template_modal.png'} 
+    src={ImgWorksheetTemplateModal} 
     caption={'A user can generate a template from scratch, or duplicate and build off an existing template.  This saved Vertech staff a heap of time, as many worksheets share common fields.'}
 />
 <br />
 
 <ImgWrapper 
-    src={'/assets/images/anomaly-reporting/worksheet_template.png'} 
+    src={ImgWorksheetTemplate} 
     alt={'An example of a worksheet template'}
     caption={'An example of a worksheet template. The dropdown beside each field name is for selecting the field\'s type.'}
 />

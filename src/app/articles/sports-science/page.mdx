@@ -3,6 +3,10 @@ import { ArticleIndex } from '../_components/ArticleIndex/ArticleIndex';
 import { ArticleCodeBlock } from '../_components/ArticleCodeBlock/ArticleCodeBlock';
 import { ARTICLE_INDEX, articleIndexHrefEnum } from './_static/static';
 
+export const metadata = {
+  title: "Sports Science"
+};
+
 <ArticleHeader 
     title={'A priority on performance and scalability'}
     subtitle={'Building resource-demanding software for the browser'}
@@ -59,6 +63,7 @@ large desktop monitors and small laptop screens.
 [INSERT SCREENSHOT OF TEAM PAGE HERE]
 [INSERT SCREENSHOT OF PLAYER DASHBOARD HERE]
 
+<a id={articleIndexHrefEnum.webWorkers} />
 ## Performance
 
 In order to plot the data given to me in these big CSV files, I would need to ensure that the system held on to as 
@@ -81,6 +86,9 @@ as well as file streaming and chunk processing.
 
 This helped immensely with performance, and would handle large files with ease (even on slower machines).
 <br />
+
+<a id={articleIndexHrefEnum.memoryManagement} />
+###### Memory Management
 
 The next hurdle would be to ensure that this whole process would work with multiple files.  Being able to select multiple files at 
 once, and have them all process in sequence, would present another challenge - memory management.

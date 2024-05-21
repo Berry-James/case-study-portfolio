@@ -1,4 +1,5 @@
 import React, { ReactNode } from 'react';
+import { FaGithub, FaPhone } from 'react-icons/fa';
 import { IoLogoLinkedin } from 'react-icons/io5';
 import { MdAlternateEmail } from 'react-icons/md';
 
@@ -18,6 +19,14 @@ export const Contact = () => {
                     href={process.env.LINKEDIN_URL}
                     icon={<IoLogoLinkedin />}
                 />
+                <ContactItem 
+                    href={process.env.GITHUB_URL}
+                    icon={<FaGithub />}
+                />
+                <ContactItem 
+                    href={process.env.PHONE}
+                    icon={<FaPhone />}
+                />
             </div>
            
         </div>
@@ -25,7 +34,7 @@ export const Contact = () => {
 
 }
 
-const ContactItem = ({ text, icon, href }: { text?: string, icon: ReactNode, href: string | undefined; }) => (
+const ContactItem = ({ text, icon, href, message }: { text?: string, icon: ReactNode, href: string | undefined; message?: string }) => (
     <a href={href}>
         <div className='flex items-center gap-2'>
             {icon}

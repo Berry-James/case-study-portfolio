@@ -4,9 +4,12 @@ import Image from 'next/image';
 
 export const ImgWrapper = ({ src, alt, caption }: ImgWrapperProps) => {
 
+    const isStaticImport = typeof src !== 'string';
+
     return (
         <div className='p-2 border animate-fade-down'>
             <Image
+                placeholder={isStaticImport ? 'blur' : undefined}
                 alt={alt || ''} 
                 src={src}
                 width={0}

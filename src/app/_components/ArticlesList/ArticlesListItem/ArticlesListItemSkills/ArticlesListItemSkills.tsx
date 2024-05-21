@@ -9,7 +9,7 @@ export const ArticlesListItemSkills = ({ skills }: IArticleListItemSkillsProps) 
             {
                 skills.map((skill, skillIndex) => (
                     <div 
-                        className={`${Styles.SkillItem} py-2 px-4 border bg-white absolute`}
+                        className={`${Styles.SkillItem} py-2 px-4 border absolute`}
                         key={`${skill.title}-${skillIndex}`}
                     >
                         {skill.icon}

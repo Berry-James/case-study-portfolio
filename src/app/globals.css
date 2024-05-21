@@ -4,18 +4,20 @@
 
 html {
   filter: url("#pixelate");
+  scroll-behavior: smooth;
 }
 
 :root {
   --foreground-rgb: 0, 0, 0;
-  --highlight: #659e5b;
+  --highlight: steelblue;
   --text: #000;
   --border: #6d626d;
   --tw-border-color: #6d626d;
+  --background: #fffbf7;
 
   list-style: unset;
 
-  background: #fffbf7;
+  background: var(--background);
   background-image: radial-gradient(rgb(175, 175, 175) 1px, transparent 0);
   background-size: 40px 40px;
   background-position: -19px -19px;

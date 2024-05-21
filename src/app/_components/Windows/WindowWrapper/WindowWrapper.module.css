@@ -1,0 +1,15 @@
+.WindowWrapper {
+    border: 8px solid lightsteelblue;
+    background: var(--background);
+}
+
+.Button {
+    border: 2px solid steelblue;
+    width: 24px;
+    height: 24px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    background: var(--highlight);
+    color: var(--text);
+}
