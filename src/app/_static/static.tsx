@@ -1,5 +1,5 @@
 import { FaCode, FaGlobeAsia, FaRunning, FaTruck, FaWpforms } from "react-icons/fa";
-import { IArticleListItem } from "../_components/ArticlesList/ArticlesList.types";
+import { IArticleListItem } from "../_components/Windows/PortfolioWindow/ArticlesList/ArticlesList.types";
 import { IconBaseProps, IconType } from "react-icons";
 import { PAGE_ROUTES } from "@/network/pageRoutes";
 import { MdMemory, MdOutlineDesignServices } from "react-icons/md";
@@ -9,10 +9,16 @@ import { LuClipboardEdit, LuPaintbrush } from "react-icons/lu";
 import { FiTruck } from "react-icons/fi";
 import { RiDragDropLine } from "react-icons/ri";
 
+/**
+ * Base props for icon components
+ */
 const PROPS: IconBaseProps = {
     fontSize: '1.5rem',
 }
 
+/**
+ * Static array of all case study articles
+ */
 export const ARTICLES: IArticleListItem[] = [
     {
         title: 'Sports Science',

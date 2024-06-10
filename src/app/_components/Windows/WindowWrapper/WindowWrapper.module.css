@@ -1,15 +1,39 @@
 .WindowWrapper {
-    border: 8px solid lightsteelblue;
-    background: var(--background);
+    background: var(--grey);
+    position: absolute;
+    display: flex;
+    flex-direction: column;
+    box-shadow: 2px 2px #000, inset 2px 2px #FFF;
+    padding: 2px;
 }
 
-.Button {
-    border: 2px solid steelblue;
-    width: 24px;
-    height: 24px;
+.WindowWrapperActive {
+    z-index: 999;
+    border-color: rgba(var(--highlight), 0.4);
+}
+
+.WindowContent {
+    overflow: auto;
+    height: 100%;
+}
+
+.WindowToolbar {
+    background: linear-gradient(90deg rgb(var(--highlight)) 0%, color-mix(in srgb, rgb(var(--highlight)), white 50%));
+    background-color: rgb(var(--highlight));
+    min-height: 24px;
+    overflow: hidden;
     display: flex;
-    justify-content: center;
+    gap: 6px;
+    height: 24px;
     align-items: center;
-    background: var(--highlight);
-    color: var(--text);
+    justify-content: space-between;
+    padding: 0 4px;
+    filter: saturate(0) brightness(.95);
+    font-weight: bold;
+    color: #FFF;
+}
+
+.WindowToolbarActive {
+    background-color: rgb(var(--highlight));
+    filter: unset;
 }

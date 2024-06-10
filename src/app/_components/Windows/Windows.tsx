@@ -1,23 +1,38 @@
 import React, { useContext, useEffect } from 'react';
-import { TaskbarContext } from '../Taskbar/context/TaskbarContext';
-import { windowStatusEnum } from '../Taskbar/context/TaskbarContext.types';
 import { WindowWrapper } from './WindowWrapper/WindowWrapper';
+import { WINDOWS_COMPONENT_MAP } from '../SystemContext/_static/windows/windows.static';
+import { SystemContext } from '../SystemContext/SystemContext';
+import { windowIdEnum } from '../SystemContext/_static/windows/windows.types';
 
+/**
+ * Contains all window elements
+ * 
+ * @returns Component
+ */
 export const Windows = () => {
 
     // CONTEXT
-    const { windows } = useContext(TaskbarContext);
+    const { windows } = useContext(SystemContext);
 
-    useEffect(() => console.log('wind', windows), [windows]);
+    // Map through and return all windows
+    return Object.values(windows).map(windowItem => {
 
-    return Object.values(windows).map(window => {
+        // Get component from component mapping
+        const components = WINDOWS_COMPONENT_MAP[windowItem.id]({
+            instanceId: windowItem.instanceId,
+            ...windowItem.componentProps
+        });
 
-            return (
-                <WindowWrapper id={window.id} key={window.id} title={window.title} icon={window.icon}>
-                    {window.component}
-                </WindowWrapper>
-            )
-        
+        return (
+            <WindowWrapper 
+                key={windowItem.instanceId} 
+                {...windowItem}
+                icon={components.icon}
+                defaultWindowPosition={windowItem.position}
+            >
+                {components.component}
+            </WindowWrapper>
+        )
         
     })
 

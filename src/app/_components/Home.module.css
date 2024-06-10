@@ -1,9 +1,4 @@
 .Home {
-	/* background-image: url("/assets/images/window.webp");
-	background-clip: border-box;
-	background-size: cover;
-	background-repeat: no-repeat;
-    height: 700px; */
     border: 12px solid lightsteelblue;
     display: flex;
     justify-content: center;

@@ -1,4 +1,4 @@
 import { ReactNode } from "react";
-import { IWindow, windowStatusEnum } from "../context/TaskbarContext.types";
+import { IWindow } from "../../SystemContext/_static/windows/windows.types";
 
-export type ITaskbarItemProps = Omit<IWindow, 'component'>;
+export type ITaskbarItemProps = Omit<IWindow, 'component'> & { icon: ReactNode };

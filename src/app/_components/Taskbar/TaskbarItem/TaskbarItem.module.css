@@ -2,10 +2,14 @@
     height: 100%;
     width: max-content;
     min-width: 60px;
-    border: 2px solid steelblue;
     padding: 4px;
-    display: grid;
-    grid-template-columns: 24px auto;
-    align-content: center;
+    display: flex;
+    justify-content: center;
     align-items: center;
+    box-shadow: 1px 1px rgba(0,0,0,0.5), inset 2px 2px #FFF
+}
+
+.TaskbarItemActive {
+    box-shadow: 1px 1px #FFF, inset 1px 1px #000;
+    background-color: color-mix(in srgb, rgb(var(--highlight)), white 50%);
 }

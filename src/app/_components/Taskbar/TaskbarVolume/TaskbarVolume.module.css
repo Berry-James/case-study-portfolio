@@ -1,0 +1,26 @@
+.RangeInput::-webkit-slider-thumb {
+    -webkit-appearance: none;
+    appearance: none;
+    width: 32px;
+    height: 12px;
+    border-radius: 0;
+    background: var(--grey);
+    cursor: pointer;
+    border: none;
+    box-shadow: 1px 1px black, inset 1px 1px white;
+  }
+  
+.RangeInput::-moz-range-thumb {
+    width: 32px;
+    height: 12px;
+    background: var(--grey);
+    border-radius: 0;
+    cursor: pointer;
+    box-shadow: 1px 1px black, inset 1px 1px white;
+}
+
+.RangeInput {
+    width: 4px;
+    background: black;
+    box-shadow: 1px 1px white, inset 1px 1px black;
+}

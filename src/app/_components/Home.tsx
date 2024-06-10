@@ -1,29 +1,48 @@
 'use client';
-import React from 'react';
-import { ArticlesList } from './ArticlesList/ArticlesList';
-import { ARTICLES } from '../_static/static';
-import { Contact } from './Contact/Contact';
-import { Jersey_25 } from 'next/font/google'
-import { VscSparkle } from 'react-icons/vsc';
-import { Coin } from './Coin/Coin';
-import { Badge } from './Badge/Badge';
-import Styles from './Home.module.css';
-import { TaskbarContextProvider } from './Taskbar/context/TaskbarContext';
+import React, { useContext } from 'react';
 import { Windows } from './Windows/Windows';
+import { Taskbar } from './Taskbar/Taskbar';
+import { DesktopIcons } from './DesktopIcons/DesktopIcons';
+import { SystemContext, SystemContextProvider } from './SystemContext/SystemContext';
+import { WALLPAPER_DICT } from './SystemContext/_static/theme/theme.static';
 
-const jersey15 = Jersey_25({ subsets: ['latin'], weight: '400' });
-
+/**
+ * Root, top-level component
+ * Gives access to the SystemContext to the rest of the system
+ * 
+ * @returns Component
+ */
 export const Home = () => {
 
     return (
-        <TaskbarContextProvider>
-            <main className={`flex min-h-screen flex-col justify-center items-center p-12 sm:p-24 gap-4 animate-fade-down animate-delay-400 ${jersey15.className}`}>
+        <SystemContextProvider>
+            <HomeContent />
+        </SystemContextProvider>
+    )
 
-                <Windows />
+}
 
-            </main>
-        </TaskbarContextProvider>
-    
+/**
+ * Content for the @see {Home} component
+ * 
+ * @returns Component
+ */
+const HomeContent = () => {
+
+    // CONTEXT
+    const { activeWallpaperId } = useContext(SystemContext);
+
+    return (
+        <main 
+            className={`min-h-screen overflow-hidden`}
+            style={{
+                ...WALLPAPER_DICT[activeWallpaperId].style,
+            }}
+        >
+            <Windows />
+            <Taskbar />
+            <DesktopIcons />
+        </main>
     )
 
 }

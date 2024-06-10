@@ -1,3 +1,6 @@
+/**
+ * System page routes
+ */
 export const PAGE_ROUTES = {
 
     // ROOT
