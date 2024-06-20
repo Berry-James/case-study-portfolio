@@ -201,11 +201,7 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
      */
     const handleSetWindowPosition = (instanceId: string, newPos: Partial<WindowPosition>) => {
 
-        console.log('handleSetWindowPosition() -> windows', windows);
-
         setWindows((prevState) => {
-
-            console.log('handleSetWindowPosition() -> prevState', prevState);
 
             const ret = {
                 ...prevState,
@@ -217,8 +213,6 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
                     }
                 }
             }
-
-            console.log('handleSetWindowPosition() -> ret', ret);
 
             return ret;
         });

@@ -2,6 +2,8 @@
 import { WindowPosition } from "@/app/_components/SystemContext/_static/windows/windows.types";
 import { useCallback, useEffect, useRef, useState } from "react";
 import { UseWindowInteractivity } from "./useWindowInteractivity.types";
+import debounce from "debounce";
+import { TASKBAR_HEIGHT } from "@/app/_components/Taskbar/Taskbar";
 
 /**
  * Throttle/Debouncer
@@ -154,6 +156,84 @@ export const useWindowInteractivity: UseWindowInteractivity = ({
     }, []);
 
     /**
+     * Handle window resize event
+     */
+
+    useEffect(() => {
+
+        if(typeof window === 'undefined') { return }
+
+        const resizeEvent = debounce((e: Event) => {
+
+
+            // Set x/y to 0 if they're out of bounds
+            let newPosition = {
+                ...position.current,
+                x: position.current.x < 0 ? 0 : position.current.x,
+                y: position.current.y < 0 ? 0 : position.current.y
+            };
+
+
+            // If window x pos spills out to the right
+            if((position.current.x + position.current.w) > window.innerWidth) {
+
+                // Check if window width is greater than possible screen width
+                if(position.current.w > window.innerWidth) {
+                    newPosition.w = window.innerWidth
+                    newPosition.x = 0;
+                } else {
+                    newPosition.x = window.innerWidth - position.current.w;
+                }
+
+            }
+
+            if((position.current.y + position.current.h) > window.innerHeight) {
+
+                // Check if window height is greater than possible screen height
+                if(position.current.h > window.innerHeight) {
+                    newPosition.h = window.innerHeight - TASKBAR_HEIGHT
+                    newPosition.y = 0;
+                } else {
+                    newPosition.y = window.innerHeight - position.current.h;
+                }
+
+            }
+
+            // update position ref
+            position.current = { ...newPosition };
+
+            // Update window element in DOM
+            if(windowRef.current) {
+
+                // Set new x/y positions
+                windowRef.current.style.transform = `translate(${newPosition.x}px, ${newPosition.y}px)`;
+
+                // Set new w/h positions
+                windowRef.current.style.width = `${newPosition.w}px`
+                windowRef.current.style.height = `${newPosition.h}px`
+
+            }
+
+            // Run callbacks
+            onDrag(newPosition);
+            if(onResizeEnd) {
+                onResizeEnd(newPosition);
+            }
+            
+        }, 200)
+
+        window.addEventListener('resize', resizeEvent);
+
+        return () => {
+            resizeEvent.clear();
+            if(typeof window !== 'undefined') { 
+                window.removeEventListener('resize', resizeEvent);
+            }
+        }
+        
+    }, []);
+
+    /**
      * Handle Resizing
      */
     useEffect(() => {
@@ -231,14 +311,6 @@ export const useWindowInteractivity: UseWindowInteractivity = ({
                 ...newPosition
             };
             onDrag(newPosition)
-
-            // position.current = {
-            //     x: Math.min(Math.max(pos.x + event.movementX), window.innerWidth),
-            //     y: pos.y + event.movementY
-            // };
-
-            // onDrag({ x, y });
-
             elem.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
             
         });
