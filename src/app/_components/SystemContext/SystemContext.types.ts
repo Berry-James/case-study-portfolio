@@ -12,7 +12,7 @@ export interface ISystemContext {
     handleSetWindowStatus: (instanceId: string, newStatus: windowStatusEnum) => void;
     handleSetWindowPosition: (instanceId: string, newPos: Partial<WindowPosition>) => void;
     handleSetActiveWallpaperId: (newActiveWallpaperId: wallpaperIdEnum) => void;
-    handleSetActiveWindowInstanceId: (instanceId: string) => void;
+    handleSetActiveWindowInstanceId: (instanceId: string | null) => void;
     handleOpenWindow: (id: windowIdEnum, windowOverride?: Partial<IWindowTemplate>) => string;
     handleCloseWindow: (instanceId: string) => void;
 }

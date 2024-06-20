@@ -21,7 +21,7 @@ export const SystemContext = createContext<ISystemContext>({
     handleSetWindowStatus: (instanceId: string, newStatus: windowStatusEnum) => undefined,
     handleSetWindowPosition: (instanceId: string, newPos: Partial<WindowPosition>) => undefined,
     handleSetActiveWallpaperId: (newActiveWallpaperId: number) => undefined,
-    handleSetActiveWindowInstanceId: (instanceId: string) => undefined,
+    handleSetActiveWindowInstanceId: (instanceId: string | null) => undefined,
     handleOpenWindow: (id: windowIdEnum, windowOverride?: Partial<IWindowTemplate>) => '',
     handleCloseWindow: (instanceId: string) => undefined
 });
@@ -219,7 +219,7 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
 
     }
 
-    const handleSetActiveWindowInstanceId = (instanceId: string) => setActiveWindowInstanceId(instanceId);
+    const handleSetActiveWindowInstanceId = (instanceId: string | null) => setActiveWindowInstanceId(instanceId);
 
     const handleSetActiveWallpaperId = (newActiveWallpaperId: number) => setActiveWallpaperId(newActiveWallpaperId);
 
