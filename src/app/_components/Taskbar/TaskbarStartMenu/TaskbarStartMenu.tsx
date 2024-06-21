@@ -59,7 +59,7 @@ const TaskbarStartMenuContent = () => {
 
                 {/* APPS LIST */}
                 <div
-                    className='p-2'
+                    className='py-2'
                 >
                     <TaskbarStartMenuApps />
                 </div>

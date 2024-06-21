@@ -4,6 +4,9 @@ import { SystemContext } from '../../SystemContext/SystemContext';
 import { FaVolumeMute } from 'react-icons/fa';
 import { FaVolumeHigh, FaVolumeLow } from 'react-icons/fa6';
 import Styles from './TaskbarVolume.module.css';
+import VolumeIcon from '../../../_static/icons/png/loudspeaker_rays-1.png'
+import VolumeMuteIcon from '../../../_static/icons/png/loudspeaker_muted-1.png'
+import Image from 'next/image';
 
 /**
  * Volume slider used to control volume of all system Audio
@@ -25,20 +28,23 @@ export const TaskbarVolume = () => {
     /**
      * Determine the current volume icon based on the current volume value
      */
-    const VolumeIcon = useMemo(() => {
+    // const VolumeIcon = useMemo(() => {
+
+
+    //     let src = VolumeIcon;
         
-        if(volume === 0) {
-            return <FaVolumeMute />
-        }
+    //     if(volume === 0) {
+    //         return <FaVolumeMute />
+    //     }
 
-        if(volume < .5) {
-            return <FaVolumeLow />
-        }
+    //     if(volume < .5) {
+    //         return <FaVolumeLow />
+    //     }
 
-        return <FaVolumeHigh />
+    //     return <FaVolumeHigh />
         
 
-    }, [volume]);
+    // }, [volume]);
 
     // HANDLERS
     /**
@@ -74,7 +80,12 @@ export const TaskbarVolume = () => {
             <button
                 onClick={handleToggleIsOpen}
             >
-                {VolumeIcon}
+                <Image 
+                    width={18}
+                    height={18}
+                    src={isMuted ? VolumeMuteIcon : VolumeIcon}
+                    alt={''}
+                />
             </button>
 
             {/* VOLUME POPOVER */}

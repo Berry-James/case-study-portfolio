@@ -4,6 +4,7 @@ import { IWindowTemplate } from '@/app/_components/SystemContext/_static/windows
 import { WINDOWS_COMPONENT_MAP, WINDOWS_DICT } from '@/app/_components/SystemContext/_static/windows/windows.static';
 import { SystemContext } from '@/app/_components/SystemContext/SystemContext';
 import { TaskbarStartMenuContext } from '../context/TaskbarStartMenuContext';
+import Styles from './TaskbarStartMenuApps.module.css';
 
 /**
  * List of all system applications to be displayed in the @see {TaskbarStartMenu}
@@ -65,12 +66,14 @@ const TaskbarStartMenuApp = ({ windowItem }: { windowItem: IWindowTemplate }) =>
     }, [windowItem]);
 
     return (
-        <li className='w-full mb-2'>
+        <li className={`w-full mb-2 py-2 px-1 ${Styles.MenuItem}`}>
             <button
-                className='w-full flex items-center justify-start gap-2 px-1'
+                className='w-full flex items-center justify-start gap-4 px-1'
                 onClick={handleClickApp}    
             >
-                { appComponents.icon }
+                <div className='w-6 h-6'>
+                    { appComponents.icon }
+                </div>
                 { windowItem.title }
             </button>
         </li>

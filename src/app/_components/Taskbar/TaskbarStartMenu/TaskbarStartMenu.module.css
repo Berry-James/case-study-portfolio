@@ -1,16 +1,17 @@
 .StartMenuOpen {
-    animation: StartMenuIntro 0.2s linear forwards;
+    animation: StartMenuIntro 0.1s linear forwards;
 }
 
 .StartMenu {
     height: 500px;
-    width: 300px;
+    width: 270px;
     background-color: var(--grey);
     position: absolute;
     bottom: -540px;
     left: 0;
     z-index: -1;
     box-shadow: 2px 2px #000, inset 2px 2px #FFF;
+    padding: 2px;
     
     display: grid;
     grid-template-columns: 24px 1fr;

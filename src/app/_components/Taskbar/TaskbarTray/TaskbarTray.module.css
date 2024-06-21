@@ -1,7 +1,10 @@
 .TaskbarTray {
     display: flex;
     padding: 0 6px;
-    background-color: color-mix(in srgb, var(--grey), black 20%);
+    background-color: color-mix(in srgb, var(--grey), black 15%);
     align-items: center;
     gap: 8px;
+    box-shadow: 1px 1px inset var(--grey);
+    border-bottom: 1px solid #FFF;
+    border-right: 1px solid #FFF;
 }

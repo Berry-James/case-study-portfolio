@@ -6,20 +6,11 @@
     display: flex;
     justify-content: center;
     align-items: center;
+    gap: 4px;
     box-shadow: 1px 1px rgba(0,0,0,0.5), inset 2px 2px #FFF
 }
 
 .TaskbarItemActive {
     box-shadow: 1px 1px #FFF, inset 1px 1px #000;
     background-color: color-mix(in srgb, rgb(var(--highlight)), white 50%);
-}
-
-.TaskbarItemAnimating {
-
-}
-
-@keyframes TaskbarItemAnimation {
-    from {
-        
-    }
 }

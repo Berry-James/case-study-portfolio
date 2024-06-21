@@ -52,7 +52,7 @@ export const DesktopIcon = ({ id, title, icon, windowId }: IDesktopIconProps) =>
 
     return (
         <button 
-            className={`w-16 p-2 flex flex-col items-center justify-start cursor-default bg-inherit ${isSelected ? 'border-1 border-white' : 'border-none'}`}
+            className={`w-16 p-2 flex flex-col items-center justify-start cursor-default bg-inherit border ${isSelected ? 'border-white' : 'border-transparent'}`}
             onDoubleClick={handleDoubleClickDesktopIcon}
             onMouseDown={handleSingleClickDesktopIcon}
         >

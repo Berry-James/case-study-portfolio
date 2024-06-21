@@ -1,17 +1,20 @@
 import { PortfolioWindow } from "@/app/_components/Windows/PortfolioWindow/PortfolioWindow"
-import { IWindow, IWindowComponentProps, IWindowTemplate, windowIdEnum, windowStatusEnum } from "./windows.types"
+import { IWindowComponentProps, IWindowTemplate, windowIdEnum, windowStatusEnum } from "./windows.types"
 import { ThemeWindow } from "@/app/_components/Windows/ThemeWindow/ThemeWindow"
 import { NotepadWindow } from "@/app/_components/Windows/NotepadWindow/NotepadWindow"
 import Image from 'next/image';
-
-// ICONS
-import ThemeIcon from './assets/theme.svg';
-import NotepadIcon from './assets/notepad.svg';
-import PortfolioIcon from './assets/portfolio.svg';
 import { ReactNode } from "react";
 import { DocumentWindow } from "@/app/_components/Windows/DocumentWindow/DocumentWindow";
 import { IDocumentWindowProps } from "@/app/_components/Windows/DocumentWindow/DocumentWindow.types";
 import { MusicPlayerWindow } from "@/app/_components/Windows/MusicPlayerWindow/MusicPlayerWindow";
+
+// ICONS
+import NotepadIcon from '../../../../_static/icons/png/notepad-4.png';
+import PortfolioIcon from '../../../../_static/icons/png/desktop_w95-0.png';
+import MediaPlayerIcon from '../../../../_static/icons/png/media_player-0.png';
+import DocumentViewerIcon from '../../../../_static/icons/png/document-0.png';
+import ThemeIcon from '../../../../_static/icons/png/themes-4.png';
+
 
 /**
  * Static dictionary of ALL windows/applications in the system.
@@ -122,7 +125,7 @@ export const WINDOWS_COMPONENT_MAP: Record<windowIdEnum, (props?: any) => { comp
         component: <DocumentWindow {...props} />,
         icon: <Image 
         alt=''
-        src={NotepadIcon}  
+        src={DocumentViewerIcon}  
         width={0}
         height={0}
         sizes='60vw'
@@ -133,7 +136,7 @@ export const WINDOWS_COMPONENT_MAP: Record<windowIdEnum, (props?: any) => { comp
         component: <MusicPlayerWindow {...props} />,
         icon: <Image 
         alt=''
-        src={NotepadIcon}  
+        src={MediaPlayerIcon}  
         width={0}
         height={0}
         sizes='60vw'
