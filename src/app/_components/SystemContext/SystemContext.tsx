@@ -8,6 +8,7 @@ import { WINDOWS_DICT } from './_static/windows/windows.static';
 import { uuid } from 'uuidv4';
 import { SYSTEM_HIGHLIGHT_COLOURS } from './_static/theme/theme.static';
 import { TASKBAR_HEIGHT } from '../Taskbar/Taskbar';
+import { formatVolume } from '@/utils/audioUtils';
 
 
 export const SystemContext = createContext<ISystemContext>({
@@ -16,6 +17,8 @@ export const SystemContext = createContext<ISystemContext>({
     activeWindowInstanceId: null,                
     highlightColour: SYSTEM_HIGHLIGHT_COLOURS[0],
     volume: .8,
+    isMuted: false,
+    handleSetIsMuted: (newIsMuted: boolean) => undefined,
     handleSetVolume: (newVolume: number) => undefined,
     handleSetHighlightColour: (newHighlightColour: string) => undefined,
     handleSetWindowStatus: (instanceId: string, newStatus: windowStatusEnum) => undefined,
@@ -33,7 +36,10 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
     const [activeWallpaperId, setActiveWallpaperId] = useState<wallpaperIdEnum>(wallpaperIdEnum.clouds);
     const [activeWindowInstanceId, setActiveWindowInstanceId] = useState<string | null>(null);
     const [highlightColour, setHighlightColour] = useState<string>(SYSTEM_HIGHLIGHT_COLOURS[0]);
+
+    // Audio
     const [volume, setVolume] = useState(.8);
+    const [isMuted, setIsMuted] = useState(false);
 
     // HOOKS
     const legacySave = useSave({windows, activeWallpaperId, activeWindowInstanceId, highlightColour});
@@ -87,7 +93,14 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
 
     }, [highlightColour]);
 
-    const handleSetVolume = (newVolume: number) => setVolume(newVolume);
+    const handleSetVolume = (newVolume: number | string) => {
+        const parsedVolume = formatVolume(newVolume);
+        if(parsedVolume) {
+            setVolume(parsedVolume) 
+        }
+    }
+
+    const handleSetIsMuted = (newIsMuted: boolean) => setIsMuted(newIsMuted);
 
     const handleSetHighlightColour = useCallback((newHighlightColour: string) => setHighlightColour(newHighlightColour), []);
 
@@ -202,7 +215,6 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
     const handleSetWindowPosition = (instanceId: string, newPos: Partial<WindowPosition>) => {
 
         setWindows((prevState) => {
-
             const ret = {
                 ...prevState,
                 [instanceId]: {
@@ -213,7 +225,6 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
                     }
                 }
             }
-
             return ret;
         });
 
@@ -231,6 +242,8 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
                 activeWindowInstanceId,
                 highlightColour,
                 volume,
+                isMuted,
+                handleSetIsMuted,
                 handleSetVolume,
                 handleSetHighlightColour,
                 handleSetWindowStatus,

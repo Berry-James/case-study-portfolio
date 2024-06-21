@@ -28,8 +28,8 @@ export const TaskbarClock = () => {
     }, []);
 
     return (
-        <span>
-            {date.getHours()}:{date.getMinutes()}:{date.getSeconds()}
+        <span className='w-12 text-sm'>
+            {`00${date.getHours()}`.slice(-2)}:{`00${date.getMinutes()}`.slice(-2)}:{`00${date.getSeconds()}`.slice(-2)}
         </span>
     )
 

@@ -19,7 +19,7 @@ export const TaskbarVolume = () => {
     const [isOpen, setIsOpen] = useState(false);
 
     // CONTEXT
-    const { volume, handleSetVolume } = useContext(SystemContext);
+    const { volume, isMuted, handleSetIsMuted, handleSetVolume } = useContext(SystemContext);
 
     // COMPUTED
     /**
@@ -65,7 +65,7 @@ export const TaskbarVolume = () => {
      * 
      * @returns 
      */
-    const handleToggleMute = () => handleSetVolume(volume === 0 ? .2 : 0);
+    const handleToggleMute = () => handleSetIsMuted(!isMuted);
 
     return (
         <div className='relative flex'>
@@ -110,7 +110,7 @@ export const TaskbarVolume = () => {
                     <input 
                         id='mute-checkbox' 
                         type='checkbox' 
-                        checked={volume === 0}
+                        checked={isMuted}
                         onChange={handleToggleMute}
                     />
                     <label htmlFor='mute-checkbox'>Mute</label>

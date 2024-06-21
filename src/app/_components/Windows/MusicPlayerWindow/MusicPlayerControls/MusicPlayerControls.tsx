@@ -22,7 +22,7 @@ export const MusicPlayerControls = () => {
 
     // CONTEXT
     const { playingTrackId, handleSetPlayingTrackId } = useContext(MusicPlayerWindowContext);
-    const { volume } = useContext(SystemContext);
+    const { volume, isMuted } = useContext(SystemContext);
 
     // REFS
     /**
@@ -55,10 +55,20 @@ export const MusicPlayerControls = () => {
      * Update the song volume whenever volume global state changes
      */
     useEffect(() => {
-        if(audioRef.current && volume <= 1) {
-            audioRef.current.volume = volume;
+      
+        if(audioRef.current) {
+
+            // If volume muted from system tray
+            if(isMuted) {
+                audioRef.current.volume = 0;
+            }
+
+            // If volume above 0 and below 1
+            else if(volume <= 1 && volume >= 0) {
+                audioRef.current.volume = volume;
+            }
         }
-    }, [volume]);
+    }, [volume, isMuted]);
 
     /**
      * Triggers a pause on the audio

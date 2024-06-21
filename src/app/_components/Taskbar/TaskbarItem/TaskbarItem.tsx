@@ -26,6 +26,7 @@ export const TaskbarItem = ({ title, icon, status, instanceId }: ITaskbarItemPro
 
     // REFS
     const animationDivRef = useRef<HTMLDivElement | null>(null);
+    const taskbarButtonRef = useRef<HTMLButtonElement | null>(null);
 
     // COMPUTED
     const isActiveTaskarItem = useMemo(() => activeWindowInstanceId === instanceId, [activeWindowInstanceId, instanceId])
@@ -42,15 +43,18 @@ export const TaskbarItem = ({ title, icon, status, instanceId }: ITaskbarItemPro
             case windowStatusEnum.open: {
                 if(isActiveTaskarItem) {
                     newStatus = windowStatusEnum.minimised;
+                    handleSetActiveWindowInstanceId(null);
                 } else {
-                    await animateWindowClose();
+                    // await animateWindowClose();
                     handleSetActiveWindowInstanceId(instanceId);
                 }
+                animateWindow(newStatus);
                 break;
             }
             case windowStatusEnum.closed:
             case windowStatusEnum.minimised: {
                 newStatus = windowStatusEnum.open;
+                await animateWindow(newStatus);
                 handleSetActiveWindowInstanceId(instanceId);
                 break;
             }
@@ -67,40 +71,62 @@ export const TaskbarItem = ({ title, icon, status, instanceId }: ITaskbarItemPro
      * 
      * @returns void
      */
-    const animateWindowClose = async (): Promise<void> => {
+    const animateWindow = async (newStatus: windowStatusEnum): Promise<void> => {
 
-        return new Promise((resolve) => {
-
-
+        return new Promise((resolve, reject) => {
 
             // Find corresponding window for taskbar item
             const correspondingWindow = windows[instanceId];
 
-            if(!animationDivRef?.current || !correspondingWindow) {
-                resolve();
+            if(
+                !animationDivRef?.current ||
+                !taskbarButtonRef?.current ||
+                !correspondingWindow
+            ) {
+                reject();
                 return;
             }
 
-            animationDivRef.current.style.transition = '.5s';
+            animationDivRef.current.style.display = 'block';
             animationDivRef.current.style.position = 'fixed';
-            // animationDivRef.current.style.left = '0';
-            // animationDivRef.current.style.top = '0';
+            animationDivRef.current.style.transition = '.5s';
             animationDivRef.current.style.border = '2px solid'
+
+            animationDivRef.current.style.top = `${correspondingWindow.position.y}px`;
+            animationDivRef.current.style.left = `${correspondingWindow.position.x}px`;
             animationDivRef.current.style.width = `${correspondingWindow.position.w}px`;
             animationDivRef.current.style.height = `${correspondingWindow.position.h}px`;
-            animationDivRef.current.style.transform = `translate(${correspondingWindow.position.x}px, ${correspondingWindow.position.y}px)`;
-        
-            setTimeout(() => {
-                if(animationDivRef?.current) {
-                    animationDivRef.current.style.display = 'none';
-                    resolve();
+
+            const animation = animationDivRef.current.animate(
+                [
+                    { 
+                        top: `${correspondingWindow.position.y}px`,
+                        left: `${correspondingWindow.position.x}px`,
+                        width: `${correspondingWindow.position.w}px`,
+                        height: `${correspondingWindow.position.h}px`
+                    },
+                    { 
+                        top: `${taskbarButtonRef.current.getBoundingClientRect().top}px`,
+                        left: `${taskbarButtonRef.current.getBoundingClientRect().left}px`,
+                        width: `${taskbarButtonRef.current.offsetWidth}px`,
+                        height: `${taskbarButtonRef.current.offsetHeight}px`
+                    }
+                ], 
+                {
+                    duration: 200,
+                    direction: newStatus === windowStatusEnum.open ? 'reverse' : 'normal'
                 }
-              
-            }, 600);
+                
+            )
+            
+            animation.onfinish = () => {
+                if(animationDivRef.current) {
+                    animationDivRef.current.style.display = 'none';
+                }
+                resolve();
+            }
 
-            // return;
-
-        })
+        });
 
     }
 
@@ -111,6 +137,7 @@ export const TaskbarItem = ({ title, icon, status, instanceId }: ITaskbarItemPro
             <button
                 onClick={handleClickTaskbarItem}
                 className={`${Styles.TaskbarItem} ${isActiveTaskarItem ? Styles.TaskbarItemActive : undefined}`}
+                ref={taskbarButtonRef}
             >
                 <div className={'w-6 h-full'}>
                     {icon}

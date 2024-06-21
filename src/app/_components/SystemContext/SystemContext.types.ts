@@ -7,6 +7,8 @@ export interface ISystemContext {
     activeWindowInstanceId: string | null;
     highlightColour: string;
     volume: number;
+    isMuted: boolean;
+    handleSetIsMuted: (newIsMuted: boolean) => void;
     handleSetVolume: (newVolume: number) => void;
     handleSetHighlightColour: (newHighlightColour: string) => void;
     handleSetWindowStatus: (instanceId: string, newStatus: windowStatusEnum) => void;
