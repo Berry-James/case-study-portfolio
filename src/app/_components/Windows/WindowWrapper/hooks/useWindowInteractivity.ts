@@ -1,6 +1,6 @@
 'use client';
 import { WindowPosition } from "@/app/_components/SystemContext/_static/windows/windows.types";
-import { useCallback, useEffect, useRef, useState } from "react";
+import { CSSProperties, useCallback, useEffect, useRef, useState } from "react";
 import { UseWindowInteractivity } from "./useWindowInteractivity.types";
 import debounce from "debounce";
 import { TASKBAR_HEIGHT } from "@/app/_components/Taskbar/Taskbar";
@@ -90,11 +90,14 @@ export const useWindowInteractivity: UseWindowInteractivity = ({
     const moveButtonRef = useRef<Element | null>(null);
 
     /**
-     * 
+     * Handle subscriptions
      */
     const unsubscribe = useRef<Function | null>(null);
-
     const movementUnsub = useRef<Function | null>(null);
+
+    // useEffect(() => {
+
+    // }, []);
 
     // CALLBACKS
 
@@ -124,6 +127,24 @@ export const useWindowInteractivity: UseWindowInteractivity = ({
             elem.removeEventListener("mousedown", handleMouseDown);
         };
 
+    }, []);
+
+    const legacyWindowRef = useCallback((elem: HTMLDivElement | null) => {
+
+        windowRef.current = elem;
+
+            // Update window element in DOM
+            if(windowRef.current) {
+
+                // Set new x/y positions
+                windowRef.current.style.transform = `translate(${position.current.x}px, ${position.current.y}px)`;
+
+                // Set new w/h positions
+                windowRef.current.style.width = `${position.current.w}px`
+                windowRef.current.style.height = `${position.current.h}px`
+
+            }
+        
     }, []);
 
     
@@ -156,7 +177,7 @@ export const useWindowInteractivity: UseWindowInteractivity = ({
     }, []);
 
     /**
-     * Handle window resize event
+     * Handle browser resize event
      */
 
     useEffect(() => {
@@ -333,10 +354,16 @@ export const useWindowInteractivity: UseWindowInteractivity = ({
       };
     
     }, [isMoving, onDrag]);
-  
+
+    // const styles: CSSProperties = {
+    //     width: `${position.current.w}px`
+    //     height: windowDefaults?.h !== undefined ? `${windowDefaults.h}px` : '300px',
+    //     zIndex: isActive ? 999 : windowDefaults?.z || 1,
+    //     transform: windowDefaults?.y !== undefined && windowDefaults?.x !== undefined ? `translate(${windowDefaults.x}px, ${windowDefaults.y}px)` : undefined
+    // }
     
     return {
-        windowRef, 
+        windowRef: legacyWindowRef, 
         moveButtonRef: legacyMoveButtonRef, 
         resizeButtonRef: legacyResizeButtonRef, 
         isMoving, 

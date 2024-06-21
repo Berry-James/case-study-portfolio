@@ -8,7 +8,7 @@ export type UseWindowInteractivity = (args: {
     onResizeEnd?: ({ w, h }: { w: number, h: number }) => void,
     initialWindowPosition?: Partial<WindowPosition>
 }) => ({
-    windowRef: MutableRefObject<HTMLDivElement | null>, 
+    windowRef: (elem: HTMLDivElement | null) => void, 
     moveButtonRef: (elem: HTMLElement | null) => void, 
     resizeButtonRef: (elem: HTMLElement | null) => void, 
     isMoving: boolean, 

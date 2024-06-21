@@ -108,7 +108,7 @@ export const WindowWrapper = ({
             // className={`${Styles.WindowWrapper} animate-flip-up`}
             className={`${Styles.WindowWrapper} ${isActive ? Styles.WindowWrapperActive : undefined}`}
             style={{
-                ...computedWindowDefaulStyles,
+                // ...computedWindowDefaulStyles,
                 zIndex: isActive ? 999 : 1,
                 borderColor: isActive ? undefined : 'lightsteelblue'   // zIndex: isActive ? 999 : 1,
                 // borderColor: isActive ? undefined : 'lightgrey'
@@ -155,7 +155,6 @@ export const WindowWrapper = ({
                 className={Styles.WindowContent}
             >
                 { children }
-
             </div>
 
             {/* RESIZE BUTTON */}

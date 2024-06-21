@@ -1,5 +1,5 @@
 'use client';
-import React, { useContext, useMemo, useRef, useState } from 'react';
+import React, { useContext, useEffect, useMemo, useRef, useState } from 'react';
 import Styles from './TaskbarItem.module.css';
 import { ITaskbarItemProps } from './TaskbarItem.types';
 import { SystemContext } from '../../SystemContext/SystemContext';
@@ -18,13 +18,11 @@ import { windowStatusEnum } from '../../SystemContext/_static/windows/windows.ty
  */
 export const TaskbarItem = ({ title, icon, status, instanceId }: ITaskbarItemProps) => {
 
-    // STATE
-    const [isAnimating, setIsAnimating] = useState(false);
-
     // CONTEXT
     const { handleSetWindowStatus, handleSetActiveWindowInstanceId, windows, activeWindowInstanceId } = useContext(SystemContext);
 
     // REFS
+    const previousStatus = useRef<windowStatusEnum | null>(null);
     const animationDivRef = useRef<HTMLDivElement | null>(null);
     const taskbarButtonRef = useRef<HTMLButtonElement | null>(null);
 
@@ -130,6 +128,22 @@ export const TaskbarItem = ({ title, icon, status, instanceId }: ITaskbarItemPro
 
     }
 
+    /**
+     * Animate window open/close whenever status updates
+     */
+    useEffect(() => {
+        
+        if(
+            previousStatus.current !== null && 
+            previousStatus.current !== windowStatusEnum.minimised &&
+            status === windowStatusEnum.minimised
+        ) {
+            animateWindow(status);
+        }
+
+        previousStatus.current = status;
+
+    }, [status]);
 
     return (
         <>
@@ -145,7 +159,6 @@ export const TaskbarItem = ({ title, icon, status, instanceId }: ITaskbarItemPro
                 <span>{title}</span>
             </button>
         </>
-       
        
     )
 
