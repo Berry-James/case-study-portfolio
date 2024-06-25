@@ -10,8 +10,7 @@ import { CSSProperties } from "react";
  * @member clouds
  */
 export enum wallpaperIdEnum {
-    default,
-    dark,
+    dots,
     bliss,
     kitten,
     clouds,

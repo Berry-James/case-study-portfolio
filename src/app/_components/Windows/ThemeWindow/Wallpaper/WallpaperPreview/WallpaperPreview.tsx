@@ -1,6 +1,10 @@
 import React, { useContext } from 'react';
 import { ThemeWindowContext } from '../../context/ThemeWindowContext';
 import { WALLPAPER_DICT } from '@/app/_components/SystemContext/_static/theme/theme.static';
+import Image from 'next/image';
+
+// IMAGES
+import PcScreenImage from '../../../../../_static/imgs/theme-window-screen.png';
 
 /**
  * Preview of a chosen wallpaper
@@ -20,7 +24,8 @@ export const WallpaperPreview = () => {
                 display: 'flex',
                 justifyContent: 'center',
                 alignItems: 'center',
-                flexDirection: 'column'
+                flexDirection: 'column',
+                position: 'relative'
             }}
         >
 
@@ -28,14 +33,30 @@ export const WallpaperPreview = () => {
             <span>{ WALLPAPER_DICT[selectedWallpaperId].name }</span>
             
              {/* PREVIEW */}
-             <div
-                style={{
-                    width: 140,
-                    height: 100,
-                    ...WALLPAPER_DICT[selectedWallpaperId].style
-                }}
-            >
-                
+             <div className='relative'>
+                <Image 
+                    src={PcScreenImage} height={120} width={160}
+                    loading='lazy'
+                    alt=''
+                    style={{
+                        position: 'relative',
+                        zIndex: 2
+                    }}
+                />
+                <div
+                    style={{
+                        ...WALLPAPER_DICT[selectedWallpaperId].style,
+                        position: 'absolute',
+                        width: 128,
+                        height: 95,
+                        top: 16,
+                        left: 16,
+                        zIndex: 1,
+                        // borderRadius: '2px'
+                    }}
+                >
+             </div>
+           
             </div>
 
         </div>

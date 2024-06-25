@@ -56,7 +56,9 @@ export const DesktopIcon = ({ id, title, icon, windowId }: IDesktopIconProps) =>
             onDoubleClick={handleDoubleClickDesktopIcon}
             onMouseDown={handleSingleClickDesktopIcon}
         >
+            <div className='w-8 h-8'>
             { icon } 
+            </div>
             <span 
                 className='text-black'
                 style={{

@@ -66,9 +66,9 @@ const TaskbarStartMenuApp = ({ windowItem }: { windowItem: IWindowTemplate }) =>
     }, [windowItem]);
 
     return (
-        <li className={`w-full mb-2 py-2 px-1 ${Styles.MenuItem}`}>
+        <li className={`w-full ${Styles.MenuItem}`}>
             <button
-                className='w-full flex items-center justify-start gap-4 px-1'
+                className='w-full flex items-center justify-start gap-4 px-1 py-2 mb-2'
                 onClick={handleClickApp}    
             >
                 <div className='w-6 h-6'>

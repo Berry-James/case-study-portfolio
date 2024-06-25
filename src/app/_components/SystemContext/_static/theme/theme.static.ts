@@ -34,21 +34,11 @@ export const WALLPAPER_DICT: Record<wallpaperIdEnum, IWallpaper> = {
             backgroundImage: 'url("/assets/images/backgrounds/clouds.webp")'
         }
     },
-    [wallpaperIdEnum.default]: {
-        id: wallpaperIdEnum.default,
+    [wallpaperIdEnum.dots]: {
+        id: wallpaperIdEnum.dots,
         name: 'Default',
         style: {
             background: '#fffbf7',
-            backgroundImage: 'radial-gradient(rgb(175, 175, 175) 1px, transparent 0)',
-            backgroundSize: '40px 40px',
-            backgroundPosition: '-19px -19px'
-        }
-    },
-    [wallpaperIdEnum.dark]: {
-        id: wallpaperIdEnum.dark,
-        name: 'Dark',
-        style: {
-            background: 'darkgrey',
             backgroundImage: 'radial-gradient(rgb(175, 175, 175) 1px, transparent 0)',
             backgroundSize: '40px 40px',
             backgroundPosition: '-19px -19px'

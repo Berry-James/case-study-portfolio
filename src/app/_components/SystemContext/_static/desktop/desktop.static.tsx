@@ -24,4 +24,16 @@ export const DESKTOP_ICONS: IDesktopIcon[] = [
         title: WINDOWS_DICT[windowIdEnum.notepad].title,
         icon: WINDOWS_COMPONENT_MAP[windowIdEnum.notepad]().icon
     },
+    {
+        id: '4',
+        windowId: windowIdEnum.paint,
+        title: WINDOWS_DICT[windowIdEnum.paint].title,
+        icon: WINDOWS_COMPONENT_MAP[windowIdEnum.paint]().icon
+    },
+    {
+        id: '5',
+        windowId: windowIdEnum.musicPlayer,
+        title: WINDOWS_DICT[windowIdEnum.musicPlayer].title,
+        icon: WINDOWS_COMPONENT_MAP[windowIdEnum.musicPlayer]().icon
+    }
 ]

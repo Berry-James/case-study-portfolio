@@ -90,6 +90,7 @@ export enum windowIdEnum {
     notepad,
     document,
     musicPlayer,
+    paint
 }
 
 export type WindowDict = Partial<Record<windowIdEnum, IWindow>>;

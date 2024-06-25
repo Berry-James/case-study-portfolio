@@ -27,7 +27,7 @@ export const TaskbarStartMenu = () => {
 const TaskbarStartMenuContent = () => {
 
     // CONTEXT
-    const { isOpen, handleSetIsOpen } = useContext(TaskbarStartMenuContext);
+    const { isOpen, startMenuRef, startButtonRef, handleSetIsOpen } = useContext(TaskbarStartMenuContext);
 
     // HANDLERS
     /**
@@ -43,6 +43,7 @@ const TaskbarStartMenuContent = () => {
             <button 
                 className={'text-button w-12 h-full flex justify-center items-center'}
                 onClick={handleClickStartButton}
+                ref={startButtonRef}
             >
                 Begin
             </button>
@@ -50,6 +51,7 @@ const TaskbarStartMenuContent = () => {
             {/* START MENU */}
             <div
                 className={`${Styles.StartMenu} ${isOpen ? Styles.StartMenuOpen : undefined}`}
+                ref={startMenuRef}
             >
 
                 {/* GRADIENT SIDEBAR */}

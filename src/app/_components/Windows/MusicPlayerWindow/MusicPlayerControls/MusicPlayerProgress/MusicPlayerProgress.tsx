@@ -20,6 +20,13 @@ export const MusicPlayerProgress = ({ audioElement }: IMusicPlayerProgressProps)
      */
     const [trackProgress, setTrackProgress] = useState(0);
 
+    /**
+     * Position that the range is set to, when scrubbing time
+     */
+    const [scrubPosition, setScrubPosition] = useState<number | null>(null);
+
+    const [isScrubbing, setIsScrubbing] = useState(false);
+
     // SIDE EFFECTS
     /**
      * Adds listener to audioElement to extract duration
@@ -47,20 +54,22 @@ export const MusicPlayerProgress = ({ audioElement }: IMusicPlayerProgressProps)
             ) {
                 interval = setInterval(() => {
 
-                    console.log('PAUSED', audioElement?.paused)
-
                     if(audioElement?.paused && interval) {
                         clearInterval(interval);
                         return
                     }
         
                     if(
+                        // Audio element has a source
                         audioElement?.src &&
+                        // Audio element has a currentTime
                         audioElement?.currentTime !== undefined && 
-                        trackDuration !== null
+                        // Track duration is not null (i.e. loadedmetadata event has occurred)
+                        trackDuration !== null &&
+                        // User is not scrubbing track position
+                        !isScrubbing
                     ) {
-                        console.log('setTrackProgress');
-                        setTrackProgress((audioElement.currentTime / trackDuration) * 100);   
+                        setTrackProgress(audioElement.currentTime);   
                     }
         
                 }, 1000);
@@ -76,7 +85,7 @@ export const MusicPlayerProgress = ({ audioElement }: IMusicPlayerProgressProps)
 
         }
 
-    }, [audioElement, trackDuration]);
+    }, [audioElement, trackDuration, isScrubbing]);
 
     /**
      * WIP Sets the current playback position in the track
@@ -91,31 +100,28 @@ export const MusicPlayerProgress = ({ audioElement }: IMusicPlayerProgressProps)
             return null;
         }
 
-        console.log('handleSetTrackTime');
-        setTrackProgress(() => Number(e.target.value) * (trackDuration / 100))
+        setIsScrubbing(true);
+
+        console.log('handleSetTrackTime', e.target.value);
+        setTrackProgress(() => Number(e.target.value) * (trackDuration / 100));
+
+        if(audioElement && audioElement.currentTime !== undefined) {
+            // Set position of audio
+            audioElement.currentTime = Number(e.target.value)
+        }
 
     }
 
-    useEffect(() => {
-        console.log('trackProgress', trackProgress);
-    }, [trackProgress]);
-
     return (
-        <div
-            className='grid grid-cols-3 w-full'
-        >
-            <input
-                className='w-full' 
-                type='range' 
-                value={trackProgress}
-                onChange={handleSetTrackTime}
-                min={0}
-                max={100}
-                step={.1}
-            />
-        </div>
-
-
+        <input
+            className='w-full' 
+            type='range' 
+            value={trackProgress}
+            onChange={handleSetTrackTime}
+            min={0}
+            max={Math.round(trackDuration)}
+            step={.1}
+        />
     )
 
 }

@@ -1,5 +1,5 @@
 'use client';
-import React, { CSSProperties, useCallback, useContext, useMemo } from 'react';
+import React, { useCallback, useContext, useMemo } from 'react';
 import Styles from './WindowWrapper.module.css';
 import { IWindowWrapperProps } from './WindowWrapper.types';
 import { BsTextareaResize } from 'react-icons/bs';
@@ -8,7 +8,8 @@ import { SystemContext } from '../../SystemContext/SystemContext';
 import { WindowPosition, windowStatusEnum } from '../../SystemContext/_static/windows/windows.types';
 
 /**
- * Component which wraps ALL custom applications/windows, and applies resizing, positioning and other logic
+ * Backbone of ALL system windows.
+ * Wraps content of window, and applies resizing, positioning, closing/minimising and other logic
  * 
  * @param props.id                          ID of the window being displayed in WINDOW_DICT
  * @param props.children                    Child components (the window itself)
@@ -83,18 +84,16 @@ export const WindowWrapper = ({
      * Sets window status to 'minimised'
      * @returns 
      */
-    const handleClickMinimiseButton = () => handleSetWindowStatus(instanceId, windowStatusEnum.minimised);
+    const handleClickMinimiseButton = () => {
+        handleSetWindowStatus(instanceId, windowStatusEnum.minimised);
+        handleSetActiveWindowInstanceId(null);
+    }
 
     const handleClickWindow = useCallback(() => {
         if(activeWindowInstanceId !== instanceId) {
             handleSetActiveWindowInstanceId(instanceId);
         }
     }, [instanceId, activeWindowInstanceId]);
-
-    /**
-     * Memoise window default styles (on first load)
-     */
-    const computedWindowDefaulStyles = useMemo(() => getWindowDefaultStyles(defaultWindowPosition, isActive), []);
 
     /**
      * If no window ID or window is not open, return null
@@ -105,13 +104,10 @@ export const WindowWrapper = ({
 
     return (
         <div 
-            // className={`${Styles.WindowWrapper} animate-flip-up`}
             className={`${Styles.WindowWrapper} ${isActive ? Styles.WindowWrapperActive : undefined}`}
             style={{
-                // ...computedWindowDefaulStyles,
                 zIndex: isActive ? 999 : 1,
                 borderColor: isActive ? undefined : 'lightsteelblue'   // zIndex: isActive ? 999 : 1,
-                // borderColor: isActive ? undefined : 'lightgrey'
             }}
             ref={windowRef}
             onMouseDown={isActive ? undefined : handleClickWindow}
@@ -122,6 +118,8 @@ export const WindowWrapper = ({
                 className={`${Styles.WindowToolbar} ${isActive && Styles.WindowToolbarActive} ${isMoving ? 'cursor-grabbing' : 'cursor-grab'}`}
                 ref={moveButtonRef}    
             >
+
+                {/* TITLE AND ICON */}
                 <div className='flex gap-2 items-center h-full'>
                     <div className='w-4 h-4'>
                         { icon }
@@ -129,6 +127,7 @@ export const WindowWrapper = ({
                     <span className='whitespace-nowrap'>{ title }</span>
                 </div>
                
+                {/* WINDOW BUTTONS */}
                 <div className='flex gap-2 items-center h-full'>
 
                     {/* MINIMISE BUTTON */}
@@ -166,24 +165,5 @@ export const WindowWrapper = ({
             </button>
         </div>
     )
-
-}
-
-/**
- * Formats and returns the default values for the window
- * 
- * @param windowDefaults        Default position values
- * @param isActive              Is the window active?
- * 
- * @returns Default positioning values
- */
-function getWindowDefaultStyles(windowDefaults: WindowPosition | undefined, isActive: boolean): CSSProperties {
-
-    return {
-        width: windowDefaults?.w !== undefined ? `${windowDefaults.w}px` : '500px',
-        height: windowDefaults?.h !== undefined ? `${windowDefaults.h}px` : '300px',
-        zIndex: isActive ? 999 : windowDefaults?.z || 1,
-        transform: windowDefaults?.y !== undefined && windowDefaults?.x !== undefined ? `translate(${windowDefaults.x}px, ${windowDefaults.y}px)` : undefined
-    }
 
 }

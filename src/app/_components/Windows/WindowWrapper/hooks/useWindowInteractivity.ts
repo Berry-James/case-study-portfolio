@@ -1,6 +1,6 @@
 'use client';
 import { WindowPosition } from "@/app/_components/SystemContext/_static/windows/windows.types";
-import { CSSProperties, useCallback, useEffect, useRef, useState } from "react";
+import { useCallback, useEffect, useRef, useState } from "react";
 import { UseWindowInteractivity } from "./useWindowInteractivity.types";
 import debounce from "debounce";
 import { TASKBAR_HEIGHT } from "@/app/_components/Taskbar/Taskbar";
@@ -117,7 +117,9 @@ export const useWindowInteractivity: UseWindowInteractivity = ({
         }
 
         const handleMouseDown = (e: Event) => {
-            (e.target as HTMLDivElement).style.userSelect = "none";
+            if(e?.target) {
+                (e.target as HTMLDivElement).style.userSelect = "none";
+            }
             setIsMoving(true);
         };
 
@@ -179,7 +181,6 @@ export const useWindowInteractivity: UseWindowInteractivity = ({
     /**
      * Handle browser resize event
      */
-
     useEffect(() => {
 
         if(typeof window === 'undefined') { return }
@@ -275,7 +276,6 @@ export const useWindowInteractivity: UseWindowInteractivity = ({
                 return;
             }
 
-
             const elem = windowRef.current;
     
             const newDimensions = {
@@ -324,43 +324,47 @@ export const useWindowInteractivity: UseWindowInteractivity = ({
 
             const newPosition = {
                 x: Math.min(Math.max(pos.x + event.movementX), window.innerWidth),
-                y: pos.y + event.movementY
+                y: Math.max(pos.y + event.movementY, 0)
             };
 
             position.current = {
                 ...position.current,
                 ...newPosition
             };
-            onDrag(newPosition)
+            onDrag(newPosition);
             elem.style.transform = `translate(${pos.x}px, ${pos.y}px)`;
-            
+
         });
 
         const handleMouseUp = (e: MouseEvent) => {
-            (e.target as HTMLDivElement).style.userSelect = "auto";
+            if(e?.target) {
+                (e.target as HTMLDivElement).style.userSelect = "auto";
+            }
             setIsMoving(false);
             if(onDragEnd) {
                 onDragEnd(position.current);
             }
         };
-    
-      document.addEventListener("mousemove", handleMouseMove);
-      document.addEventListener("mouseup", handleMouseUp);
 
-      return () => {
-        handleMouseMove.cancel();
-        document.removeEventListener("mousemove", handleMouseMove);
-        document.removeEventListener("mouseup", handleMouseUp);
-      };
+        // const handleMouseLeave = (e: MouseEvent) => {
+        //     setIsMoving(false);
+        //     if(onDragEnd) {
+        //         onDragEnd(position.current)
+        //     }
+        // }
+    
+        document.addEventListener("mousemove", handleMouseMove);
+        document.addEventListener("mouseup", handleMouseUp);
+        // document.addEventListener('mouseleave', handleMouseLeave);
+
+        return () => {
+            handleMouseMove.cancel();
+            document.removeEventListener("mousemove", handleMouseMove);
+            document.removeEventListener("mouseup", handleMouseUp);
+            // document.removeEventListener('mouseleave', handleMouseLeave);
+        };
     
     }, [isMoving, onDrag]);
-
-    // const styles: CSSProperties = {
-    //     width: `${position.current.w}px`
-    //     height: windowDefaults?.h !== undefined ? `${windowDefaults.h}px` : '300px',
-    //     zIndex: isActive ? 999 : windowDefaults?.z || 1,
-    //     transform: windowDefaults?.y !== undefined && windowDefaults?.x !== undefined ? `translate(${windowDefaults.x}px, ${windowDefaults.y}px)` : undefined
-    // }
     
     return {
         windowRef: legacyWindowRef, 

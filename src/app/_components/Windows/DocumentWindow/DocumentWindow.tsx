@@ -3,6 +3,7 @@ import React, { useContext, useMemo } from 'react';
 import { DocumentWindowContext, DocumentWindowContextProvider } from './context/DocumentWindowContext';
 import { DOCUMENTS_DICT } from '../../SystemContext/_static/documents/documents.static';
 import { IDocumentWindowProps } from './DocumentWindow.types';
+import { documentIdEnum } from '../../SystemContext/_static/documents/documents.types';
 
 /**
  * Document window/application.  Currently used to display ANY component inside (but for articles mostly)
@@ -30,7 +31,7 @@ export const DocumentWindow = ({ documentId, instanceId }: IDocumentWindowProps)
 const DocumentWindowContent = () => {
 
     // CONTEXT
-    const { activeDocumentId } = useContext(DocumentWindowContext);
+    const { activeDocumentId, handleSetActiveDocumentId } = useContext(DocumentWindowContext);
 
     // COMPUTED
     /**
@@ -52,14 +53,36 @@ const DocumentWindowContent = () => {
 
     return (
         <div className='p-2 mx-12'>
-            <div 
-                className='bg-white px-8 py-12'
-                style={{
-                    fontFamily: 'var(--font-document)'
-                }}
-            >
-                { activeDocument?.component }
+            <div className='flex flex-col mb-2'>
+                <select
+                    // TODO -> fix this type casting
+                    onChange={(e) => handleSetActiveDocumentId(e.target.value as unknown as documentIdEnum)}
+                    className='px-1'
+                    value={activeDocumentId || -1}
+                >
+                    {
+                        Object.entries(DOCUMENTS_DICT).map(([key, value]) => (
+                            <option 
+                                value={value.id} 
+                                key={value.id}
+                            >
+                                {value.title}
+                            </option>
+                        ))
+                    }
+                </select>
             </div>
+            {
+                activeDocument?.component &&
+                <div 
+                    className='bg-white px-8 py-12'
+                    style={{
+                        fontFamily: 'var(--font-document)'
+                    }}
+                >
+                    { activeDocument?.component }
+                </div>
+            }
         </div>
     )
 

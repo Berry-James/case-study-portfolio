@@ -24,28 +24,6 @@ export const TaskbarVolume = () => {
     // CONTEXT
     const { volume, isMuted, handleSetIsMuted, handleSetVolume } = useContext(SystemContext);
 
-    // COMPUTED
-    /**
-     * Determine the current volume icon based on the current volume value
-     */
-    // const VolumeIcon = useMemo(() => {
-
-
-    //     let src = VolumeIcon;
-        
-    //     if(volume === 0) {
-    //         return <FaVolumeMute />
-    //     }
-
-    //     if(volume < .5) {
-    //         return <FaVolumeLow />
-    //     }
-
-    //     return <FaVolumeHigh />
-        
-
-    // }, [volume]);
-
     // HANDLERS
     /**
      * Toggles open state of volume modal
@@ -67,9 +45,8 @@ export const TaskbarVolume = () => {
     
     /**
      * Toggles the mute
-     * @todo -> this should be a separate boolean, rather than just setting the volume to 0/.2
      * 
-     * @returns 
+     * @returns void
      */
     const handleToggleMute = () => handleSetIsMuted(!isMuted);
 
@@ -90,7 +67,7 @@ export const TaskbarVolume = () => {
 
             {/* VOLUME POPOVER */}
             <div
-                className={`${isOpen ? 'block' : 'hidden'} absolute top-0 left-0 flex flex-col items-center generic-box-shadow`}
+                className={`${isOpen ? 'block' : 'hidden'} absolute top-0 left-0 flex flex-col items-center win-bezel`}
                 style={{
                     backgroundColor: 'var(--grey)',
                     top: `-212px`,

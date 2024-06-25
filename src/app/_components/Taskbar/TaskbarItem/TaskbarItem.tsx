@@ -42,18 +42,17 @@ export const TaskbarItem = ({ title, icon, status, instanceId }: ITaskbarItemPro
                 if(isActiveTaskarItem) {
                     newStatus = windowStatusEnum.minimised;
                     handleSetActiveWindowInstanceId(null);
+                    animateWindow(newStatus);
                 } else {
-                    // await animateWindowClose();
                     handleSetActiveWindowInstanceId(instanceId);
                 }
-                animateWindow(newStatus);
                 break;
             }
             case windowStatusEnum.closed:
             case windowStatusEnum.minimised: {
                 newStatus = windowStatusEnum.open;
-                await animateWindow(newStatus);
                 handleSetActiveWindowInstanceId(instanceId);
+                await animateWindow(newStatus);
                 break;
             }
         }

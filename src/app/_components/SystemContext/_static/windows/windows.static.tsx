@@ -3,10 +3,11 @@ import { IWindowComponentProps, IWindowTemplate, windowIdEnum, windowStatusEnum 
 import { ThemeWindow } from "@/app/_components/Windows/ThemeWindow/ThemeWindow"
 import { NotepadWindow } from "@/app/_components/Windows/NotepadWindow/NotepadWindow"
 import Image from 'next/image';
-import { ReactNode } from "react";
+import { CSSProperties, ReactNode } from "react";
 import { DocumentWindow } from "@/app/_components/Windows/DocumentWindow/DocumentWindow";
 import { IDocumentWindowProps } from "@/app/_components/Windows/DocumentWindow/DocumentWindow.types";
 import { MusicPlayerWindow } from "@/app/_components/Windows/MusicPlayerWindow/MusicPlayerWindow";
+import { PaintWindow } from "@/app/_components/Windows/PaintWindow/PaintWindow";
 
 // ICONS
 import NotepadIcon from '../../../../_static/icons/png/notepad-4.png';
@@ -14,6 +15,7 @@ import PortfolioIcon from '../../../../_static/icons/png/desktop_w95-0.png';
 import MediaPlayerIcon from '../../../../_static/icons/png/media_player-0.png';
 import DocumentViewerIcon from '../../../../_static/icons/png/document-0.png';
 import ThemeIcon from '../../../../_static/icons/png/themes-4.png';
+import PaintIcon from '../../../../_static/icons/png/paint_old-1.png';
 
 
 /**
@@ -80,7 +82,24 @@ export const WINDOWS_DICT: Record<windowIdEnum, IWindowTemplate> = {
             w: 600,
             h: 500
         }
+    },
+    [windowIdEnum.paint]: {
+        id: windowIdEnum.paint,
+        title: 'Paint',
+        solo: false,
+        position: {
+            x: 150,
+            y: 20,
+            z: 0,
+            w: 600,
+            h: 500
+        }
     }
+}
+
+const ICON_STYLES: CSSProperties = {
+    width: '100%',
+    imageRendering: 'pixelated'
 }
 
 /**
@@ -96,7 +115,7 @@ export const WINDOWS_COMPONENT_MAP: Record<windowIdEnum, (props?: any) => { comp
             width={0}
             height={0}
             sizes='60vw'
-            style={{ height: '100%' }}
+            style={ICON_STYLES}
         />
     }),
     [windowIdEnum.theme]: (props: IWindowComponentProps) => ({
@@ -107,7 +126,7 @@ export const WINDOWS_COMPONENT_MAP: Record<windowIdEnum, (props?: any) => { comp
             width={0}
             height={0}
             sizes='60vw'
-            style={{ height: '100%' }}
+            style={ICON_STYLES}
         />
     }),
     [windowIdEnum.notepad]: (props: IWindowComponentProps) => ({
@@ -118,7 +137,7 @@ export const WINDOWS_COMPONENT_MAP: Record<windowIdEnum, (props?: any) => { comp
             width={0}
             height={0}
             sizes='60vw'
-            style={{ height: '100%' }}
+            style={ICON_STYLES}
         />
     }),
     [windowIdEnum.document]: (props: IDocumentWindowProps) => ({
@@ -129,7 +148,7 @@ export const WINDOWS_COMPONENT_MAP: Record<windowIdEnum, (props?: any) => { comp
         width={0}
         height={0}
         sizes='60vw'
-        style={{ height: '100%' }}
+        style={ICON_STYLES}
     />    
     }),
     [windowIdEnum.musicPlayer]: (props: IDocumentWindowProps) => ({
@@ -140,7 +159,18 @@ export const WINDOWS_COMPONENT_MAP: Record<windowIdEnum, (props?: any) => { comp
         width={0}
         height={0}
         sizes='60vw'
-        style={{ height: '100%' }}
+        style={ICON_STYLES}
     />    
+    }),
+    [windowIdEnum.paint]: (props: IDocumentWindowProps) => ({
+        component: <PaintWindow {...props} />,
+        icon: <Image 
+            alt=''
+            src={PaintIcon}  
+            width={0}
+            height={0}
+            sizes='60vw'
+            style={ICON_STYLES}
+        />    
     })
 }

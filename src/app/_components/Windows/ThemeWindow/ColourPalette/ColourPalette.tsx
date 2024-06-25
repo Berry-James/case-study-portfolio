@@ -17,7 +17,7 @@ export const ColourPalette = () => {
             <span>Highlight Colour</span>
 
             {/* COLOUR GRID */}
-            <div className='grid grid-cols-8 w-max gap-1 bg-gray-50'>
+            <div className='grid grid-cols-8 w-max gap-1'>
                 {
                     SYSTEM_HIGHLIGHT_COLOURS.map((colour, colourIndex) => <ColourPaletteItem key={`${colour}-${colourIndex}`} colour={colour} />)
                 }

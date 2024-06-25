@@ -11,7 +11,7 @@ import { SYSTEM_HIGHLIGHT_COLOURS } from '@/app/_components/SystemContext/_stati
  * @returns React Context
  */
 export const ThemeWindowContext = createContext<IThemeWindowContext>({
-    selectedWallpaperId: wallpaperIdEnum.default,
+    selectedWallpaperId: wallpaperIdEnum.bliss,
     selectedHighlightColour: SYSTEM_HIGHLIGHT_COLOURS[0],
     handleSetSelectedHighlightColour: (newSelectedHighlightColour: string) => undefined,
     handleSetSelectedWallpaper: (newSelectedWallpaperId: wallpaperIdEnum) => undefined,

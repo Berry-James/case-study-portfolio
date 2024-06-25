@@ -111,29 +111,27 @@ export const MusicPlayerControls = () => {
     /**
      * Toggles between playing/pausing the current track, depending on isPlaying state
      */
-    const handleClickPlayPause = () => {
-        if(isPlaying) {
-            handlePause();
-            return
-        }
-        handlePlay();
-    }
+    // const handleClickPlayPause = () => {
+    //     if(isPlaying) {
+    //         handlePause();
+    //         return
+    //     }
+    //     handlePlay();
+    // }
 
     return (
         <div className='p-2'>
 
             {/* PROGRESS RANGE INPUT */}
-            <div className='w-full px-4'>
-                <MusicPlayerProgress audioElement={audioRef.current}  />
-            </div>
+            <MusicPlayerProgress audioElement={audioRef.current} />
 
             {/* CONTROL BUTTONS */}
-            <div className='flex justify-center items-center gap-2'>
-                <button className='icon-button' onClick={handleClickPlayPause}>
-                    { 
-                        isPlaying ? 
-                        <FaPause /> : <FaPlay />
-                    }
+            <div className='flex items-center gap-2'>
+                <button className='icon-button' onClick={handlePlay}>
+                    <FaPlay />
+                </button>
+                <button className='icon-button' onClick={handlePause}>
+                    <FaPause /> 
                 </button>
                 <button 
                     className='icon-button'
@@ -148,7 +146,7 @@ export const MusicPlayerControls = () => {
                 ref={audioRef}
                 src={playingTrack?.src}
             />
-         
+        
         </div>
     )
 

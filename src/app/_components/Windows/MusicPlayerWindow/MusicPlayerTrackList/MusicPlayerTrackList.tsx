@@ -27,7 +27,7 @@ export const MusicPlayerTrackList = () => {
     }, [playingTrackId]);
 
     return (
-        <div>
+        <div className='px-2'>
 
             {/* TITLE */}
             <span>Tracks ({MUSIC_PLAYER_WINDOW_TRACK_LIST.length})</span>
@@ -37,7 +37,6 @@ export const MusicPlayerTrackList = () => {
                 className='px-2 bg-white'
             >
                 {MUSIC_PLAYER_WINDOW_TRACK_LIST.map((track, trackIndex) => {
-
                     return (
                         <li key={track.id} className='border-b'>
                             <button onClick={() => handleClickTrack(track.id)}>
@@ -45,7 +44,6 @@ export const MusicPlayerTrackList = () => {
                             </button>
                         </li>
                     )
-
                 })}
             </ol>
         </div>
