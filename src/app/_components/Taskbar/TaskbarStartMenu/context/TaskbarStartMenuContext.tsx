@@ -50,8 +50,6 @@ export const TaskbarStartMenuContextProvider = ({ children }: PropsWithChildren)
         if(newIsOpen && startMenuRef?.current) {
             const handleMouseDown = (e: MouseEvent) => {
 
-                console.log(e.target, startButtonRef.current);
-
                 if(
                     // We have event target
                     e.target &&

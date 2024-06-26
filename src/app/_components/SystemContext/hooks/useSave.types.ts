@@ -24,3 +24,12 @@ export interface ISave {
 export interface IUseSave {
     save: ISave;
 }
+
+/**
+ * @interface
+ * 
+ * @member disableSaving            If true, saving will be disabled.  This won't clear the current save
+ */
+export interface UseSaveOptions {
+    disableSaving?: boolean
+}

@@ -1,8 +1,7 @@
-import React, { useContext, useEffect } from 'react';
+import React, { useContext } from 'react';
 import { WindowWrapper } from './WindowWrapper/WindowWrapper';
 import { WINDOWS_COMPONENT_MAP } from '../SystemContext/_static/windows/windows.static';
 import { SystemContext } from '../SystemContext/SystemContext';
-import { windowIdEnum } from '../SystemContext/_static/windows/windows.types';
 
 /**
  * Contains all window elements

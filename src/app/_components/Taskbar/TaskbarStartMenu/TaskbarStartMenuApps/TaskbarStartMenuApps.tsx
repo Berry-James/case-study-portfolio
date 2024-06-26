@@ -5,6 +5,12 @@ import { WINDOWS_COMPONENT_MAP, WINDOWS_DICT } from '@/app/_components/SystemCon
 import { SystemContext } from '@/app/_components/SystemContext/SystemContext';
 import { TaskbarStartMenuContext } from '../context/TaskbarStartMenuContext';
 import Styles from './TaskbarStartMenuApps.module.css';
+import Image from 'next/image';
+import { useRouter } from 'next/navigation';
+import { PAGE_ROUTES } from '@/network/pageRoutes';
+
+// ICONS
+import LogOutIcon from '../../../../_static/icons/png/key_win-4.png'
 
 /**
  * List of all system applications to be displayed in the @see {TaskbarStartMenu}
@@ -13,20 +19,57 @@ import Styles from './TaskbarStartMenuApps.module.css';
  */
 export const TaskbarStartMenuApps = () => {
 
+    // ROUTER
+    const router = useRouter();
+
     // COMPUTED
     /**
      * Computes a list of all applications from WINDOWS_DICT static value
      */
     const computedApplicationsList = useMemo(() => {
         return Object.values(WINDOWS_DICT).map((windowItem, windowItemIndex) => {
+            if(windowItem.rules.disableStartMenuShortcut) { return null }
             return <TaskbarStartMenuApp key={windowItem?.id} windowItem={windowItem}  />
         });
     }, []);
 
+    const handleLogOut = () => {
+        router.push(PAGE_ROUTES.login);
+    }
+
     return (
-        <ul className='w-full'>
-            {computedApplicationsList}
-        </ul>
+        <div className='flex flex-col justify-between'>
+            {/* APPLICATION MENU */}
+            <ul className='w-full'>
+                {computedApplicationsList}
+            </ul>
+
+            {/* AUTH MENU */}
+            <ul className='w-full'>
+
+                {/* DIVIDER */}
+                <hr className='win-bezel-inverted h-[2px]' style={{ color: 'unset' }}/>
+
+                <li className={`w-full ${Styles.MenuItem}`}>
+                    <button
+                        className='w-full flex items-center justify-start gap-4 px-1 py-2 mb-2'
+                        onClick={handleLogOut}    
+                    >
+                        <div className='w-6 h-6'>
+                            <Image 
+                                src={LogOutIcon}
+                                width={24}
+                                height={24}
+                                alt={''}
+                            />
+                        </div>
+                        Sign Out
+                    </button>
+                </li>
+            </ul>
+            
+        </div>
+      
     )
 
 }

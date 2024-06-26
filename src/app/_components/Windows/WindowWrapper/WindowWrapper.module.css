@@ -5,16 +5,17 @@
     flex-direction: column;
     box-shadow: 2px 2px #000, inset 2px 2px #FFF;
     padding: 2px;
+    border: 1px solid var(--grey);
 }
 
 .WindowWrapperActive {
     z-index: 999;
-    border-color: rgba(var(--highlight), 0.4);
 }
 
 .WindowContent {
     overflow: auto;
     height: 100%;
+    /* position: relative; */
 }
 
 .WindowToolbar {

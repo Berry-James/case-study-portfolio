@@ -95,10 +95,6 @@ export const useWindowInteractivity: UseWindowInteractivity = ({
     const unsubscribe = useRef<Function | null>(null);
     const movementUnsub = useRef<Function | null>(null);
 
-    // useEffect(() => {
-
-    // }, []);
-
     // CALLBACKS
 
     /**

@@ -36,7 +36,7 @@ export const WALLPAPER_DICT: Record<wallpaperIdEnum, IWallpaper> = {
     },
     [wallpaperIdEnum.dots]: {
         id: wallpaperIdEnum.dots,
-        name: 'Default',
+        name: 'Dots',
         style: {
             background: '#fffbf7',
             backgroundImage: 'radial-gradient(rgb(175, 175, 175) 1px, transparent 0)',

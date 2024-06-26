@@ -56,13 +56,10 @@ export const PaintWindowCanvasResize = () => {
         setIsResizing(true);
         (e.target as HTMLElement).style.userSelect = 'none';
 
-        console.log('canvasRef.current', canvasRef.current);
-
         // Snapshot canvas
         if(canvasRef.current) {
             const ctx = canvasRef.current.getContext('2d');
             if(ctx) {
-                console.log('ctx obtained');
                 canvasSnapshot.current = ctx.getImageData(0, 0, canvasRef.current.width, canvasRef.current.height);
             }
         }

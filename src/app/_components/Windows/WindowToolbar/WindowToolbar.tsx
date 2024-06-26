@@ -26,7 +26,6 @@ export const WindowToolbar = ({ items }: IWindowToolbarProps) => {
                 openMenuRef?.current && 
                 !openMenuRef.current.contains(e.target as Element)
             ) {
-                console.log('clearing open item index!')
                 setOpenItemIndex(null);
                 document.removeEventListener('mousedown', handleMouseDown);
             }
@@ -37,11 +36,8 @@ export const WindowToolbar = ({ items }: IWindowToolbarProps) => {
     }, [openItemIndex]);
 
     const handleClickItem = useCallback((e: React.MouseEvent<HTMLButtonElement>, action: WindowToolbarOption['action']) => {
-
         action(e);
-
         setOpenItemIndex(null);
-
     }, []);
 
     const Items = useMemo(() => {
@@ -67,10 +63,10 @@ export const WindowToolbar = ({ items }: IWindowToolbarProps) => {
                     {
                         item.options && item.options.length &&
                         <div 
-                            className={`win-bezel min-w-32 absolute left-2 bg-white py-2 px-6 ${isActive ? 'block' : 'hidden'}`}
+                            className={`win-bezel min-w-32 absolute left-2 bg-[var(--grey)] py-1 px-6 ${isActive ? 'block' : 'hidden'}`}
                             ref={openMenuRef}
                             style={{
-                                bottom: '-2.5rem',
+                                bottom: '-2rem',
                             }}
                         >
                             {
@@ -94,10 +90,9 @@ export const WindowToolbar = ({ items }: IWindowToolbarProps) => {
 
     }, [items, openItemIndex]);
 
-
     return (
         <div
-            className='h-8 w-full flex items-center bg-white'
+            className='h-8 w-full flex items-center bg-[var(--grey)] win-bezel'
         >
             {Items}
         </div>

@@ -3,8 +3,11 @@ import React, { useCallback, useContext, useEffect, useMemo, useRef, useState } 
 import { MusicPlayerWindowContext } from '../context/MusicPlayerWindowContext';
 import { MUSIC_PLAYER_WINDOW_TRACK_LIST } from '../MusicPlayerWindow.static';
 import { MusicPlayerProgress } from './MusicPlayerProgress/MusicPlayerProgress';
-import { FaPause, FaPlay, FaStop } from 'react-icons/fa';
+import { FaForward, FaPause, FaPlay, FaStop } from 'react-icons/fa';
 import { SystemContext } from '@/app/_components/SystemContext/SystemContext';
+import { RiForwardEndMiniFill, RiRewindMiniFill, RiRewindStartFill, RiRewindStartMiniFill } from 'react-icons/ri';
+import { BiFastForward } from 'react-icons/bi';
+import { FaForwardFast } from 'react-icons/fa6';
 
 /**
  * Controls for the MusicPlayer window/application
@@ -126,19 +129,43 @@ export const MusicPlayerControls = () => {
             <MusicPlayerProgress audioElement={audioRef.current} />
 
             {/* CONTROL BUTTONS */}
-            <div className='flex items-center gap-2'>
-                <button className='icon-button' onClick={handlePlay}>
+            <div className='flex items-center gap-3'>
+                <button onClick={handlePlay}>
                     <FaPlay />
                 </button>
-                <button className='icon-button' onClick={handlePause}>
+                <button 
+                    onClick={handlePause} 
+                    disabled={!isPlaying}
+                    className={isPlaying ? 'opacity-100' : 'opacity-50'}
+                >
                     <FaPause /> 
                 </button>
                 <button 
-                    className='icon-button'
                     onClick={handleStop}
+                    disabled={!isPlaying}
+                    className={isPlaying ? 'opacity-100' : 'opacity-50'}
                 >
                     <FaStop />
                 </button>
+
+                <hr className='h-6 w-[2px] win-bezel-inverted' />
+
+                <button disabled={!isPlaying} className={isPlaying ? 'opacity-100' : 'opacity-50'}>
+                    <FaForwardFast className='rotate-180' />
+                </button>
+
+                <button disabled={!isPlaying} className={isPlaying ? 'opacity-100' : 'opacity-50'}>
+                    <FaForward className='rotate-180' />
+                </button>
+
+                <button disabled={!isPlaying} className={isPlaying ? 'opacity-100' : 'opacity-50'}>
+                    <FaForward />
+                </button>
+
+                <button disabled={!isPlaying} className={isPlaying ? 'opacity-100' : 'opacity-50'}>
+                    <FaForwardFast  />
+                </button>
+
             </div>
             
             {/* AUDIO ELEMENT */}

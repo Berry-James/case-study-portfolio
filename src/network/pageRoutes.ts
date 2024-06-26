@@ -6,6 +6,9 @@ export const PAGE_ROUTES = {
     // ROOT
     root: '/',
 
+    // LOGIN
+    login: '/login',
+
     // ARTICLES
     articles: {
         sportsScience: '/articles/sports-science',

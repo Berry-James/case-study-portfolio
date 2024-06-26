@@ -17,4 +17,6 @@ export interface ISystemContext {
     handleSetActiveWindowInstanceId: (instanceId: string | null) => void;
     handleOpenWindow: (id: windowIdEnum, windowOverride?: Partial<IWindowTemplate>) => string;
     handleCloseWindow: (instanceId: string) => void;
+    clearAllWindows: () => Promise<void>;
+    restoreSave: () => void;
 }

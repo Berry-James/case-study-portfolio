@@ -1,14 +1,14 @@
 'use client';
-import React, { ChildContextProvider, PropsWithChildren, createContext, useCallback, useEffect, useState } from 'react';
+import React, { PropsWithChildren, createContext, useCallback, useEffect, useState } from 'react';
 import { ISystemContext } from './SystemContext.types';
 import { wallpaperIdEnum } from './_static/theme/theme.types';
-import { IWindow, IWindowTemplate, WindowDict, WindowPosition, windowIdEnum, windowStatusEnum } from './_static/windows/windows.types';
+import { IWindow, IWindowTemplate, WindowPosition, windowIdEnum, windowStatusEnum } from './_static/windows/windows.types';
 import { useSave } from './hooks/useSave';
 import { WINDOWS_DICT } from './_static/windows/windows.static';
-import { uuid } from 'uuidv4';
+import { v4 as uuid } from 'uuid';
 import { SYSTEM_HIGHLIGHT_COLOURS } from './_static/theme/theme.static';
-import { TASKBAR_HEIGHT } from '../Taskbar/Taskbar';
 import { formatVolume } from '@/utils/audioUtils';
+import { TASKBAR_HEIGHT } from '../Taskbar/Taskbar';
 
 
 export const SystemContext = createContext<ISystemContext>({
@@ -26,12 +26,16 @@ export const SystemContext = createContext<ISystemContext>({
     handleSetActiveWallpaperId: (newActiveWallpaperId: number) => undefined,
     handleSetActiveWindowInstanceId: (instanceId: string | null) => undefined,
     handleOpenWindow: (id: windowIdEnum, windowOverride?: Partial<IWindowTemplate>) => '',
-    handleCloseWindow: (instanceId: string) => undefined
+    handleCloseWindow: (instanceId: string) => undefined,
+    clearAllWindows: () => new Promise((resolve) =>  undefined),
+    restoreSave: () => undefined,
 });
 
 export const SystemContextProvider = ({ children }: PropsWithChildren) => {
 
     // STATE
+    const [init, setInit] = useState(true);
+
     const [windows, setWindows] = useState<Record<string, IWindow>>({});
     const [activeWallpaperId, setActiveWallpaperId] = useState<wallpaperIdEnum>(wallpaperIdEnum.clouds);
     const [activeWindowInstanceId, setActiveWindowInstanceId] = useState<string | null>(null);
@@ -42,26 +46,60 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
     const [isMuted, setIsMuted] = useState(false);
 
     // HOOKS
-    const legacySave = useSave({windows, activeWallpaperId, activeWindowInstanceId, highlightColour});
+    const legacySave = useSave({
+        windows, 
+        activeWallpaperId, 
+        activeWindowInstanceId, 
+        highlightColour
+    });
 
     // TODO -> refactor this into the useSave hook and treat it more like a redux store/reducer type vibe
+    // useEffect(() => {
+
+       
+    // }, [legacySave]);
+
     useEffect(() => {
+        
+        const root = document.documentElement;
+
+        root.style.setProperty('--highlight', highlightColour)
+
+    }, [highlightColour]);
+
+    const restoreSave = () => {
+        console.log('restoreSave()', init)
 
         if(legacySave) {
-            if(legacySave.activeWallpaperId !== undefined) {
+            if(
+                legacySave.activeWallpaperId !== undefined &&
+                legacySave.activeWallpaperId in wallpaperIdEnum
+            ) {
                 setActiveWallpaperId(legacySave.activeWallpaperId);
             }
             if(legacySave.activeWindowInstanceId !== undefined) {
                 setActiveWindowInstanceId(legacySave.activeWindowInstanceId);
             } 
-            if(legacySave.windows) {
-                console.log('save.windows', legacySave.windows);
+            if(legacySave.windows && Object.keys(legacySave.windows).length) {
                 setWindows(legacySave.windows);
+            } else {
+                handleOpenWindow(
+                    windowIdEnum.portfolio, 
+                    { 
+                        position: { 
+                            ...WINDOWS_DICT[windowIdEnum.portfolio].position,
+                            x: (window.innerWidth / 2) - (WINDOWS_DICT[windowIdEnum.portfolio].position.w / 2), 
+                            y: (window.innerHeight / 2) - (WINDOWS_DICT[windowIdEnum.portfolio].position.h / 2) - TASKBAR_HEIGHT
+                        } 
+                    })
             }
             if(legacySave.highlightColour) {
                 setHighlightColour(legacySave.highlightColour)
             }
         } else {
+
+            // TODO -> move this logic to within 'Home.tsx' component, as we only want it to run there
+            
             // No save, set some defaults
 
             // Calc window position
@@ -83,15 +121,7 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
             });
             setActiveWindowInstanceId(instanceId);
         }
-    }, [legacySave]);
-
-    useEffect(() => {
-        
-        const root = document.documentElement;
-
-        root.style.setProperty('--highlight', highlightColour)
-
-    }, [highlightColour]);
+    }
 
     const handleSetVolume = (newVolume: number | string) => {
         const parsedVolume = formatVolume(newVolume);
@@ -106,13 +136,13 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
 
     const handleOpenWindow = (id: windowIdEnum, windowOverride?: Partial<IWindowTemplate>) => {
 
+        console.log('### OVERRIDE', windowOverride);
+
         // If window template is 'solo'
-        if(WINDOWS_DICT[id].solo) {
+        if(WINDOWS_DICT[id].rules?.solo) {
 
             // Find instance ID of window in windows state (if it exists)
             const existingWindow = Object.values(windows).find(existingWindow => existingWindow.id === id);
-
-            console.log('existing Window', existingWindow);
 
             if(existingWindow?.instanceId !== undefined) {
 
@@ -145,7 +175,7 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
                     instanceId,
                     status: windowStatusEnum.open,
                     ...WINDOWS_DICT[id],
-                    ...windowOverride
+                    ...windowOverride,
                 }
             }
         });
@@ -158,8 +188,6 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
     }
 
     const handleCloseWindow = (instanceId: string) => {
-
-        console.log('handleCloseWindow()', instanceId, windows);
 
         // Check if a window with this instance ID exists
         if(windows[instanceId]) {
@@ -234,6 +262,15 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
 
     const handleSetActiveWallpaperId = (newActiveWallpaperId: number) => setActiveWallpaperId(newActiveWallpaperId);
 
+    const clearAllWindows = async (): Promise<void> => {
+        return new Promise((resolve) => {
+            setWindows({});
+            setActiveWindowInstanceId(null);
+            resolve();
+        })
+
+    }
+
     return (
         <SystemContext.Provider
             value={{
@@ -251,7 +288,9 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
                 handleSetActiveWallpaperId,
                 handleSetActiveWindowInstanceId,
                 handleOpenWindow,
-                handleCloseWindow
+                handleCloseWindow,
+                clearAllWindows,
+                restoreSave
             }}
         >
             {children}
@@ -259,4 +298,3 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
     )
 
 }
-

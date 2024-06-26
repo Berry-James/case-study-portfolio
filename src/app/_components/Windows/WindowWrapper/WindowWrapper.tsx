@@ -26,7 +26,8 @@ export const WindowWrapper = ({
     title,
     icon, 
     defaultWindowPosition, 
-    instanceId 
+    instanceId,
+    rules
 }: IWindowWrapperProps) => {
 
     // CONTEXT
@@ -128,23 +129,30 @@ export const WindowWrapper = ({
                 </div>
                
                 {/* WINDOW BUTTONS */}
-                <div className='flex gap-2 items-center h-full'>
+                <div className='flex gap-1 items-center h-full'>
 
                     {/* MINIMISE BUTTON */}
-                    <button 
-                        onClick={handleClickMinimiseButton}
-                        className='!p-0 icon-button h-5 w-5 flex justify-center items-center'
-                    >
-                        _
-                    </button>
+                    {
+                        !rules?.disableMinimise &&
+                        <button 
+                            onClick={handleClickMinimiseButton}
+                            className='!p-0 icon-button h-5 w-5 flex justify-center items-center'
+                        >
+                            _
+                        </button>
+                    }
 
                     {/* CLOSE BUTTON */}
-                    <button 
-                        onClick={handleClickCloseButton}
-                        className='!p-0 icon-button h-5 w-5 flex justify-center items-center'
-                    >
+                    {
+                        !rules?.disableClose &&
+                        <button 
+                            onClick={handleClickCloseButton}
+                            className='!p-0 icon-button h-5 w-5 flex justify-center items-center'
+                        >
                         &times;
                     </button>
+                    }
+                   
                 </div>
               
             </div>
@@ -159,7 +167,7 @@ export const WindowWrapper = ({
             {/* RESIZE BUTTON */}
             <button
                 ref={resizeButtonRef}
-                className={`absolute bottom-0 right-0 cursor-nwse-resize`}
+                className={`absolute bottom-0 right-0 cursor-nwse-resize z-10`}
             >
                 <BsTextareaResize />
             </button>

@@ -1,10 +1,9 @@
 'use client';
 import { useEffect, useMemo, useState } from "react"
-import { ISave, IUseSave } from "./useSave.types";
-import { IWindow, WindowDict, windowIdEnum, windowStatusEnum } from "../_static/windows/windows.types";
-import { wallpaperIdEnum } from "../_static/theme/theme.types";
+import { ISave, UseSaveOptions } from "./useSave.types";
+import { IWindow, windowIdEnum, windowStatusEnum } from "../_static/windows/windows.types";
 import { WINDOWS_DICT } from "../_static/windows/windows.static";
-import { uuid } from "uuidv4";
+import { v4 as uuid } from 'uuid';
 
 /**
  * Statkc local storage key name
@@ -18,7 +17,7 @@ const LOCAL_STORAGE_SAVE_KEY = 'save';
  * 
  * @returns The up to date save
  */
-export const useSave = (args: ISave): ISave | null => {
+export const useSave = (args: ISave, options?: UseSaveOptions): ISave | null => {
 
     // STATE
     /**
@@ -33,10 +32,10 @@ export const useSave = (args: ISave): ISave | null => {
         if(init) {
             return setInit(false);
         }
-        if(args) {
+        if(!options?.disableSaving && args) {
             saveSession(args);
         }
-    }, [args]);
+    }, [args, options?.disableSaving]);
 
     return useMemo(() => getSaveSession(), []);
 

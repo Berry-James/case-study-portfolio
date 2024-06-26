@@ -3,6 +3,7 @@ import { MusicPlayerWindowContextProvider } from './context/MusicPlayerWindowCon
 import { MusicPlayerControls } from './MusicPlayerControls/MusicPlayerControls';
 import { IDocumentWindowProps } from '../DocumentWindow/DocumentWindow.types';
 import { MusicPlayerTrackList } from './MusicPlayerTrackList/MusicPlayerTrackList';
+import { MusicPlayerVisualiser } from './MusicPlayerVisualiser/MusicPlayerVisualiser';
 
 /**
  * Window/application for playing music
@@ -15,8 +16,12 @@ export const MusicPlayerWindow = (props: IDocumentWindowProps) => {
 
     return (
         <MusicPlayerWindowContextProvider>
-            <MusicPlayerControls />
-            <MusicPlayerTrackList />
+            <div className='p-2'>
+                <MusicPlayerVisualiser />
+                <MusicPlayerControls />
+                <MusicPlayerTrackList />
+            </div>
+           
         </MusicPlayerWindowContextProvider>
     )
 

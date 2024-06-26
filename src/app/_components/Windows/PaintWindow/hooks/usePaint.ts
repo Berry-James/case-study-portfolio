@@ -70,8 +70,6 @@ export const usePaint: UsePaint = () => {
 
         const handleMouseDown = (e: MouseEvent) => {
 
-            console.log('handleMouseDown() -> isResizing', isResizing);
-
             if(isResizing) { return }
 
             positionRef.current.x = e.offsetX;
@@ -80,7 +78,6 @@ export const usePaint: UsePaint = () => {
         }
 
         const handleMouseMove = (e: MouseEvent) => {
-            console.log('handleMouseMove() -> isResizing', isResizing);
             if(ctx && isDrawing && !isResizing) {
                 draw(
                     // Canvas context
@@ -210,7 +207,7 @@ export const usePaint: UsePaint = () => {
             link.href = dataUrl;
             link.click();
 
-            document.removeChild(link);
+            link.remove();
         } catch (err) {
             console.error(err);
         }

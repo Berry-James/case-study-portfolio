@@ -1,4 +1,4 @@
-import React, { useContext, useState } from 'react';
+import React, { useContext } from 'react';
 import Styles from './TaskbarStartMenu.module.css';
 import { TaskbarStartMenuApps } from './TaskbarStartMenuApps/TaskbarStartMenuApps';
 import { TaskbarStartMenuContext, TaskbarStartMenuContextProvider } from './context/TaskbarStartMenuContext';
@@ -61,7 +61,7 @@ const TaskbarStartMenuContent = () => {
 
                 {/* APPS LIST */}
                 <div
-                    className='py-2'
+                    className='py-1'
                 >
                     <TaskbarStartMenuApps />
                 </div>

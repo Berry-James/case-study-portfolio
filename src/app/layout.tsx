@@ -38,7 +38,6 @@ export default function RootLayout({
       <body className={`${bodyFont.variable} ${documentFont.variable} overflow-hidden`}>
         <SystemContextProvider>
           {children}
-          {/* {anomalyReporting} */}
         </SystemContextProvider>
       </body>
     </html>

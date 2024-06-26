@@ -35,12 +35,14 @@ export const WallpaperPreview = () => {
              {/* PREVIEW */}
              <div className='relative'>
                 <Image 
-                    src={PcScreenImage} height={120} width={160}
+                    src={PcScreenImage} 
+                    height={120} 
+                    width={160}
                     loading='lazy'
                     alt=''
                     style={{
                         position: 'relative',
-                        zIndex: 2
+                        zIndex: 2,
                     }}
                 />
                 <div

@@ -15,11 +15,9 @@ import { SystemContext } from '../../SystemContext/SystemContext';
 export const ThemeWindow = ({ instanceId }: IWindowComponentProps) => {
 
     return (
-        <div className='p-3'>
-            <ThemeWindowContextProvider>
-                <ThemeWindowContent instanceId={instanceId} />
-            </ThemeWindowContextProvider>
-        </div>
+        <ThemeWindowContextProvider>
+            <ThemeWindowContent instanceId={instanceId} />
+        </ThemeWindowContextProvider>
     )
 
 }
@@ -37,7 +35,7 @@ const ThemeWindowContent = ({ instanceId }: { instanceId: string }) => {
     const { handleApplyTheme } = useContext(ThemeWindowContext);
 
     return (
-        <>
+        <div className='p-3 mb-12'>
 
             {/* CONTENT */}
             <div
@@ -59,7 +57,7 @@ const ThemeWindowContent = ({ instanceId }: { instanceId: string }) => {
                     }
                 }}
             />
-        </>
+        </div>
      
     )
 

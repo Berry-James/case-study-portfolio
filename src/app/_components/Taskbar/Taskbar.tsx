@@ -48,13 +48,9 @@ export const Taskbar = () => {
 
                         return (
                             <TaskbarItem 
-                                id={windowItem.id}
-                                key={windowItem.id}
-                                position={windowItem.position}
+                                {...windowItem}
+                                key={windowItem.instanceId}
                                 icon={components.icon}
-                                title={windowItem.title}
-                                status={windowItem.status}
-                                instanceId={windowItem.instanceId}
                             />
                         )
                         

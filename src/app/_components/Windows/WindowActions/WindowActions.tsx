@@ -17,7 +17,12 @@ export const WindowActions = ({ actions }: IWindowActionsProps) => {
     }
 
     return (
-        <div className='absolute bottom-0 left-0 p-2 w-full flex gap-2 items-center justify-end pr-12 overflow-hidden'>
+        <div 
+            className='absolute z-[2] bottom-[2px] left-[2px] p-2 flex gap-2 items-center justify-end pr-12 overflow-hidden bg-[color:var(--grey)]'
+            style={{
+                width: 'calc(100% - 4px)'
+            }}
+        >
             
             {/* CUSTOM ACTIONS (NODES) */}
             { actions.custom }

@@ -2,6 +2,9 @@ import React from 'react';
 import { TaskbarClock } from '../TaskbarClock/TaskbarClock';
 import Styles from './TaskbarTray.module.css';
 import { TaskbarVolume } from '../TaskbarVolume/TaskbarVolume';
+import dynamic from 'next/dynamic';
+
+const DynamicTaskbarClock = dynamic(() => import('../TaskbarClock/TaskbarClock').then(mod => mod.TaskbarClock), { ssr: false });
 
 /**
  * Tray component displayed to the far right of the taskbar
@@ -15,7 +18,7 @@ export const TaskbarTray = () => {
             className={Styles.TaskbarTray}
         >
             <TaskbarVolume />
-            <TaskbarClock />
+            <DynamicTaskbarClock />
         </div>
     )
 

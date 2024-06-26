@@ -19,7 +19,7 @@ export interface IWindow extends Omit<IWindowTemplate, 'solo'> {
  * @member position         Object containing starting position data for the window 
  * @member actions          (optional) Custom actions for the window
  * @member componentProps   Custom props to be passed to the component on mount
- * @member solo             If true, only one instance of this window can be visible at a time
+ * @member rules            A set of rules for how the window can be interacted with
  */
 export interface IWindowTemplate {
     id: windowIdEnum;
@@ -27,7 +27,20 @@ export interface IWindowTemplate {
     position: WindowPosition;
     actions?: IWindowActions;
     componentProps?: any
-    solo: boolean;
+    rules: WindowRules
+}
+
+/**
+ * @member disableMinimise      
+ * @member disableClose      
+ * @member solo      
+ * @member disableStartMenuShortcut
+ */
+export type WindowRules = {
+    disableMinimise?: boolean;
+    disableClose?: boolean;
+    solo?: boolean;
+    disableStartMenuShortcut?: boolean;
 }
 
 /**
@@ -90,7 +103,8 @@ export enum windowIdEnum {
     notepad,
     document,
     musicPlayer,
-    paint
+    paint,
+    login
 }
 
 export type WindowDict = Partial<Record<windowIdEnum, IWindow>>;

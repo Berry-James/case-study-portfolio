@@ -27,7 +27,7 @@ export const MusicPlayerTrackList = () => {
     }, [playingTrackId]);
 
     return (
-        <div className='px-2'>
+        <div>
 
             {/* TITLE */}
             <span>Tracks ({MUSIC_PLAYER_WINDOW_TRACK_LIST.length})</span>
