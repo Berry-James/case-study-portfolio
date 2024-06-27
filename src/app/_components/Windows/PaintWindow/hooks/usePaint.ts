@@ -2,6 +2,12 @@ import { useCallback, useReducer, useRef, useState } from "react"
 import { CanvasDimensions, IPaintSettings, PaintBrushAttributes, UsePaint, paintBrushEnum } from "./usePaint.types";
 import { PAINT_BRUSH_DICT } from "./usePaint.static";
 
+/**
+ * Hook which enables painting, resizing and saving on a canvas element
+ * @implements {UsePaint}
+ * 
+ * @returns A set of tools used to manage painting with a canvas
+ */
 export const usePaint: UsePaint = () => {
 
     // REDUCER
@@ -163,8 +169,6 @@ export const usePaint: UsePaint = () => {
         element.addEventListener('mouseenter', handleMouseEnter);
 
         canvasRef.current = element;
-
-        // return element;
 
     }
 

@@ -44,12 +44,13 @@ export const TaskbarStartMenuApps = () => {
                 {computedApplicationsList}
             </ul>
 
-            {/* AUTH MENU */}
+            {/* SYSTEM ACTIONS */}
             <ul className='w-full'>
 
                 {/* DIVIDER */}
                 <hr className='win-bezel-inverted h-[2px]' style={{ color: 'unset' }}/>
-
+                
+                {/* SIGN OUT BUTTON */}
                 <li className={`w-full ${Styles.MenuItem}`}>
                     <button
                         className='w-full flex items-center justify-start gap-4 px-1 py-2 mb-2'

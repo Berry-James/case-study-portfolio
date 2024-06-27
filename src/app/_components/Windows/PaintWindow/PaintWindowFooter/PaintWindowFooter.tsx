@@ -2,19 +2,27 @@ import React, { ChangeEvent, useCallback, useContext } from 'react';
 import { PaintWindowContext } from '../context/PaintWindowContext';
 import { PaintWindowPalette } from '../PaintWindowControls/PaintWindowPalette/PaintWindowPalette';
 
+/**
+ * Footer for paint window
+ * Contains WIP zoom functionality, and colour palette
+ * 
+ * TODO -> clean this up once zoom has been implemented
+ * 
+ * @returns Component
+ */
 export const PaintWindowFooter = () => {
 
     // CONTEXT
     const { paintSettings: { canvasZoom }, setCanvasZoom } = useContext(PaintWindowContext);
 
-    const handleSetCanvasZoom = (variant: 'increment' | 'decrement') => {
-        const newZoom = Math.min(canvasZoom + (variant === 'increment' ? .2 : -.2), 5)
-        setCanvasZoom(newZoom < 0.1 ? 0.1 : newZoom);
-    }
+    // const handleSetCanvasZoom = (variant: 'increment' | 'decrement') => {
+    //     const newZoom = Math.min(canvasZoom + (variant === 'increment' ? .2 : -.2), 5)
+    //     setCanvasZoom(newZoom < 0.1 ? 0.1 : newZoom);
+    // }
 
-    const handleSetCanvasZoomSlider = useCallback((e: ChangeEvent<HTMLInputElement>) => {
-        setCanvasZoom(Number(e.target.value))
-    }, []);
+    // const handleSetCanvasZoomSlider = useCallback((e: ChangeEvent<HTMLInputElement>) => {
+    //     setCanvasZoom(Number(e.target.value))
+    // }, []);
 
     return (
         <footer 

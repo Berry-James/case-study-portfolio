@@ -52,9 +52,9 @@ export type WindowRules = {
  * @member custom           (optional) Array of completely independent components to render in the 'actions' bar
  */
 export interface IWindowActions {
-    onApply?: () => any;
-    onOkay?: () => any;
-    onCancel?: () => any;
+    onApply?: (...args: any) => any;
+    onOkay?: (...args: any) => any;
+    onCancel?: (...args: any) => any;
     custom?: ReactNode[];
 }
 
@@ -104,7 +104,8 @@ export enum windowIdEnum {
     document,
     musicPlayer,
     paint,
-    login
+    login,
+    image
 }
 
 export type WindowDict = Partial<Record<windowIdEnum, IWindow>>;

@@ -1,8 +1,6 @@
 'use client';
-import React, { ChangeEvent, useContext, useMemo, useState } from 'react';
+import React, { ChangeEvent, useContext, useState } from 'react';
 import { SystemContext } from '../../SystemContext/SystemContext';
-import { FaVolumeMute } from 'react-icons/fa';
-import { FaVolumeHigh, FaVolumeLow } from 'react-icons/fa6';
 import Styles from './TaskbarVolume.module.css';
 import VolumeIcon from '../../../_static/icons/png/loudspeaker_rays-1.png'
 import VolumeMuteIcon from '../../../_static/icons/png/loudspeaker_muted-1.png'

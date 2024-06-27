@@ -10,7 +10,6 @@ import { SYSTEM_HIGHLIGHT_COLOURS } from './_static/theme/theme.static';
 import { formatVolume } from '@/utils/audioUtils';
 import { TASKBAR_HEIGHT } from '../Taskbar/Taskbar';
 
-
 export const SystemContext = createContext<ISystemContext>({
     windows: {},
     activeWallpaperId: wallpaperIdEnum.clouds,
@@ -34,8 +33,6 @@ export const SystemContext = createContext<ISystemContext>({
 export const SystemContextProvider = ({ children }: PropsWithChildren) => {
 
     // STATE
-    const [init, setInit] = useState(true);
-
     const [windows, setWindows] = useState<Record<string, IWindow>>({});
     const [activeWallpaperId, setActiveWallpaperId] = useState<wallpaperIdEnum>(wallpaperIdEnum.clouds);
     const [activeWindowInstanceId, setActiveWindowInstanceId] = useState<string | null>(null);
@@ -60,15 +57,11 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
     // }, [legacySave]);
 
     useEffect(() => {
-        
         const root = document.documentElement;
-
         root.style.setProperty('--highlight', highlightColour)
-
     }, [highlightColour]);
 
     const restoreSave = () => {
-        console.log('restoreSave()', init)
 
         if(legacySave) {
             if(
@@ -96,31 +89,32 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
             if(legacySave.highlightColour) {
                 setHighlightColour(legacySave.highlightColour)
             }
-        } else {
+        } 
+        // else {
 
-            // TODO -> move this logic to within 'Home.tsx' component, as we only want it to run there
+        //     // TODO -> move this logic to within 'Home.tsx' component, as we only want it to run there
             
-            // No save, set some defaults
+        //     // No save, set some defaults
 
-            // Calc window position
-            const x = (window.innerWidth / 2) - (WINDOWS_DICT[windowIdEnum.portfolio].position.w / 2);
-            const y = (window.innerHeight / 2) - (WINDOWS_DICT[windowIdEnum.portfolio].position.h / 2) - TASKBAR_HEIGHT;
+        //     // Calc window position
+        //     const x = (window.innerWidth / 2) - (WINDOWS_DICT[windowIdEnum.portfolio].position.w / 2);
+        //     const y = (window.innerHeight / 2) - (WINDOWS_DICT[windowIdEnum.portfolio].position.h / 2) - TASKBAR_HEIGHT;
 
-            const instanceId = uuid();
-            setWindows({
-                [instanceId]: {
-                    instanceId,
-                    status: windowStatusEnum.open,
-                    ...WINDOWS_DICT[windowIdEnum.portfolio],
-                    position: {
-                        ...WINDOWS_DICT[windowIdEnum.portfolio].position,
-                        x,
-                        y
-                    }
-                }
-            });
-            setActiveWindowInstanceId(instanceId);
-        }
+        //     const instanceId = uuid();
+        //     setWindows({
+        //         [instanceId]: {
+        //             instanceId,
+        //             status: windowStatusEnum.open,
+        //             ...WINDOWS_DICT[windowIdEnum.portfolio],
+        //             position: {
+        //                 ...WINDOWS_DICT[windowIdEnum.portfolio].position,
+        //                 x,
+        //                 y
+        //             }
+        //         }
+        //     });
+        //     setActiveWindowInstanceId(instanceId);
+        // }
     }
 
     const handleSetVolume = (newVolume: number | string) => {

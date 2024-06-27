@@ -1,15 +1,18 @@
 import React, { useContext } from 'react';
 import { INotepadWindowProps } from './NotepadWindow.types';
-import { WindowToolbar } from '../WindowToolbar/WindowToolbar';
 import { NotepadWindowContext, NotepadWindowContextProvider } from './context/NotepadWindowContext';
 import { NotepadWindowToolbar } from './NotepadWindowToolbar/NotepadWindowToolbar';
 
 /**
- * WIP notepad
+ * Simple notepad window for making text documents
+ * Able to download contents as .txt file
  * @alpha
+ * TODO -> Add the following features:
+ * TODO -> - FONT (size, typeface, color)
+ * TODO -> - Save As
  * 
  * @param propsinstanceId               instanceId of the parent window 
- * @returns 
+ * @returns Component
  */
 export const NotepadWindow = ({ instanceId }: INotepadWindowProps) => {
 
@@ -21,6 +24,12 @@ export const NotepadWindow = ({ instanceId }: INotepadWindowProps) => {
 
 }
 
+/**
+ * Content for NotepadWindow Component
+ * @see NotepadWindow
+ * 
+ * @returns Component
+ */
 const NotepadWindowContent = () => {
 
     // CONTEXT

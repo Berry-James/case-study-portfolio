@@ -17,13 +17,10 @@ export const MusicPlayerTrackList = () => {
      * Handles setting the playingTrackId to the chosen track
      */
     const handleClickTrack = useCallback((trackId: string) => {
-
         if(playingTrackId === trackId) {
             return
         }
-
         handleSetPlayingTrackId(trackId);
-
     }, [playingTrackId]);
 
     return (

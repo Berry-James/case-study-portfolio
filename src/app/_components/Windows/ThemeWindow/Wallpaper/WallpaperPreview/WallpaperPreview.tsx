@@ -54,7 +54,6 @@ export const WallpaperPreview = () => {
                         top: 16,
                         left: 16,
                         zIndex: 1,
-                        // borderRadius: '2px'
                     }}
                 >
              </div>

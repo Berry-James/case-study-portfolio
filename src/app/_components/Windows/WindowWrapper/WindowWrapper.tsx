@@ -116,7 +116,7 @@ export const WindowWrapper = ({
 
             {/* TITLE BAR */}
             <div 
-                className={`${Styles.WindowToolbar} ${isActive && Styles.WindowToolbarActive} ${isMoving ? 'cursor-grabbing' : 'cursor-grab'}`}
+                className={`${Styles.WindowTitleBar} ${isActive && Styles.WindowTitleBarActive} ${isMoving ? 'cursor-grabbing' : 'cursor-grab'}`}
                 ref={moveButtonRef}    
             >
 

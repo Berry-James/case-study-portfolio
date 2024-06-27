@@ -15,17 +15,16 @@
 .WindowContent {
     overflow: auto;
     height: 100%;
-    /* position: relative; */
 }
 
-.WindowToolbar {
-    background: linear-gradient(90deg rgb(var(--highlight)) 0%, color-mix(in srgb, rgb(var(--highlight)), white 50%));
-    background-color: rgb(var(--highlight));
+.WindowTitleBar {
+    background: linear-gradient(90deg, rgb(var(--highlight)), color-mix(in srgb, rgb(var(--highlight)) 50%, white));
+    height: 24px;
     min-height: 24px;
+    max-height: 24px;
     overflow: hidden;
     display: flex;
     gap: 6px;
-    height: 24px;
     align-items: center;
     justify-content: space-between;
     padding: 0 4px;
@@ -34,7 +33,6 @@
     color: #FFF;
 }
 
-.WindowToolbarActive {
-    background-color: rgb(var(--highlight));
+.WindowTitleBarActive {
     filter: unset;
 }

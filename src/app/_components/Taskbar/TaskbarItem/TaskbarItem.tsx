@@ -22,11 +22,26 @@ export const TaskbarItem = ({ title, icon, status, instanceId }: ITaskbarItemPro
     const { handleSetWindowStatus, handleSetActiveWindowInstanceId, windows, activeWindowInstanceId } = useContext(SystemContext);
 
     // REFS
+
+    /**
+     * Store the previous status of the window in order to determine which animation to play
+     */
     const previousStatus = useRef<windowStatusEnum | null>(null);
+
+    /**
+     * Ref to the div used to display the minimise/maximise animation
+     */
     const animationDivRef = useRef<HTMLDivElement | null>(null);
+
+    /**
+     * Ref for the taskbar item/button
+     */
     const taskbarButtonRef = useRef<HTMLButtonElement | null>(null);
 
     // COMPUTED
+    /**
+     * Determine if this is the active taskbar item
+     */
     const isActiveTaskarItem = useMemo(() => activeWindowInstanceId === instanceId, [activeWindowInstanceId, instanceId])
 
     // HANDLERS
@@ -39,17 +54,20 @@ export const TaskbarItem = ({ title, icon, status, instanceId }: ITaskbarItemPro
 
         switch(status) {
             case windowStatusEnum.open: {
+                // if window open, and taskbar item is currently active, minimise it and clear active item
                 if(isActiveTaskarItem) {
                     newStatus = windowStatusEnum.minimised;
                     handleSetActiveWindowInstanceId(null);
                     animateWindow(newStatus);
                 } else {
+                    // Otherwise, set to active window
                     handleSetActiveWindowInstanceId(instanceId);
                 }
                 break;
             }
             case windowStatusEnum.closed:
             case windowStatusEnum.minimised: {
+                // If closed or minimised, set status to open and set to active window
                 newStatus = windowStatusEnum.open;
                 handleSetActiveWindowInstanceId(instanceId);
                 await animateWindow(newStatus);
@@ -57,6 +75,7 @@ export const TaskbarItem = ({ title, icon, status, instanceId }: ITaskbarItemPro
             }
         }
 
+        // Finally, update the window status in SystemContext
         handleSetWindowStatus(instanceId, newStatus);
 
     }
@@ -128,10 +147,13 @@ export const TaskbarItem = ({ title, icon, status, instanceId }: ITaskbarItemPro
     }
 
     /**
-     * Animate window open/close whenever status updates
+     * Animate window open/close whenever status updates.
+     * This is used to still trigger an animation to occur when a window is minimised via
+     * the button on its toolbar
      */
     useEffect(() => {
         
+        // If window has status (which is NOT minimised), and is trying to be minimised
         if(
             previousStatus.current !== null && 
             previousStatus.current !== windowStatusEnum.minimised &&
@@ -140,22 +162,31 @@ export const TaskbarItem = ({ title, icon, status, instanceId }: ITaskbarItemPro
             animateWindow(status);
         }
 
+        // update previous status
         previousStatus.current = status;
 
     }, [status]);
 
     return (
         <>
+            {/* ANIMATION DIV */}
             <div ref={animationDivRef} />
+
+            {/* TASKBAR ITEM */}
             <button
                 onClick={handleClickTaskbarItem}
                 className={`${Styles.TaskbarItem} ${isActiveTaskarItem ? Styles.TaskbarItemActive : undefined}`}
                 ref={taskbarButtonRef}
             >
+
+                {/* ICON */}
                 <div className={'w-6 h-full'}>
                     {icon}
                 </div>
+
+                {/* WINDOW NAME */}
                 <span>{title}</span>
+                
             </button>
         </>
        

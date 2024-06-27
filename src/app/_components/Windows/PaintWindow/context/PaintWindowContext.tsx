@@ -2,6 +2,16 @@ import React, { PropsWithChildren, createContext } from 'react';
 import { usePaint } from '../hooks/usePaint';
 import { CanvasDimensions, UsePaint, UsePaintReturn, paintBrushEnum } from '../hooks/usePaint.types';
 
+/**
+ * Functional context for the PaintWindow component
+ * Functionality is exclusively what is contained within usePaint hook,
+ * and this context is used to sync paint state with all components in module
+ * 
+ * @see PaintWindow
+ * @implements {UsePaintReturn}
+ * 
+ * @returns Context
+ */
 export const PaintWindowContext = createContext<UsePaintReturn>({
     // SETTINGS
     paintSettings: {

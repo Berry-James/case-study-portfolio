@@ -113,7 +113,7 @@ export const useWindowInteractivity: UseWindowInteractivity = ({
         }
 
         const handleMouseDown = (e: Event) => {
-            if(e?.target) {
+            if((e.target as HTMLDivElement).style) {
                 (e.target as HTMLDivElement).style.userSelect = "none";
             }
             setIsMoving(true);
@@ -127,6 +127,9 @@ export const useWindowInteractivity: UseWindowInteractivity = ({
 
     }, []);
 
+    /**
+     * Append listeners to window element on mount
+     */
     const legacyWindowRef = useCallback((elem: HTMLDivElement | null) => {
 
         windowRef.current = elem;

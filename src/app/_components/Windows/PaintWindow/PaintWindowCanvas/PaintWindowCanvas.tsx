@@ -2,6 +2,11 @@ import React, { useContext } from 'react';
 import { PaintWindowContext } from '../context/PaintWindowContext';
 import { PaintWindowCanvasResize } from './PaintWindowCanvasResize/PaintWindowCanvasResize';
 
+/**
+ * Canvas element for paint component
+ * 
+ * @returns Component
+ */
 export const PaintWindowCanvas = () => {
 
     // CONTEXT
@@ -17,6 +22,8 @@ export const PaintWindowCanvas = () => {
             <div 
                 className='relative w-max'
             >
+
+                {/* PAINT CANVAS */}
                 <canvas
                     ref={setCanvasRef}
                     height={canvasDimensions.h}
@@ -27,6 +34,8 @@ export const PaintWindowCanvas = () => {
                         width: `calc(${canvasDimensions.w * canvasZoom}px)`,
                     }}
                 />
+
+                {/* RESIZE BUTTON */}
                 <PaintWindowCanvasResize />
             </div>
         </div>

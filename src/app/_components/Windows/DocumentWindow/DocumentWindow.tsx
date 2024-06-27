@@ -53,6 +53,8 @@ const DocumentWindowContent = () => {
 
     return (
         <div className='p-2 mx-12'>
+
+            {/* DOCUMENT SELECT */}
             <div className='flex flex-col mb-2'>
                 <select
                     // TODO -> fix this type casting
@@ -72,6 +74,8 @@ const DocumentWindowContent = () => {
                     }
                 </select>
             </div>
+
+            {/* ACTIVE DOCUMENT */}
             {
                 activeDocument?.component &&
                 <div 

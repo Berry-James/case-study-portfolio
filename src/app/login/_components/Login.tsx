@@ -6,6 +6,11 @@ import { WindowPosition, windowIdEnum } from '@/app/_components/SystemContext/_s
 import { TASKBAR_HEIGHT } from '@/app/_components/Taskbar/Taskbar';
 import { WINDOWS_DICT } from '@/app/_components/SystemContext/_static/windows/windows.static';
 
+/**
+ * Content for Login page
+ * 
+ * @returns Component
+ */
 export const Login = () => {
 
     // CONTEXT
@@ -18,6 +23,7 @@ export const Login = () => {
     // STATE
     const [init, setInit] = useState(true);
 
+    // SIDE EFFECTS
     useEffect(() => {
 
         if(init) {
@@ -28,7 +34,6 @@ export const Login = () => {
             }
     
             if(Object.keys(windows).length > 0) {
-                console.log('second time running effect?????')
                 clearAllWindows().then(() => handleOpenWindow(windowIdEnum.login, { position: windowPosition }));
             } else {
                 handleOpenWindow(windowIdEnum.login, { position: windowPosition })

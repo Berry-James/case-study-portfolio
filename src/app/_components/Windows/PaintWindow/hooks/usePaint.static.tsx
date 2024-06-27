@@ -6,6 +6,9 @@ import PaintBrushIcon from '../../../../_static/icons/png/paint-brush.png'
 import PaintPencilIcon from '../../../../_static/icons/png/paint-pencil.png'
 import PaintEraserIcon from '../../../../_static/icons/png/paint-eraser.png'
 
+/**
+ * Static dictionary of all paint brushes
+ */
 export const PAINT_BRUSH_DICT: Record<paintBrushEnum, PaintBrush> = {
     [paintBrushEnum.pencil]: {
         id: paintBrushEnum.pencil,

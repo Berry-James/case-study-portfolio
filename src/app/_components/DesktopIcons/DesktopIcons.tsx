@@ -23,6 +23,12 @@ export const DesktopIcons = () => {
 
 }
 
+/**
+ * Content for DesktopIcons component
+ * @see {DesktopIcons}
+ * 
+ * @returns Component
+ */
 const DesktopIconsContent = () => {
 
     // CONTEXT
@@ -53,7 +59,7 @@ const DesktopIconsContent = () => {
     return (
         <div 
             id='desktopIconsBackground'
-            className='fixed top-0 left-0 p-4 flex flex-col gap-8 w-screen'
+            className='fixed top-0 left-0 p-4 flex flex-col gap-6 w-screen'
             style={{
                 height: `calc(100vh - ${TASKBAR_HEIGHT}px)`
             }}

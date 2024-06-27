@@ -2,69 +2,91 @@ import React, { useContext, useRef } from 'react';
 import { IDocumentWindowProps } from '@/app/_components/Windows/DocumentWindow/DocumentWindow.types';
 import { WindowActions } from '@/app/_components/Windows/WindowActions/WindowActions';
 import { SystemContext } from '@/app/_components/SystemContext/SystemContext';
-import { useRouter } from 'next/navigation';
-import { PAGE_ROUTES } from '@/network/pageRoutes';
+import { logInAction } from '@/actions/login.actions';
+import Image from 'next/image';
+
+// IMAGES
+import BrandingImage from '../../../_static/imgs/branding.png';
+import SpaceImage from '../../../_static/imgs/space.png';
 
 export const LoginWindow = (props: IDocumentWindowProps) => {
 
     // CONTEXT
     const { clearAllWindows } = useContext(SystemContext);
 
-    // ROUTER
-    const router = useRouter();
-
     // REFS
     const passwordRef = useRef<HTMLInputElement | null>(null);
     const userSelectRef = useRef<HTMLSelectElement | null>(null);
 
     // HANDLERS
-    const handleLogin = () => {
-        setTimeout(() => {
-            clearAllWindows();
-            setTimeout(() =>  router.push(PAGE_ROUTES.root), 1000)
-        }, 500);
+    const handleLogin = async (e: React.FormEvent) => {
+        e.preventDefault();
+        await logInAction();
+        clearAllWindows();
     }
 
     return (
-       <div className='p-4 flex flex-col gap-4'>
-            {/* LOGO */}
-            <div>LOGO HERE!!!</div>
-
-            {/* USER SELECT */}
-            <div className='flex flex-col gap-1'>
-                <label htmlFor='user-select'>Select user name</label>
-                <select 
-                    multiple 
-                    id='user-select'
-                    ref={userSelectRef}
-                    style={{ overflow: 'auto' }}
-                    className='win-bezel-inverted'
+        <form onSubmit={handleLogin}>
+            <div 
+                className='p-4'
+                style={{
+                    background: `linear-gradient(0deg, rgba(192,192,192,1) 45%, rgba(192,192,192,0) 100%), url("${SpaceImage.src}") top/cover no-repeat`
+                }}
+            >
+                {/* LOGO */}
+                <div
+                    className='relative w-full pl-2'
                 >
-                    <option value={'James'}>James</option>
-                </select>
-            </div>
-           
+                    <Image 
+                        src={BrandingImage}
+                        height={64}
+                        alt=''
+                        className='z-10 relative'
+                        
+                    />
+                    {/* <div className='w-full left-0 absolute h-[2px] bg-white top-[19px]' /> */}
+                </div>
 
-            {/* PASSWORD INPUT */}
-            <div className='flex flex-col gap-1'>
-                <label htmlFor='password'>Password</label>
-                <input 
-                    id='password' 
-                    type='password' 
-                    ref={passwordRef}
-                    className='win-bezel-inverted'
+                {/* USER SELECT */}
+                <div className='flex flex-col gap-1 mt-12'>
+                    <label htmlFor='user-select'>Select user</label>
+                    <select 
+                        multiple 
+                        id='user-select'
+                        ref={userSelectRef}
+                        style={{ overflow: 'auto' }}
+                        className='win-bezel-inverted'
+                        defaultValue={'1'}
+                    >
+                        <option value={'1'}>James</option>
+                    </select>
+                </div>
+            
 
+                {/* PASSWORD INPUT */}
+                <div className='flex flex-col gap-1 mt-4'>
+                    <label htmlFor='password'>Password</label>
+                    <input 
+                        id='password' 
+                        type='password' 
+                        ref={passwordRef}
+                        className='win-bezel-inverted'
+                        defaultValue={'password :^)'}
+                        required
+
+                    />
+                </div>
+
+                {/* ACTIONS */}
+                <WindowActions 
+                    actions={{
+                        onOkay: handleLogin,
+                        // onCancel: () => {}
+                    }}
                 />
             </div>
-
-            {/* ACTIONS */}
-            <WindowActions 
-                actions={{
-                    onOkay: handleLogin,
-                    onCancel: () => {}
-                }}
-            />
-       </div>
+        </form>
+     
     )
 
 }

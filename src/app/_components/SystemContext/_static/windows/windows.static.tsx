@@ -3,7 +3,7 @@ import { IWindowComponentProps, IWindowTemplate, windowIdEnum, windowStatusEnum 
 import { ThemeWindow } from "@/app/_components/Windows/ThemeWindow/ThemeWindow"
 import { NotepadWindow } from "@/app/_components/Windows/NotepadWindow/NotepadWindow"
 import Image, { ImageProps } from 'next/image';
-import { CSSProperties, ReactNode } from "react";
+import { ReactNode } from "react";
 import { DocumentWindow } from "@/app/_components/Windows/DocumentWindow/DocumentWindow";
 import { IDocumentWindowProps } from "@/app/_components/Windows/DocumentWindow/DocumentWindow.types";
 import { MusicPlayerWindow } from "@/app/_components/Windows/MusicPlayerWindow/MusicPlayerWindow";
@@ -17,6 +17,7 @@ import DocumentViewerIcon from '../../../../_static/icons/png/document-0.png';
 import ThemeIcon from '../../../../_static/icons/png/themes-4.png';
 import PaintIcon from '../../../../_static/icons/png/paint_old-1.png';
 import { LoginWindow } from "@/app/login/_components/LoginWindow/LoginWindow";
+import { ImageWindow } from "@/app/_components/Windows/ImageWindow/ImageWindow";
 
 
 /**
@@ -32,6 +33,21 @@ export const WINDOWS_DICT: Record<windowIdEnum, IWindowTemplate> = {
             disableClose: true,
             disableStartMenuShortcut: true,
             solo: true,
+        },
+        position: {
+            x: 150,
+            y: 20,
+            z: 0,
+            w: 600,
+            h: 500
+        }
+    },
+    [windowIdEnum.image]: {
+        id: windowIdEnum.image,
+        title: 'View Image',
+        rules: {
+            disableStartMenuShortcut: true,
+            solo: false,
         },
         position: {
             x: 150,
@@ -150,6 +166,13 @@ export const WINDOWS_COMPONENT_MAP: Record<windowIdEnum, (props?: any) => { comp
         icon: <Image
             src={PortfolioIcon}
             {...ICON_PROPS} />
+    }),
+    [windowIdEnum.image]: (props: IWindowComponentProps) => ({
+        component: <ImageWindow {...props} />,
+        icon: <Image
+            src={PortfolioIcon}
+            {...ICON_PROPS} 
+        />
     }),
     [windowIdEnum.theme]: (props: IWindowComponentProps) => ({
         component: <ThemeWindow {...props} />,

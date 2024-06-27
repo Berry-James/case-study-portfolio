@@ -1,8 +1,10 @@
 import React, { ChangeEvent, useEffect, useRef, useState } from 'react';
 import { IMusicPlayerProgressProps } from './MusicPlayerProgress.types';
+import Styles from './MusicPlayerProgress.module.css';
 
 /**
  * Displays the progress of the currently playing track via a html 'range' input
+ * TODO -> clean up some of the unused states here, have been left in in case of future implementation
  * 
  * @param props.audioElement            The audio tag element
  * @returns Component
@@ -13,7 +15,7 @@ export const MusicPlayerProgress = ({ audioElement }: IMusicPlayerProgressProps)
     /**
      * Duration of the track in seconds (float)
      */
-    const [trackDuration, setTrackDuration] = useState(0);
+    // const [trackDuration, setTrackDuration] = useState(0);
 
     const rangeSliderRef = useRef<HTMLInputElement | null>(null);
 
@@ -26,8 +28,9 @@ export const MusicPlayerProgress = ({ audioElement }: IMusicPlayerProgressProps)
 
         if(audioElement) {
 
+            // Create listener to timeUpdate event
             const timeUpdateListener = (e: Event) => {
-                console.log('TIME UPDATD!!');
+                // Update value in rangeSlider element
                 if(rangeSliderRef.current) {
                     rangeSliderRef.current.value = String((e.target as HTMLAudioElement).currentTime)
                 }
@@ -37,25 +40,22 @@ export const MusicPlayerProgress = ({ audioElement }: IMusicPlayerProgressProps)
             const loadedMetaDataListener = () => {
                 if(audioElement?.duration !== undefined) {
                     if(rangeSliderRef.current) {
+                        // Assign min and max values on range slider
                         rangeSliderRef.current.min = '0';
                         rangeSliderRef.current.max = String(audioElement.duration);
                     }
-                    setTrackDuration(audioElement.duration)
+                    // setTrackDuration(audioElement.duration)
                 }
-
-
             }
 
+            // Assign listeners
             audioElement.addEventListener('loadedmetadata', loadedMetaDataListener);
-
             audioElement.addEventListener('timeupdate', timeUpdateListener);
 
+            // Cleanup listeners
             return () => {
                 audioElement.removeEventListener('loadedmetadata', loadedMetaDataListener);
                 audioElement.removeEventListener('timeupdate', timeUpdateListener);
-                // if(interval) {
-                //     clearInterval(interval);
-                // }
             }
 
         }
@@ -63,7 +63,7 @@ export const MusicPlayerProgress = ({ audioElement }: IMusicPlayerProgressProps)
     }, [audioElement]);
 
     /**
-     * WIP Sets the current playback position in the track
+     * Sets the current playback position in the track
      * @alpha
      * 
      * @param e             ChangeEvent for the range input
@@ -83,17 +83,15 @@ export const MusicPlayerProgress = ({ audioElement }: IMusicPlayerProgressProps)
     }
 
     return (
-        // <div className='grid grid-cols-[max-content_1fr_max-content] gap-1'>
         <div>
-            {/* <span className='text-center'>0:00</span> */}
             <input
-                className='w-full' 
+                className={`${Styles.ProgressRangeInput} win-bezel-inverted`}
                 type='range' 
                 onChange={handleSetTrackTime}
                 step={1}
                 ref={rangeSliderRef}
+                defaultValue={0}
             />
-            {/* <span className='text-center'>{new Date(trackDuration * 1000).toISOString().substring(1, 19)}</span> */}
         </div>
 
     )

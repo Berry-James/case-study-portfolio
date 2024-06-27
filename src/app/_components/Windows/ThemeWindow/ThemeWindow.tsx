@@ -45,7 +45,6 @@ const ThemeWindowContent = ({ instanceId }: { instanceId: string }) => {
                 <ColourPalette />
             </div>
            
-
             {/* ACTIONS */}
             <WindowActions 
                 actions={{

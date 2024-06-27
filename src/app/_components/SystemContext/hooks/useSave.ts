@@ -78,6 +78,14 @@ export function getSaveSession(): ISave | null {
 
         Object.values(parsed.windows).forEach((localStorageWindow) => {
 
+            // If failed to find window in enum, or in WINDOWS_DICT, don't add it
+            if(
+                !windowIdEnum[localStorageWindow.id] ||
+                !WINDOWS_DICT[localStorageWindow.id]
+            ) {
+                return
+            }
+
             formattedWindows[localStorageWindow.instanceId] = {
                 ...localStorageWindow,
                 position: {

@@ -22,7 +22,8 @@ export const Home = () => {
 
 }
 
-const DynamicWindows = dynamic(() => import('./Windows/Windows').then((mod) => mod.Windows), { ssr: false, });
+// Don't ssr windows, as they rely on window dimensions to determine their own sizing/location
+const DynamicWindows = dynamic(() => import('./Windows/Windows').then((mod) => mod.Windows), { ssr: false });
 
 /**
  * Content for the @see {Home} component
@@ -37,7 +38,6 @@ const HomeContent = () => {
     const [init, setInit] = useState(true);
 
     useEffect(() => {
-
         if(init) {
             restoreSave();
             setInit(false);

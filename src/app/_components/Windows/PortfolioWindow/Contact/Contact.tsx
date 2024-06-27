@@ -28,17 +28,18 @@ export const Contact = () => {
                     icon={<FaPhone />}
                 />
             </div>
-           
         </div>
     )
 
 }
 
-const ContactItem = ({ text, icon, href, message }: { text?: string, icon: ReactNode, href: string | undefined; message?: string }) => (
-    <a href={href}>
-        <div className='flex items-center gap-2'>
-            {icon}
-        </div>
+const ContactItem = ({ icon, href }: { text?: string, icon: ReactNode, href: string | undefined; message?: string }) => (
+    <a 
+        href={href} 
+        className='cursor-pointer'
+        target='_blank'
+        rel='noreferrer'
+    >
+        {icon}
     </a>
-    
 )

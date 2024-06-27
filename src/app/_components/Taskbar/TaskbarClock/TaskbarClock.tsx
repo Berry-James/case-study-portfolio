@@ -9,7 +9,7 @@ export const TaskbarClock = () => {
     
     // STATE
     /**
-     * The curren date
+     * The current date
      */
     const [date, setDate] = useState(new Date());
 
@@ -18,13 +18,10 @@ export const TaskbarClock = () => {
      * Sets an interval to update the date every second
      */
     useEffect(() => {
-
         const interval = setInterval(() => {
             setDate(new Date());
         }, 1000);
-
         return () => clearInterval(interval);
-
     }, []);
 
     return (

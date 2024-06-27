@@ -1,3 +1,4 @@
+'use client';
 import React, { useContext } from 'react';
 import Styles from './TaskbarStartMenu.module.css';
 import { TaskbarStartMenuApps } from './TaskbarStartMenuApps/TaskbarStartMenuApps';

@@ -1,6 +1,9 @@
 import React, { useCallback, useContext, useState } from 'react';
 import { PaintWindowContext } from '../../context/PaintWindowContext';
 
+/**
+ * Store static palette of paint colours (from windows 98 paint)
+ */
 const PALETTE = [
     '#000000',
     '#767676',
@@ -32,17 +35,29 @@ const PALETTE = [
     '#fb7144',
 ]
 
+/**
+ * Colour palette with all available colours
+ * User can specify primary and secondary colour here
+ * 
+ * @returns Component
+ */
 export const PaintWindowPalette = () => {
     
     // CONTEXT
     const { paintSettings: { colour, secondaryColour }, setPrimaryColour, setSecondaryColour } = useContext(PaintWindowContext);
 
     // HANDLERS
+    /**
+     * Swaps values of primary and secondary colour
+     */
     const handleSwitchColours = useCallback(() => {
         setPrimaryColour(secondaryColour);
         setSecondaryColour(colour);
     }, [secondaryColour, colour]);
 
+    /**
+     * Sets primary colour to the given value
+     */
     const handleSetColour = useCallback((newColour: string) => {
         setPrimaryColour(newColour);
     }, []);
@@ -76,6 +91,8 @@ export const PaintWindowPalette = () => {
                     onClick={handleSwitchColours}
                 />
             </div>
+
+            {/* COLOUR PALETTE */}
             <div 
                 className='grid gap-1'
                 style={{

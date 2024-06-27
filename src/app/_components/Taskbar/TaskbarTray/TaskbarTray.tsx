@@ -4,6 +4,7 @@ import Styles from './TaskbarTray.module.css';
 import { TaskbarVolume } from '../TaskbarVolume/TaskbarVolume';
 import dynamic from 'next/dynamic';
 
+// Make clock dynamic to avoid SSR conflicts with rendered HTML
 const DynamicTaskbarClock = dynamic(() => import('../TaskbarClock/TaskbarClock').then(mod => mod.TaskbarClock), { ssr: false });
 
 /**

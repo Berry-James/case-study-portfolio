@@ -1,3 +1,4 @@
+'use client';
 import React, { PropsWithChildren, createContext, useRef, useState } from 'react';
 import { ITaskbarStartMenuContext } from './TaskbarStartMenuContext.types';
 
