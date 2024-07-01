@@ -51,12 +51,6 @@ export const SystemContextProvider = ({ children, initialState }: ISystemContext
         highlightColour
     });
 
-    // TODO -> refactor this into the useSave hook and treat it more like a redux store/reducer type vibe
-    // useEffect(() => {
-
-       
-    // }, [legacySave]);
-
     useEffect(() => {
         const root = document.documentElement;
         root.style.setProperty('--highlight', highlightColour)

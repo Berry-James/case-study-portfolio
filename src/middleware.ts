@@ -33,6 +33,7 @@ export function middleware(request: NextRequest) {
         return redirect(PAGE_ROUTES.mobile)
       }
     } 
+    
     // Not mobile device
     else {
 
@@ -50,41 +51,9 @@ export function middleware(request: NextRequest) {
 
       // if we have no login cookie key, redirect to login
       if(!request.cookies.has(LOGIN_COOKIE_KEY)) {
-        redirect(PAGE_ROUTES.login)
+        return redirect(PAGE_ROUTES.login)
       }
-
-      // Otherwise, check
-      // switch(pathname) {
-
-      //   // If login page, delete login cookie and carry on
-      //   case PAGE_ROUTES.login: {
-      //     const response = NextResponse.next();
-      //     response.cookies.delete(LOGIN_COOKIE_KEY);
-      //     return response;
-      //   }
-  
-      //   // For all other pages, if no login cookie -> redirect to login page
-      //   // Otherwise, carry on
-      //   default: {
-          
-      //     // check if cookie exists
-      //     if(!request.cookies.has(LOGIN_COOKIE_KEY)) {
-      //       const url = request.nextUrl.clone();
-      //       url.pathname = PAGE_ROUTES.login;
-      //       return NextResponse.redirect(url);
-      //     }
-      //   }
-      // }
     }
-
-    // if(isMobile && !pathname.startsWith(PAGE_ROUTES.mobile)) {
-    //   return redirect(PAGE_ROUTES.mobile);
-    // } else if(!isMobile && pathname.startsWith(PAGE_ROUTES.mobile)) {
-    //   console.log('### STARTS WITH MOBILE')
-    //   return redirect(PAGE_ROUTES.root)
-    // }
-
-
 }
 
 /**
