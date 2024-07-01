@@ -8,11 +8,15 @@ import Image from 'next/image';
 // IMAGES
 import BrandingImage from '../../../_static/imgs/branding.png';
 import SpaceImage from '../../../_static/imgs/space.png';
+import { windowIdEnum } from '@/app/_components/SystemContext/_static/windows/windows.types';
+import { LoginWindowSuccessDialog } from './LoginWindowSuccessDialog/LoginWindowSuccessDialog';
+import { centerWindow } from '@/utils/windowUtils';
+import { WINDOWS_DICT } from '@/app/_components/SystemContext/_static/windows/windows.static';
 
 export const LoginWindow = (props: IDocumentWindowProps) => {
 
     // CONTEXT
-    const { clearAllWindows } = useContext(SystemContext);
+    const { clearAllWindows, handleOpenWindow } = useContext(SystemContext);
 
     // REFS
     const passwordRef = useRef<HTMLInputElement | null>(null);
@@ -20,9 +24,22 @@ export const LoginWindow = (props: IDocumentWindowProps) => {
 
     // HANDLERS
     const handleLogin = async (e: React.FormEvent) => {
+        // Cancel form default
         e.preventDefault();
-        await logInAction();
+
+        // Close all windows
         clearAllWindows();
+
+        // Open dialog window
+        handleOpenWindow(
+            windowIdEnum.dialog, 
+            { 
+                componentProps: { 
+                    children: <LoginWindowSuccessDialog />,
+                },
+                position: centerWindow(WINDOWS_DICT[windowIdEnum.dialog].position)
+            }
+        );
     }
 
     return (

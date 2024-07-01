@@ -6,14 +6,18 @@ export const PAGE_ROUTES = {
     // ROOT
     root: '/',
 
+    // ROOT FOR MOBILE
+    mobile: '/mobile',
+
     // LOGIN
     login: '/login',
 
     // ARTICLES
-    articles: {
-        sportsScience: '/articles/sports-science',
-        anomalyReporting: '/articles/anomaly-reporting',
-        vehicleMonitoring: '/articles/vehicle-monitoring'
-    }
+    article: (articleId: string) => `/mobile/${articleId}`, 
+    // articles: {
+    //     sportsScience: '/sports-science',
+    //     anomalyReporting: '/anomaly-reporting',
+    //     vehicleMonitoring: '/vehicle-monitoring'
+    // }
 
 }

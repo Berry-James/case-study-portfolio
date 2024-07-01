@@ -7,7 +7,6 @@ export interface IArticlesListProps {
 export interface IArticleListItem {
     title: string;
     icon: ReactNode;
-    href: string;
     skills: IArticleListItemSkill[];
     subtitle?: string;    
 }

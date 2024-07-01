@@ -14,10 +14,10 @@ export const usePaint: UsePaint = () => {
     const [paintSettings, paintSettingsDispatch] = useReducer(reducer, {
         colour: 'red',
         secondaryColour: '#FFF',
-        brush: paintBrushEnum.pencil,
+        brush: paintBrushEnum.brush,
         canvasDimensions: {
-            w: 300,
-            h: 200
+            w: 400,
+            h: 300
         },
         canvasZoom: 1
     })

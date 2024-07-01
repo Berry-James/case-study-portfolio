@@ -13,14 +13,15 @@ import Image from 'next/image';
  */
 export const TaskbarVolume = () => {
 
+    // CONTEXT
+    const { volume, isMuted, isMobile, handleSetIsMuted, handleSetVolume } = useContext(SystemContext);
+    
     // STATE
     /**
      * Is the volume slider popover open?
      */
     const [isOpen, setIsOpen] = useState(false);
 
-    // CONTEXT
-    const { volume, isMuted, handleSetIsMuted, handleSetVolume } = useContext(SystemContext);
 
     // HANDLERS
     /**
@@ -54,6 +55,7 @@ export const TaskbarVolume = () => {
             {/* VOLUME BUTTON */}
             <button
                 onClick={handleToggleIsOpen}
+                disabled={isMobile}
             >
                 <Image 
                     width={18}

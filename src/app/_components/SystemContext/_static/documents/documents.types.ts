@@ -8,9 +8,9 @@ import { ReactNode } from "react";
  * @member vehicleMonitoring
  */
 export enum documentIdEnum {
-    anomalyReporting,
-    sportsScience,
-    vehicleMonitoring
+    anomalyReporting = 'anomaly-reporting',
+    sportsScience = 'sport-science',
+    vehicleMonitoring = 'vehicle-monitoring'
 }
 
 /**

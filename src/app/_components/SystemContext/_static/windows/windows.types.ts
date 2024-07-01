@@ -105,7 +105,9 @@ export enum windowIdEnum {
     musicPlayer,
     paint,
     login,
-    image
+    image,
+    dialog,
+    minesweeper
 }
 
 export type WindowDict = Partial<Record<windowIdEnum, IWindow>>;

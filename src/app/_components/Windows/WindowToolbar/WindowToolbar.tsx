@@ -21,7 +21,7 @@ export const WindowToolbar = ({ items }: IWindowToolbarProps) => {
     /**
      * Store ref of open dropdown div
      */
-    const openMenuRef = useRef<HTMLDivElement | null>(null);
+    const openMenuRef = useRef<HTMLUListElement | null>(null);
 
     /**
      * Store remove event listener function
@@ -75,6 +75,9 @@ export const WindowToolbar = ({ items }: IWindowToolbarProps) => {
      * Callback which fires the action of a button within a dropdown, and then closes the dropdown
      */
     const handleClickItem = useCallback((e: React.MouseEvent<HTMLButtonElement>, action: WindowToolbarOption['action']) => {
+
+        e.stopPropagation();
+
         action(e);
         setOpenItemIndex(null);
     }, []);
@@ -106,24 +109,26 @@ export const WindowToolbar = ({ items }: IWindowToolbarProps) => {
                     {/* OPTIONS */}
                     {
                         item.options && item.options.length &&
-                        <div 
+                        <ul 
                             className={`win-bezel min-w-32 absolute left-2 bg-[var(--grey)] py-1 px-6 ${isActive ? 'block' : 'hidden'}`}
                             ref={openMenuRef}
-                            style={{
-                                bottom: '-2rem',
-                            }}
+                            // style={{
+                            //     bottom: '-2rem',
+                            // }}
                         >
                             {
                                 item.options.map((option, optionIndex) => (
-                                    <button 
-                                        key={`${option.name}-${optionIndex}`}
-                                        onClick={(e) => handleClickItem(e, option.action)}
-                                    >
-                                        {option.name}
-                                    </button>
+                                    <li key={`${option.name}-${optionIndex}`}>
+                                        <button 
+                                            key={`${option.name}-${optionIndex}`}
+                                            onClick={(e) => handleClickItem(e, option.action)}
+                                        >
+                                            {option.name}
+                                        </button>
+                                    </li>
                                 ))
                             }
-                        </div>
+                        </ul>
                     }
                    
                 </div>
@@ -145,3 +150,4 @@ export const WindowToolbar = ({ items }: IWindowToolbarProps) => {
     )
 
 }
+ 

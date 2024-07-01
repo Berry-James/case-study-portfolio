@@ -1,7 +1,6 @@
-import { FaCode, FaGlobeAsia, FaRunning, FaTruck, FaWpforms } from "react-icons/fa";
+import { FaCode, FaRunning, FaWpforms } from "react-icons/fa";
 import { IArticleListItem } from "../_components/Windows/PortfolioWindow/ArticlesList/ArticlesList.types";
-import { IconBaseProps, IconType } from "react-icons";
-import { PAGE_ROUTES } from "@/network/pageRoutes";
+import { IconBaseProps } from "react-icons";
 import { MdMemory, MdOutlineDesignServices } from "react-icons/md";
 import { TbCloud, TbPuzzle } from "react-icons/tb";
 import { BiTimer } from "react-icons/bi";
@@ -23,7 +22,6 @@ export const ARTICLES: IArticleListItem[] = [
     {
         title: 'Sports Science',
         icon: <FaRunning {...PROPS} />,
-        href: PAGE_ROUTES.articles.sportsScience,
         skills: [
             {
                 title: 'UX/UI',
@@ -46,7 +44,6 @@ export const ARTICLES: IArticleListItem[] = [
     {
         title: 'Anomaly Reporting',
         icon: <LuClipboardEdit {...PROPS}/>,
-        href: PAGE_ROUTES.articles.anomalyReporting,
         skills: [
             {
                 title: 'Dynamic Forms',
@@ -65,7 +62,6 @@ export const ARTICLES: IArticleListItem[] = [
     {
         title: 'Vehicle Monitoring',
         icon: <FiTruck {...PROPS} />,
-        href: PAGE_ROUTES.articles.vehicleMonitoring,
         skills: [
             {
                 title: 'Drag and Drop',

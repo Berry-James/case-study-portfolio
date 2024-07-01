@@ -49,6 +49,7 @@ export const useWindowInteractivity: UseWindowInteractivity = ({
     onDragEnd,
     onResizeEnd,
     initialWindowPosition,
+    windowPosition
 }) => {
 
     // STATE
@@ -364,6 +365,24 @@ export const useWindowInteractivity: UseWindowInteractivity = ({
         };
     
     }, [isMoving, onDrag]);
+
+    useEffect(() => {
+
+        Object.entries(windowPosition).forEach(([key, value]) => {
+            
+            if(position.current[key as keyof WindowPosition] !== value) {
+                position.current[key as keyof WindowPosition] = value
+            }
+        });
+
+        // Update based on new position
+        if(windowRef.current) {
+            windowRef.current.style.width = `${position.current.w}px`
+            windowRef.current.style.height = `${position.current.h}px`
+        }
+        
+
+    }, [windowPosition]);
     
     return {
         windowRef: legacyWindowRef, 

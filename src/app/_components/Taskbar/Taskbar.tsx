@@ -25,7 +25,7 @@ export const Taskbar = () => {
         <div 
             className={Styles.Taskbar}
             style={{
-                height: `${TASKBAR_HEIGHT}px`
+                height: `${TASKBAR_HEIGHT}px`,
             }}
         >
             <div className='flex items-center gap-1 h-full'>

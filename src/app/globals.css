@@ -105,6 +105,14 @@ button {
   box-shadow: var(--win-bezel-inverted-box-shadow);
 }
 
+.win-bezel-thick-inverted {
+  box-shadow: 2px 2px #FFF, inset 2px 2px #767676;
+}
+
+.win-bezel-thick {
+  box-shadow: 3px 3px #767676, -2px -2px #FFF, inset 2px 2px #FFF, inset 2px 2px #767676;
+}
+
 
 @layer utilities {
   .text-balance {

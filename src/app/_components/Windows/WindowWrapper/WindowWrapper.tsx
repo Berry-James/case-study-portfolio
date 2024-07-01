@@ -70,7 +70,8 @@ export const WindowWrapper = ({
         onDrag: handleDrag,
         onDragEnd: handleMoveResizeEnd,
         onResizeEnd: handleMoveResizeEnd,
-        initialWindowPosition: defaultWindowPosition
+        initialWindowPosition: defaultWindowPosition,
+        windowPosition: windows[instanceId].position
     });
 
     const isActive = useMemo(() => activeWindowInstanceId === instanceId, [activeWindowInstanceId, instanceId]);

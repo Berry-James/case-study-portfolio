@@ -1,6 +1,6 @@
 'use client';
 import React, { PropsWithChildren, createContext, useCallback, useEffect, useState } from 'react';
-import { ISystemContext } from './SystemContext.types';
+import { ISystemContext, ISystemContextProviderProps } from './SystemContext.types';
 import { wallpaperIdEnum } from './_static/theme/theme.types';
 import { IWindow, IWindowTemplate, WindowPosition, windowIdEnum, windowStatusEnum } from './_static/windows/windows.types';
 import { useSave } from './hooks/useSave';
@@ -17,6 +17,7 @@ export const SystemContext = createContext<ISystemContext>({
     highlightColour: SYSTEM_HIGHLIGHT_COLOURS[0],
     volume: .8,
     isMuted: false,
+    isMobile: false,
     handleSetIsMuted: (newIsMuted: boolean) => undefined,
     handleSetVolume: (newVolume: number) => undefined,
     handleSetHighlightColour: (newHighlightColour: string) => undefined,
@@ -30,7 +31,7 @@ export const SystemContext = createContext<ISystemContext>({
     restoreSave: () => undefined,
 });
 
-export const SystemContextProvider = ({ children }: PropsWithChildren) => {
+export const SystemContextProvider = ({ children, initialState }: ISystemContextProviderProps) => {
 
     // STATE
     const [windows, setWindows] = useState<Record<string, IWindow>>({});
@@ -129,8 +130,6 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
     const handleSetHighlightColour = useCallback((newHighlightColour: string) => setHighlightColour(newHighlightColour), []);
 
     const handleOpenWindow = (id: windowIdEnum, windowOverride?: Partial<IWindowTemplate>) => {
-
-        console.log('### OVERRIDE', windowOverride);
 
         // If window template is 'solo'
         if(WINDOWS_DICT[id].rules?.solo) {
@@ -274,6 +273,7 @@ export const SystemContextProvider = ({ children }: PropsWithChildren) => {
                 highlightColour,
                 volume,
                 isMuted,
+                isMobile: initialState.isMobile,
                 handleSetIsMuted,
                 handleSetVolume,
                 handleSetHighlightColour,

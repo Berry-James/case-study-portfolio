@@ -15,9 +15,7 @@ import dynamic from 'next/dynamic';
 export const Home = () => {
 
     return (
-        <SystemContextProvider>
-            <HomeContent />
-        </SystemContextProvider>
+        <HomeContent />
     )
 
 }

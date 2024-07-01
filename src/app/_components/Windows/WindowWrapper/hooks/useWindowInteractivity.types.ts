@@ -19,6 +19,7 @@ export type UseWindowInteractivity = (args: {
     onDragEnd?: ({ x, y }: { x: number, y: number }) => void,
     onResizeEnd?: ({ w, h }: { w: number, h: number }) => void,
     initialWindowPosition?: Partial<WindowPosition>
+    windowPosition: WindowPosition
 }) => ({
     windowRef: (elem: HTMLDivElement | null) => void, 
     moveButtonRef: (elem: HTMLElement | null) => void, 

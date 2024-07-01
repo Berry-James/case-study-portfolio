@@ -3,6 +3,9 @@ import { IArticlesListItemProps } from './ArticlesListItem.types';
 import Styles from './ArticleListItem.module.css';
 import { SystemContext } from '@/app/_components/SystemContext/SystemContext';
 import { IWindowTemplate, windowIdEnum } from '@/app/_components/SystemContext/_static/windows/windows.types';
+import { isMobile } from 'react-device-detect';
+import { useRouter } from 'next/navigation';
+import { PAGE_ROUTES } from '@/network/pageRoutes';
 
 export const ArticlesListItem = ({ 
     id,
@@ -14,8 +17,16 @@ export const ArticlesListItem = ({
     // CONTEXT
     const { handleOpenWindow } = useContext(SystemContext);
 
+    // ROUTER
+    const router = useRouter();
+
     // HANDLERS
     const handleClickArticle = () => {
+
+        if(isMobile) {
+            router.push(PAGE_ROUTES.article(id))
+            return
+        }
 
         const customWindow: Partial<IWindowTemplate> = {
             componentProps: {

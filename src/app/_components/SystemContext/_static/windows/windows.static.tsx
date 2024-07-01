@@ -8,6 +8,11 @@ import { DocumentWindow } from "@/app/_components/Windows/DocumentWindow/Documen
 import { IDocumentWindowProps } from "@/app/_components/Windows/DocumentWindow/DocumentWindow.types";
 import { MusicPlayerWindow } from "@/app/_components/Windows/MusicPlayerWindow/MusicPlayerWindow";
 import { PaintWindow } from "@/app/_components/Windows/PaintWindow/PaintWindow";
+import { LoginWindow } from "@/app/login/_components/LoginWindow/LoginWindow";
+import { ImageWindow } from "@/app/_components/Windows/ImageWindow/ImageWindow";
+import { DialogWindow } from "@/app/_components/Windows/DialogWindow/DialogWindow";
+import { IDialogWindowProps } from "@/app/_components/Windows/DialogWindow/DialogWindow.types";
+import { MinesweeperWindow } from "@/app/_components/Windows/MinesweeperWindow/MinesweeperWindow";
 
 // ICONS
 import NotepadIcon from '../../../../_static/icons/png/notepad-4.png';
@@ -16,15 +21,30 @@ import MediaPlayerIcon from '../../../../_static/icons/png/media_player-0.png';
 import DocumentViewerIcon from '../../../../_static/icons/png/document-0.png';
 import ThemeIcon from '../../../../_static/icons/png/themes-4.png';
 import PaintIcon from '../../../../_static/icons/png/paint_old-1.png';
-import { LoginWindow } from "@/app/login/_components/LoginWindow/LoginWindow";
-import { ImageWindow } from "@/app/_components/Windows/ImageWindow/ImageWindow";
-
+import DialogIcon from '../../../../_static/icons/png/msg_information-0.png';
+import LoginIcon from '../../../../_static/icons/png/users_key-4.png';
 
 /**
  * Static dictionary of ALL windows/applications in the system.
  * Indexed by the ID of each window within windowIdEnum for faster lookups
  */
 export const WINDOWS_DICT: Record<windowIdEnum, IWindowTemplate> = {
+    [windowIdEnum.dialog]: {
+        id: windowIdEnum.dialog,
+        title: 'Notification',
+        rules: {
+            solo: false,
+            disableStartMenuShortcut: true,
+            disableMinimise: true,
+        },
+        position: {
+            x: 150,
+            y: 20,
+            z: 0,
+            w: 240,
+            h: 140
+        }
+    },
     [windowIdEnum.login]: {
         id: windowIdEnum.login,
         title: 'Enter Password',
@@ -62,7 +82,7 @@ export const WINDOWS_DICT: Record<windowIdEnum, IWindowTemplate> = {
         title: 'Case Studies',
         rules: {
             solo: true,
-        },        
+        },
         position: {
             x: 150,
             y: 20,
@@ -76,7 +96,7 @@ export const WINDOWS_DICT: Record<windowIdEnum, IWindowTemplate> = {
         title: 'System Theme',
         rules: {
             solo: true,
-        },    
+        },
         position: {
             x: 150,
             y: 20,
@@ -90,7 +110,7 @@ export const WINDOWS_DICT: Record<windowIdEnum, IWindowTemplate> = {
         title: 'Notepad',
         rules: {
             solo: false,
-        },    
+        },
         position: {
             x: 150,
             y: 20,
@@ -104,7 +124,7 @@ export const WINDOWS_DICT: Record<windowIdEnum, IWindowTemplate> = {
         title: 'Document View',
         rules: {
             solo: false,
-        },    
+        },
         position: {
             x: 150,
             y: 20,
@@ -118,7 +138,7 @@ export const WINDOWS_DICT: Record<windowIdEnum, IWindowTemplate> = {
         title: 'Music Player',
         rules: {
             solo: true,
-        },    
+        },
         position: {
             x: 150,
             y: 20,
@@ -132,7 +152,7 @@ export const WINDOWS_DICT: Record<windowIdEnum, IWindowTemplate> = {
         title: 'Paint',
         rules: {
             solo: false,
-        },    
+        },
         position: {
             x: 150,
             y: 20,
@@ -140,7 +160,21 @@ export const WINDOWS_DICT: Record<windowIdEnum, IWindowTemplate> = {
             w: 600,
             h: 500
         }
-    }
+    },
+    [windowIdEnum.minesweeper]: {
+        id: windowIdEnum.minesweeper,
+        title: 'Minesweeper',
+        rules: {
+            solo: false,
+        },
+        position: {
+            x: 150,
+            y: 20,
+            z: 0,
+            w: 600,
+            h: 500
+        }
+    },
 }
 
 const ICON_PROPS: Partial<ImageProps> & { alt: string } = {
@@ -171,8 +205,7 @@ export const WINDOWS_COMPONENT_MAP: Record<windowIdEnum, (props?: any) => { comp
         component: <ImageWindow {...props} />,
         icon: <Image
             src={PortfolioIcon}
-            {...ICON_PROPS} 
-        />
+            {...ICON_PROPS} />
     }),
     [windowIdEnum.theme]: (props: IWindowComponentProps) => ({
         component: <ThemeWindow {...props} />,
@@ -192,20 +225,38 @@ export const WINDOWS_COMPONENT_MAP: Record<windowIdEnum, (props?: any) => { comp
             src={DocumentViewerIcon}
             {...ICON_PROPS} />
     }),
-    [windowIdEnum.musicPlayer]: (props: IDocumentWindowProps) => ({
+    [windowIdEnum.musicPlayer]: (props: IWindowComponentProps) => ({
         component: <MusicPlayerWindow {...props} />,
         icon: <Image
             src={MediaPlayerIcon}
             {...ICON_PROPS} />
     }),
-    [windowIdEnum.paint]: (props: IDocumentWindowProps) => ({
+    [windowIdEnum.paint]: (props: IWindowComponentProps) => ({
         component: <PaintWindow {...props} />,
         icon: <Image
             src={PaintIcon}
-            {...ICON_PROPS} />
+            {...ICON_PROPS} 
+        />
     }),
-    [windowIdEnum.login]: (props: IDocumentWindowProps) => ({
+    [windowIdEnum.login]: (props: IWindowComponentProps) => ({
         component: <LoginWindow {...props} />,
-        icon: <div />
+        icon: <Image 
+            src={LoginIcon}
+            {...ICON_PROPS}
+        />
+    }),
+    [windowIdEnum.dialog]: (props: IDialogWindowProps) => ({
+        component: <DialogWindow {...props} />,
+        icon: <Image
+            src={DialogIcon}
+            {...ICON_PROPS} 
+        />
+    }),
+    [windowIdEnum.minesweeper]: (props: IWindowComponentProps) => ({
+        component: <MinesweeperWindow {...props} />,
+        icon: <Image
+            src={DialogIcon}
+            {...ICON_PROPS} 
+        />
     })
 }

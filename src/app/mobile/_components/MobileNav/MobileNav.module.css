@@ -1,0 +1,13 @@
+.MobileNav {
+    background: linear-gradient(90deg, rgb(66, 135, 245), color-mix(in srgb, rgb(66, 135, 245) 50%, white));
+    height: 24px;
+    min-height: 24px;
+    max-height: 24px;
+    overflow: hidden;
+    display: flex;
+    gap: 6px;
+    align-items: center;
+    padding: 0 4px;
+    font-weight: bold;
+    color: #FFF;
+}

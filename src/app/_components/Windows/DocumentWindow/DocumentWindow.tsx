@@ -52,7 +52,7 @@ const DocumentWindowContent = () => {
     }, [activeDocumentId]);
 
     return (
-        <div className='p-2 mx-12'>
+        <div className='p-2 md:mx-12'>
 
             {/* DOCUMENT SELECT */}
             <div className='flex flex-col mb-2'>
@@ -79,7 +79,7 @@ const DocumentWindowContent = () => {
             {
                 activeDocument?.component &&
                 <div 
-                    className='bg-white px-8 py-12'
+                    className='bg-white px-2 md:px-8 py-4 md:py-12'
                     style={{
                         fontFamily: 'var(--font-document)'
                     }}

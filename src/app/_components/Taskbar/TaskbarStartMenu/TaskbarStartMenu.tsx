@@ -3,6 +3,8 @@ import React, { useContext } from 'react';
 import Styles from './TaskbarStartMenu.module.css';
 import { TaskbarStartMenuApps } from './TaskbarStartMenuApps/TaskbarStartMenuApps';
 import { TaskbarStartMenuContext, TaskbarStartMenuContextProvider } from './context/TaskbarStartMenuContext';
+import { isMobile } from 'react-device-detect';
+import { SystemContext } from '../../SystemContext/SystemContext';
 
 /**
  * Start menu displayed on the Taskbar
@@ -28,6 +30,7 @@ export const TaskbarStartMenu = () => {
 const TaskbarStartMenuContent = () => {
 
     // CONTEXT
+    const { isMobile } = useContext(SystemContext);
     const { isOpen, startMenuRef, startButtonRef, handleSetIsOpen } = useContext(TaskbarStartMenuContext);
 
     // HANDLERS
@@ -45,6 +48,10 @@ const TaskbarStartMenuContent = () => {
                 className={'text-button w-12 h-full flex justify-center items-center'}
                 onClick={handleClickStartButton}
                 ref={startButtonRef}
+                disabled={isMobile}
+                style={{
+                    pointerEvents: isMobile ? 'none' : 'unset'
+                }}
             >
                 Begin
             </button>
