@@ -14,7 +14,7 @@ export enum articleIndexHrefEnum {
     dynamicForms = 'dynamicForms',
     pdfGeneration = 'pdfGeneration',
     monorepo = 'monorepo',
-    dataFetching = 'dataFetching'
+    // dataFetching = 'dataFetching'
 }
 
 /**
@@ -36,9 +36,9 @@ export const ARTICLE_INDEX: IArticleIndexSection[] = [
         hrefId: articleIndexHrefEnum.pdfGeneration,
         icon: <FaCode fontSize={'1.5rem'} />
     },
-    {
-        title: 'Data Fetching',
-        hrefId: articleIndexHrefEnum.dataFetching,
-        icon: <TbCloud fontSize={'1.5rem'} />
-    }
+    // {
+    //     title: 'Data Fetching',
+    //     hrefId: articleIndexHrefEnum.dataFetching,
+    //     icon: <TbCloud fontSize={'1.5rem'} />
+    // }
 ]

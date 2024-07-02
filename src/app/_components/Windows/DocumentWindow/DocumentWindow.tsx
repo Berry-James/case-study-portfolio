@@ -79,7 +79,7 @@ const DocumentWindowContent = () => {
             {
                 activeDocument?.component &&
                 <div 
-                    className='bg-white px-2 md:px-8 py-4 md:py-12'
+                    className='bg-white px-2 md:px-8 py-4'
                     style={{
                         fontFamily: 'var(--font-document)'
                     }}

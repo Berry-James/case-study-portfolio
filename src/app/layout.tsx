@@ -1,6 +1,5 @@
 import type { Metadata } from "next";
 import "./globals.css";
-import { Silkscreen, Roboto, Tomorrow, Pixelify_Sans } from "next/font/google";
 import { SystemContextProvider } from "./_components/SystemContext/SystemContext";
 import localFont from 'next/font/local';
 import { getSelectorsByUserAgent } from "react-device-detect";
@@ -27,8 +26,7 @@ const documentFont = localFont({
 // const roboto = Tomorrow({ subsets: ['latin'], weight: '400', variable: '--font-primary' });
 
 export default function RootLayout({
-  children,
-  anomalyReporting
+  children
 }: Readonly<{
   children: React.ReactNode;
   anomalyReporting: React.ReactNode

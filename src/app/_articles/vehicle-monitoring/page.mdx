@@ -3,14 +3,11 @@ import { ArticleIndex } from '../_components/ArticleIndex/ArticleIndex';
 import { ArticleCodeBlock } from '../_components/ArticleCodeBlock/ArticleCodeBlock';
 import { ImgWrapper } from '../_components/ImgWrapper/ImgWrapper';
 import { ARTICLE_INDEX, articleIndexHrefEnum } from './_static/static';
+
 import ImgMonitoringPage from '../../../../public/assets/images/vehicle-monitoring/monitoring.png'
 import ImgDashboardPage from '../../../../public/assets/images/vehicle-monitoring/dashboard.png'
 import ImgUnitBuilderUnit from '../../../../public/assets/images/vehicle-monitoring/unit_builder_unit.png'
 import ImgUnitBuilderSensors from '../../../../public/assets/images/vehicle-monitoring/unit_builder_sensors.png'
-
-export const metadata = {
-  title: "Vehicle Monitoring"
-};
 
 <ArticleHeader 
     title={'Big, Real Time Data Processing'}
@@ -29,15 +26,16 @@ export const metadata = {
 />
 <br />
 
-###### Terminology
-Before we jump into this project breakdown, it’s necessary to go over a few terms that you’ll see popping up throughout.
+## Terminology
+Before we jump into this project breakdown, it's necessary to go over a few terms that you'll see popping up throughout.
 
-Prime Mover - A vehicle with an engine think a truck, which is pulling some trailers
-Unit - A trailer (or in fact, anything else) being pulled by a Prime Mover
-Sensor - This refers to an individual sensor, within the tyre of EITHER a unit or a prime mover
+<br />
+- **Prime Mover** - A vehicle with an engine think a truck, which is pulling some trailers
+- **Unit** - A trailer (or in fact, anything else) being pulled by a Prime Mover
+- **Sensor** - This refers to an individual sensor, within the tyre of EITHER a unit or a prime mover
 <br />
 
-## Project Brief
+## About the Project
 Our team was tasked with building a system that would digest and display real-time tyre data from heavy vehicles.  Our clients had come to us with the vehicle-side of the technology complete and required assistance in transforming this data into a pleasing UI.
 
 The system would be comprised of 3 major sections:
@@ -48,15 +46,32 @@ A dynamic vehicle builder, with the ability to assign custom sensor IDs to speci
 My role in this project would be as lead frontend developer and UX/UI designer.  
 <br />
 
-## ArchitectureTech Stack
-_Frontend_
-Next.JS
+## Tech Stack
+<table>
+    <thead>
+        <tr>
+            <td>Front End</td>
+            <td>Back End</td>
+        </tr>
+    </thead>
+   
+    <tr>
+        <td>[Next.js](https://nextjs.org/)</td>
+        <td>[Laravel](https://laravel.com/)</td>
+    </tr>
+    <tr>
+        <td>[MUI](https://mui.com/)</td>
+        <td>[Go](https://go.dev/)</td>
+    </tr>
+    <tr>
+        <td>[SWR](https://swr.vercel.app/)</td>
+        <td></td>
+    </tr>
+</table>
 
-_Backend_
-Laravel (primary backend)
-Go (Data ingestion layer)
 <br />
 
+<a id={articleIndexHrefEnum.realTimeData} />
 ## Dashboard
 The dashboard would need to provide a complete overview of every vehicle in the system - their GPS locations and current status (if applicable).  This was accomplished with a notification section in the top half of the page, and a map displaying vehicle locations in the bottom half.
 <br />
@@ -68,7 +83,7 @@ The dashboard would need to provide a complete overview of every vehicle in the 
 />
 <br />
 
-###### Real-time vehicle monitoring
+## Real-time vehicle monitoring
 The first and decidedly daunting challenge was to come up with a method to display the ingested vehicle data.  The monitoring page would need to clearly display the status of each tyre as its primary objective, but provide the ability to drill further down into the specifics of each tyre, such as temperature and pressure.
 <br />
 
@@ -87,7 +102,7 @@ Displaying a top-down mockup of the vehicle gives the user an immediate, visual 
 Hover tooltips are used to display further information about the tyre.
 <br />
 
-###### Dynamically Generating the Vehicle
+## Dynamically Generating the Vehicle
 The system should be able to handle vehicles of all different shapes and sizes, hence the need to dynamically generate these top-down mockups on the fly.  
 
 In order to do this, I chose to represent each axle as an svg image.  This presented three distinct advantages:
@@ -97,13 +112,15 @@ In order to do this, I chose to represent each axle as an svg image.  This prese
 3. No Third-Party Library - This helps with performance and reliability by reducing npm package bloat and removing the learning curve of a graphics library (easier for any dev to maintain down the track).
 <br />
 
-###### Data Fetching
+<a id={articleIndexHrefEnum.dataFetching} />
+## Data Fetching
 We needed to ensure the data on the vehicle monitoring page was kept up to date automatically.  Ideally, this would’ve involved using Server Sent Events, however given time and budget constraints (classic), we decided to stick with a polling system as a short-ish term solution.
 
 In order to make the polling process as seamless as possible for the end user, the SWR npm package would be used.  It has built-in handlers for interval revalidation, along with some other fantastic quality of life utilities.  Furthermore, by keeping all logic for the vehicle monitoring API endpoint inside one file, it becomes easier to maintain.
 <br />
 
-###### Building The Vehicles
+<a id={articleIndexHrefEnum.dynamicForms} />
+## Building The Vehicles
 One last section was required before this system could go live - a form to build and maintain existing vehicles.  The user will be able to:
 
 1. Select from existing units, or build a new unit from scratch out of predefined axles
@@ -134,6 +151,7 @@ I chose to try DnDKit as a drag and drop library, as the user would need a way t
 <br />
 
 ## The Final Product
-In software, nothing makes you more proud than knowing something you’ve worked hard to build, is being actively used by a company to a great deal of success.  Not more than a week into going live, our system had correctly identified a failing tyre on a heavy vehicle.  Dispatch were able to phone the driver and notify him of the issue only moments before the tyre had a blowout.
+In software, nothing makes you more proud than knowing something you've worked hard to build, is being actively used by a company to a great deal of success.  Not more than a week into going live, our system had correctly identified a failing tyre on a heavy vehicle.  Dispatch were able to phone the driver and notify him of the issue only moments before the tyre had a blowout.
 
+<br />
 From a technical perspective, this project taught me a great deal about building dynamic forms with react-hook-form, using svg files for providing visual updates in real-time and implementing drag and drop with dnd kit .

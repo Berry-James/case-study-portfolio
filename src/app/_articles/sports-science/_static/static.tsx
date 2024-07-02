@@ -14,7 +14,6 @@ export enum articleIndexHrefEnum {
     uxUi = 'uxUi',
     webWorkers = 'webWorkers',
     memoryManagement = 'memoryManagement',
-    dataFetching = 'dataFetching'
 }
 
 /**
@@ -35,10 +34,5 @@ export const ARTICLE_INDEX: IArticleIndexSection[] = [
         title: 'Memory Management',
         hrefId: articleIndexHrefEnum.memoryManagement,
         icon: <MdMemory fontSize={'1.5rem'} />
-    },
-    {
-        title: 'Data Fetching',
-        hrefId: articleIndexHrefEnum.dataFetching,
-        icon: <TbCloud fontSize={'1.5rem'} />
     }
 ]

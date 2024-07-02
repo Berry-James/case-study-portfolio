@@ -37,6 +37,12 @@ a {
   font-weight: 600;
 }
 
+ol {
+  list-style: decimal;
+  margin: inherit;
+  padding: 12px 24px;
+}
+
 /* TYPOGRAPHY */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
@@ -70,8 +76,17 @@ code {
   font-size: .8rem;
 }
 
-button {
- 
+table {
+  background: var(--lightGrey);
+  padding: 8px;
+}
+
+thead {
+  background: var(--grey);
+}
+
+td {
+  padding: 4px;
 }
 
 /* BUTTONS */

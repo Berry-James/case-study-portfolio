@@ -31,7 +31,7 @@ export const MusicPlayerTrackList = () => {
             
             {/* LIST */}
             <ol
-                className='px-2 bg-white'
+                className='px-2 bg-white list-none'
             >
                 {MUSIC_PLAYER_WINDOW_TRACK_LIST.map((track, trackIndex) => {
                     return (

@@ -1,9 +1,7 @@
-import { FaCode, FaWpforms } from "react-icons/fa";
+import { FaWpforms } from "react-icons/fa";
 import { IArticleIndexSection } from "../../_components/ArticleIndex/ArticleIndex.types";
-import { MdMemory, MdOutlineDesignServices } from "react-icons/md";
 import { TbCloud } from "react-icons/tb";
 import { BiTimer } from "react-icons/bi";
-import { LuPaintbrush } from "react-icons/lu";
 
 /**
  * @enum
@@ -13,10 +11,9 @@ import { LuPaintbrush } from "react-icons/lu";
  * @member dataFetching
  */
 export enum articleIndexHrefEnum {
-    uxUi = 'uxUi',
-    webWorkers = 'webWorkers',
-    memoryManagement = 'memoryManagement',
-    dataFetching = 'dataFetching'
+    dataFetching = 'dataFetching',
+    dynamicForms = 'dynamicForms',
+    realTimeData = 'realTimeData',
 }
 
 /**
@@ -24,23 +21,18 @@ export enum articleIndexHrefEnum {
  */
 export const ARTICLE_INDEX: IArticleIndexSection[] = [
     {
+        title: 'Data Fetching',
+        hrefId: articleIndexHrefEnum.dataFetching,
+        icon: <TbCloud fontSize={'1.5rem'} />
+    },
+    {
         title: 'Dynamic Forms',
-        hrefId: articleIndexHrefEnum.uxUi,
+        hrefId: articleIndexHrefEnum.dynamicForms,
         icon: <FaWpforms fontSize={'1.5rem'} />
     },
     {
         title: 'Real Time Data',
-        hrefId: articleIndexHrefEnum.webWorkers,
+        hrefId: articleIndexHrefEnum.realTimeData,
         icon: <BiTimer fontSize={'1.5rem'} />
-    },
-    {
-        title: 'Redraw Optimisation',
-        hrefId: articleIndexHrefEnum.memoryManagement,
-        icon: <LuPaintbrush fontSize={'1.5rem'} />
-    },
-    {
-        title: 'Data Fetching',
-        hrefId: articleIndexHrefEnum.dataFetching,
-        icon: <TbCloud fontSize={'1.5rem'} />
     }
 ]
