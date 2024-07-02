@@ -11,7 +11,9 @@ import { DIFFICULTIES } from './MinesweeperWindow.static';
 import Image from 'next/image';
 
 // ICONS
-import SmileIcon from '../../../_static/icons/png/utopia_smiley.png';
+import SmileIconInProgress from '../../../_static/icons/png/utopia_smiley.png';
+import SmileIconWon from '../../../_static/icons/png/utopia_smiley-sunglasses.png';
+import SmileIconLost from '../../../_static/icons/png/utopia_smiley-dead.png';
 
 /**
  * Simple clone of the Windows 98 version of minesweeper
@@ -26,7 +28,6 @@ export const MinesweeperWindow = (props: IWindowComponentProps) => {
     const { handleSetWindowPosition } = useContext(SystemContext);
 
     // STATE
-
     /**
      * Status of the game (i.e. in progress, won, lost etc)
      */
@@ -49,7 +50,6 @@ export const MinesweeperWindow = (props: IWindowComponentProps) => {
      * Sets values such as number of mines and size of map
      */
     const [difficulty, setDifficulty] = useState<Difficulty>(DIFFICULTIES[difficultyEnum.easy])
-
 
     // HANDLERS
     /**
@@ -153,7 +153,7 @@ export const MinesweeperWindow = (props: IWindowComponentProps) => {
         }
 
         // Create mines
-        for(let i = 0; i <= difficulty.noOfMines; i++) {
+        for(let i = 0; i < difficulty.noOfMines; i++) {
             putRandomMine();
         }
 
@@ -343,9 +343,32 @@ export const MinesweeperWindow = (props: IWindowComponentProps) => {
      */
     useEffect(() => {
         if(computedFlippedCellsMeta.unflippedCount === difficulty.noOfMines) {
-            setGameStatus(gameStatusEnum.lost);
+            setGameStatus(gameStatusEnum.won);
         }
     }, [computedFlippedCellsMeta]);
+
+    /**
+     * Determines which smiley to show based on game status
+     * 
+     * @returns A smiley dependent on game status
+     */
+    const getSmileIcon = () => {
+        switch(gameStatus) {
+            case gameStatusEnum.pending:
+            case gameStatusEnum.inProgress: {
+                return SmileIconInProgress
+            }
+            case gameStatusEnum.won: {
+                return SmileIconWon
+            }
+            case gameStatusEnum.lost: {
+                return SmileIconLost
+            }
+            default: {
+                return SmileIconInProgress
+            }
+        }
+    }
 
     return (
         <div className='flex flex-col h-max w-max'>
@@ -384,10 +407,10 @@ export const MinesweeperWindow = (props: IWindowComponentProps) => {
 
                 {/* RESET BUTTON */}
                 <button 
-                    className='icon-button !p-0 w-max' 
+                    className='icon-button !p-0.5 w-max' 
                     onClick={handleSetupBoard}
                 >
-                    <Image alt='' src={SmileIcon} width={24} height={24} style={{ imageRendering: 'pixelated' }} />    
+                    <Image alt='' src={getSmileIcon()} width={24} height={24} style={{ imageRendering: 'pixelated' }} />    
                 </button>
 
                 {/* GAME TIMER */}

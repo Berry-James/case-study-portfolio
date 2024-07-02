@@ -180,12 +180,12 @@ export const TaskbarItem = ({ title, icon, status, instanceId }: ITaskbarItemPro
             >
 
                 {/* ICON */}
-                <div className={'w-6 h-full'}>
+                <div className={'w-4 h-4'}>
                     {icon}
                 </div>
 
                 {/* WINDOW NAME */}
-                <span>{title}</span>
+                <span className='leading-none overflow-hidden text-ellipsis whitespace-nowrap'>{title}</span>
                 
             </button>
         </>

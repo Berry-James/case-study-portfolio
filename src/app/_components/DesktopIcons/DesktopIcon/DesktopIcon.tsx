@@ -58,7 +58,7 @@ export const DesktopIcon = ({ id, title, icon, windowId }: IDesktopIconProps) =>
         >
 
             {/* ICON */}
-            <div className='w-8 h-8'>
+            <div className='w-8 h-8 flex'>
                 { icon } 
             </div>
 

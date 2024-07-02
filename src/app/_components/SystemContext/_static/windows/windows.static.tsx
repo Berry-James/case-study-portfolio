@@ -23,6 +23,7 @@ import ThemeIcon from '../../../../_static/icons/png/themes-4.png';
 import PaintIcon from '../../../../_static/icons/png/paint_old-1.png';
 import DialogIcon from '../../../../_static/icons/png/msg_information-0.png';
 import LoginIcon from '../../../../_static/icons/png/users_key-4.png';
+import MinesweeperIcon from '../../../../_static/icons/png/game_mine_1-0.png';
 
 /**
  * Static dictionary of ALL windows/applications in the system.
@@ -179,7 +180,9 @@ export const WINDOWS_DICT: Record<windowIdEnum, IWindowTemplate> = {
 
 const ICON_PROPS: Partial<ImageProps> & { alt: string } = {
     style: {
-        width: '100%',
+        // width: '100%',
+        width: 'auto',
+        height: 'auto',
         imageRendering: 'pixelated'
     },
     alt: '',
@@ -255,7 +258,7 @@ export const WINDOWS_COMPONENT_MAP: Record<windowIdEnum, (props?: any) => { comp
     [windowIdEnum.minesweeper]: (props: IWindowComponentProps) => ({
         component: <MinesweeperWindow {...props} />,
         icon: <Image
-            src={DialogIcon}
+            src={MinesweeperIcon}
             {...ICON_PROPS} 
         />
     })

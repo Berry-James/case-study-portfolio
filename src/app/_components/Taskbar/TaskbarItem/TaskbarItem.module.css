@@ -1,10 +1,9 @@
 .TaskbarItem {
     height: 100%;
-    width: max-content;
+    width: 180px;
     min-width: 60px;
-    padding: 4px;
+    padding: 4px 8px;
     display: flex;
-    justify-content: center;
     align-items: center;
     gap: 4px;
     box-shadow: 1px 1px rgba(0,0,0,0.5), inset 2px 2px #FFF
