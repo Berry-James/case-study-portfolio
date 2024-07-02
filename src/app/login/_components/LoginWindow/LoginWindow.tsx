@@ -2,16 +2,16 @@ import React, { useContext, useRef } from 'react';
 import { IDocumentWindowProps } from '@/app/_components/Windows/DocumentWindow/DocumentWindow.types';
 import { WindowActions } from '@/app/_components/Windows/WindowActions/WindowActions';
 import { SystemContext } from '@/app/_components/SystemContext/SystemContext';
-import { logInAction } from '@/actions/login.actions';
 import Image from 'next/image';
-
-// IMAGES
-import BrandingImage from '../../../_static/imgs/branding.png';
-import SpaceImage from '../../../_static/imgs/space.png';
 import { windowIdEnum } from '@/app/_components/SystemContext/_static/windows/windows.types';
 import { LoginWindowSuccessDialog } from './LoginWindowSuccessDialog/LoginWindowSuccessDialog';
 import { centerWindow } from '@/utils/windowUtils';
 import { WINDOWS_DICT } from '@/app/_components/SystemContext/_static/windows/windows.static';
+
+// IMAGES
+import BrandingImage from '../../../_static/imgs/branding.png';
+import CloudBg from '../../../_static/imgs/welcome_clouds.jpg';
+
 
 export const LoginWindow = (props: IDocumentWindowProps) => {
 
@@ -47,7 +47,7 @@ export const LoginWindow = (props: IDocumentWindowProps) => {
             <div 
                 className='p-4'
                 style={{
-                    background: `linear-gradient(0deg, rgba(192,192,192,1) 45%, rgba(192,192,192,0) 100%), url("${SpaceImage.src}") top/cover no-repeat`
+                    background: `linear-gradient(0deg, rgba(192,192,192,1) 45%, rgba(192,192,192,0) 100%), url("${CloudBg.src}") top/cover no-repeat`
                 }}
             >
                 {/* LOGO */}
@@ -73,7 +73,7 @@ export const LoginWindow = (props: IDocumentWindowProps) => {
                         ref={userSelectRef}
                         style={{ overflow: 'auto' }}
                         className='win-bezel-inverted'
-                        defaultValue={'1'}
+                        defaultValue={['1']}
                     >
                         <option value={'1'}>James</option>
                     </select>
