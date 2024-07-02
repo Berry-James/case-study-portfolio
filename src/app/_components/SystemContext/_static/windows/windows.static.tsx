@@ -130,8 +130,8 @@ export const WINDOWS_DICT: Record<windowIdEnum, IWindowTemplate> = {
             x: 150,
             y: 20,
             z: 0,
-            w: 600,
-            h: 500
+            w: 500,
+            h: 700
         }
     },
     [windowIdEnum.musicPlayer]: {

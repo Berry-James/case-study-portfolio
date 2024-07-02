@@ -39,21 +39,12 @@ export const ArticlesListItem = ({
 
     return (
         <div className={Styles.Article}>
-            {/* <a 
-                href={href} 
-                className={`animate-fade-up h-full w-full block`}
-                style={{
-                    animationDelay: `${100 + index * 100}ms`
-                }}
-            > */}
-                <button className='text-button w-full h-full relative' onClick={handleClickArticle}>
-                    <div className='w-full h-full p-4 flex flex-col justify-center items-center gap-2'>
-                        { icon }
-                        <span>{ title }</span>
-                    </div>
-                </button>
-            {/* </a> */}
-            {/* <ArticlesListItemSkills skills={skills} /> */}
+            <button className='text-button w-full h-full relative' onClick={handleClickArticle}>
+                <div className='w-full h-full p-4 flex flex-col justify-center items-center gap-2'>
+                    { icon }
+                    <span>{ title }</span>
+                </div>
+            </button>
         </div>
         
      

@@ -1,5 +1,6 @@
-import React, { ReactNode } from 'react';
+import React, { AnchorHTMLAttributes, ReactNode } from 'react';
 import { FaGithub, FaPhone } from 'react-icons/fa';
+import { GrDocumentPdf } from 'react-icons/gr';
 import { IoLogoLinkedin } from 'react-icons/io5';
 import { MdAlternateEmail } from 'react-icons/md';
 
@@ -22,19 +23,24 @@ export const Contact = () => {
                     href={process.env.NEXT_PUBLIC_GITHUB_URL}
                     icon={<FaGithub />}
                 />
+                <ContactItem 
+                    href={'/assets/documents/James_Berry_Resume.pdf'}
+                    download={'James_Berry_Resume.pdf'}
+                    icon={<GrDocumentPdf />}
+                />
             </div>
         </div>
     )
 
 }
 
-const ContactItem = ({ icon, href }: { text?: string, icon: ReactNode, href: string | undefined; message?: string }) => (
+const ContactItem = (props: AnchorHTMLAttributes<HTMLAnchorElement> & { icon: ReactNode }) => (
     <a 
-        href={href} 
+        href={props.href} 
         className='cursor-pointer'
         target='_blank'
         rel='noreferrer'
     >
-        {icon}
+        {props.icon}
     </a>
 )

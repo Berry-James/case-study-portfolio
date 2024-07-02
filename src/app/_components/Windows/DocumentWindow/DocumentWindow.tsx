@@ -52,7 +52,7 @@ const DocumentWindowContent = () => {
     }, [activeDocumentId]);
 
     return (
-        <div className='p-2 md:mx-12'>
+        <div className='p-2 md:mx-6'>
 
             {/* DOCUMENT SELECT */}
             <div className='flex flex-col mb-2'>
