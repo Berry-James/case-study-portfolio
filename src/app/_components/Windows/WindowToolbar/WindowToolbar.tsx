@@ -112,9 +112,6 @@ export const WindowToolbar = ({ items }: IWindowToolbarProps) => {
                         <ul 
                             className={`win-bezel min-w-32 absolute left-2 bg-[var(--grey)] py-1 px-6 ${isActive ? 'block' : 'hidden'}`}
                             ref={openMenuRef}
-                            // style={{
-                            //     bottom: '-2rem',
-                            // }}
                         >
                             {
                                 item.options.map((option, optionIndex) => (

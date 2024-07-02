@@ -31,6 +31,6 @@ export const DOCUMENTS_DICT: Record<documentIdEnum, IDocument> = {
         id: documentIdEnum.vehicleMonitoring,
         title: 'Vehicle Monitoring',
         component: <VehicleMonitoringArticle />,
-        icon: <Image src={VehicleMonitoringIcon} height={32} width={32} alt="" />
+        icon: <Image src={VehicleMonitoringIcon} height={32} width={32} style={{ width: 'auto', height: 'auto', imageRendering: 'pixelated' }} alt="" />
     },
 }

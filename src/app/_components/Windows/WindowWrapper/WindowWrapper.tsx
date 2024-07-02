@@ -137,7 +137,7 @@ export const WindowWrapper = ({
                         !rules?.disableMinimise &&
                         <button 
                             onClick={handleClickMinimiseButton}
-                            className='!p-0 icon-button h-5 w-5 flex justify-center items-center'
+                            className='!p-0 icon-button h-4 w-4 flex justify-center items-center box-content'
                         >
                             _
                         </button>
@@ -148,7 +148,7 @@ export const WindowWrapper = ({
                         !rules?.disableClose &&
                         <button 
                             onClick={handleClickCloseButton}
-                            className='!p-0 icon-button h-5 w-5 flex justify-center items-center'
+                            className='!p-0 icon-button h-4 w-4 flex justify-center items-center box-content'
                         >
                         &times;
                     </button>
