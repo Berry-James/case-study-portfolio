@@ -5,6 +5,10 @@ import { TaskbarStartMenuApps } from './TaskbarStartMenuApps/TaskbarStartMenuApp
 import { TaskbarStartMenuContext, TaskbarStartMenuContextProvider } from './context/TaskbarStartMenuContext';
 import { isMobile } from 'react-device-detect';
 import { SystemContext } from '../../SystemContext/SystemContext';
+import Image from 'next/image';
+
+// IMAGES
+import Branding2Image from '../../../_static/imgs/branding-2.png';
 
 /**
  * Start menu displayed on the Taskbar
@@ -65,7 +69,9 @@ const TaskbarStartMenuContent = () => {
                 {/* GRADIENT SIDEBAR */}
                 <div
                     className={Styles.StartMenuBranding}
-                />
+                >
+                    <Image src={Branding2Image} alt='' width={18} />
+                </div>
 
                 {/* APPS LIST */}
                 <div

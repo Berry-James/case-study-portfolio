@@ -11,21 +11,16 @@ export const Contact = () => {
             <hr className='w-24'/>
             <div className='flex items-center justify-evenly gap-8'>
                 <ContactItem 
-                    text={process.env.EMAIL}
-                    href={`mailto:${process.env.EMAIL}`}
+                    href={`mailto:${process.env.NEXT_PUBLIC_EMAIL}`}
                     icon={<MdAlternateEmail />}
                 />
                 <ContactItem 
-                    href={process.env.LINKEDIN_URL}
+                    href={process.env.NEXT_PUBLIC_LINKEDIN_URL}
                     icon={<IoLogoLinkedin />}
                 />
                 <ContactItem 
-                    href={process.env.GITHUB_URL}
+                    href={process.env.NEXT_PUBLIC_GITHUB_URL}
                     icon={<FaGithub />}
-                />
-                <ContactItem 
-                    href={process.env.PHONE}
-                    icon={<FaPhone />}
                 />
             </div>
         </div>

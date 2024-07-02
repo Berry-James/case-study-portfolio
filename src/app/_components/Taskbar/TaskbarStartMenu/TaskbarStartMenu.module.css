@@ -24,6 +24,11 @@
     --brighter: color-mix(in srgb, rgb(var(--highlight)), white 50%);
 
     background: linear-gradient(180deg, var(--base) 0%, var(--base) 70%, var(--brighter) 80%, var(--base) 90%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 8px 0;
 }
 
 @keyframes StartMenuIntro {

@@ -181,14 +181,14 @@ export const WINDOWS_DICT: Record<windowIdEnum, IWindowTemplate> = {
 const ICON_PROPS: Partial<ImageProps> & { alt: string } = {
     style: {
         // width: '100%',
-        width: 'auto',
-        height: 'auto',
+        // width: 'auto',
+        // height: 'auto',
         imageRendering: 'pixelated'
     },
     alt: '',
-    width: 0,
-    height: 0,
-    sizes: '60vw',
+    width: 32,
+    height: 32,
+    // sizes: '60vw',
     priority: true
    
 }

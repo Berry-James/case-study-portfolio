@@ -1,6 +1,5 @@
 'use client';
 import React from 'react';
-import { Badge } from './Badge/Badge';
 import { VscSparkle } from 'react-icons/vsc';
 import { Coin } from './Coin/Coin';
 import { ArticlesList } from './ArticlesList/ArticlesList';
