@@ -1,0 +1,41 @@
+.StartMenuOpen {
+    animation: StartMenuIntro 0.1s linear forwards;
+}
+
+.StartMenu {
+    height: 500px;
+    width: 270px;
+    background-color: var(--grey);
+    position: absolute;
+    bottom: -540px;
+    left: 0;
+    z-index: -1;
+    box-shadow: 2px 2px #000, inset 2px 2px #FFF;
+    padding: 2px;
+    
+    display: grid;
+    grid-template-columns: 24px 1fr;
+
+}
+
+.StartMenuBranding {
+
+    --base: rgb(var(--highlight));
+    --brighter: color-mix(in srgb, rgb(var(--highlight)), white 50%);
+
+    background: linear-gradient(180deg, var(--base) 0%, var(--base) 70%, var(--brighter) 80%, var(--base) 90%);
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: flex-end;
+    padding: 8px 0;
+}
+
+@keyframes StartMenuIntro {
+    from {
+        bottom: -540px;
+    }
+    to {
+        bottom: 34px;
+    }
+}

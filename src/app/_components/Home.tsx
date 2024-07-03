@@ -1,46 +1,57 @@
-import React from 'react';
-import { ArticlesList } from './ArticlesList/ArticlesList';
-import { ARTICLES } from '../_static/static';
-import { Contact } from './Contact/Contact';
-import { Jersey_25 } from 'next/font/google'
-import { VscSparkle } from 'react-icons/vsc';
-import { Coin } from './Coin/Coin';
-import { Badge } from './Badge/Badge';
-import Styles from './Home.module.css';
+'use client';
+import React, { useContext, useEffect, useState } from 'react';
+import { Taskbar } from './Taskbar/Taskbar';
+import { DesktopIcons } from './DesktopIcons/DesktopIcons';
+import { SystemContext, SystemContextProvider } from './SystemContext/SystemContext';
+import { WALLPAPER_DICT } from './SystemContext/_static/theme/theme.static';
+import dynamic from 'next/dynamic';
 
-const jersey15 = Jersey_25({ subsets: ['latin'], weight: '400' });
-
+/**
+ * Root, top-level component
+ * Gives access to the SystemContext to the rest of the system
+ * 
+ * @returns Component
+ */
 export const Home = () => {
 
     return (
-        <main className={`flex min-h-screen flex-col justify-center items-center p-24 gap-4 ${jersey15.className}`}>
+        <HomeContent />
+    )
 
-            {/* TITLE */}
-            <div className={jersey15.className}>
-                <Badge
-                    badgeContent={'Hover for more!'}
-                >
-                    <h1 className='text-center animate-fade-down'>James Berry</h1>
-                </Badge>
+}
 
-                <div className='flex justify-between items-center gap-2 animate-fade-down animate-delay-100'>
-                    <VscSparkle />
-                    <span className='text-center'>
-                        Full-Stack Software Developer
-                    </span>
-                    <VscSparkle />
-                </div>
-            </div>
+// Don't ssr windows, as they rely on window dimensions to determine their own sizing/location
+const DynamicWindows = dynamic(() => import('./Windows/Windows').then((mod) => mod.Windows), { ssr: false });
 
-            <Coin />
-           
-            {/* ARTICLES */}
-            <ArticlesList 
-                articles={ARTICLES}
-            />
+/**
+ * Content for the @see {Home} component
+ * 
+ * @returns Component
+ */
+const HomeContent = () => {
 
-            {/* CONTACT */}
-            <Contact />
+    // CONTEXT
+    const { activeWallpaperId, restoreSave } = useContext(SystemContext);
+
+    const [init, setInit] = useState(true);
+
+    useEffect(() => {
+        if(init) {
+            restoreSave();
+            setInit(false);
+        }
+    }, [init]);
+
+    return (
+        <main 
+            className={`min-h-screen overflow-hidden`}
+            style={{
+                ...WALLPAPER_DICT[activeWallpaperId].style,
+            }}
+        >
+            <DynamicWindows />
+            <Taskbar />
+            <DesktopIcons />
         </main>
     )
 

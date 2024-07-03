@@ -1,0 +1,256 @@
+import { ArticleHeader } from '../_components/ArticleHeader/ArticleHeader';
+import { ArticleIndex } from '../_components/ArticleIndex/ArticleIndex';
+import { ArticleCodeBlock } from '../_components/ArticleCodeBlock/ArticleCodeBlock';
+import { ARTICLE_INDEX, articleIndexHrefEnum } from './_static/static';
+import { ImgWrapper } from '../_components/ImgWrapper/ImgWrapper';
+import UploadPageImg from '../../_static/imgs/articles/sports-science/uploadPage.jpg'
+
+export const metadata = {
+  title: "Sports Science"
+};
+
+<ArticleHeader 
+    title={'A priority on performance and scalability'}
+    subtitle={'Building resource-demanding software for the browser'}
+/>
+<ArticleIndex 
+    sections={ARTICLE_INDEX}
+/>
+<br />
+
+## About the Project   
+Being fortunate enough to work on such a breadth of projects in my time at Bluesky Digital Labs helped with developing a well rounded skillset as a developer.  One project in particular, is a web-based system used to upload, process and display data for high-performance athletes regarding how they run and move around the playing field.  The concept itself was intriguing, but little did I know what I was in for until our client approached the development team with his grand visions for the software.
+
+<br />
+
+## Stack
+<table>
+    <thead>
+        <tr>
+            <td>Front End</td>
+            <td>Back End</td>
+        </tr>
+    </thead>
+    <tr>
+        <td>[Next.js](https://nextjs.org/)</td>
+        <td>[Django](https://www.djangoproject.com/)</td>
+    </tr>
+    <tr>
+        <td>[MUI](https://mui.com/)</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[SWR](https://swr.vercel.app/)</td>
+        <td></td>
+    </tr>
+    <tr>
+        <td>[Highcharts](https://www.highcharts.com/)</td>
+        <td></td>
+    </tr>
+</table>           
+
+<br />
+
+## My Role
+I took on the role as lead frontend developer for this project.
+
+The key functions of the NextJS frontend would be as follows:
+
+- Plot huge .csv files in the browser (we're talking in the gigabytes) in a bar graph format    
+- Automatically create teams and import athlete data via .csv files
+- Display and request data for a large number of different charts, and make sure information is 
+accurately displayed
+<br />
+
+###### Problem Statement
+
+Our client's desire was to commission an entirely new system, based around the formulae and graphs in a pre-existing 
+proof-of-concept system.  Our new system would need to have a strong UX focus, 
+and be easily navigable by both experienced personal trainers and physios, as well as team coaches only looking for 
+specific metrics.
+<br />
+
+<a id={articleIndexHrefEnum.uxUi} />
+## UX/UI
+
+The system would be complex and visually busy, there was just no getting around that.  
+After collaboration with the team's designer, we were able to come up with a solution that doesn't 
+negatively impact performance and remains visually cohesive and clutter free.
+<br />
+
+[INSERT SCREENSHOT OF TOP DASHBOARD HERE]
+
+MUI would be used as the UI library this time, as its powerful list of pre-built components 
+and well documented API would help with development time on an already short deadline.
+<br />
+
+[INSERT SCREENSHOT OF TEAM PAGE HERE]
+
+Responsiveness was also imperative, as the system would be used on both 
+large desktop monitors and small laptop screens.
+<br />
+
+[INSERT SCREENSHOT OF PLAYER DASHBOARD HERE]
+
+<a id={articleIndexHrefEnum.webWorkers} />
+## Performance
+
+In order to plot the data given to me in these big CSV files, I would need to ensure that the system held on to as 
+little memory as possible.  Using web workers would be imperative, as keeping the render 'thread' free from intensive processing 
+would ensure the system remained responsive.
+<br />
+
+<ImgWrapper 
+    src={UploadPageImg} 
+    alt={'The CSV upload page'}
+    caption='Page which handles uploading .csv files in bulk.  A single column is parsed within the file and used to generate the chart preview.'
+/>
+
+CSV processing was handled with the wonderful package [Papa Parse](https://www.papaparse.com/), which has built-in web worker support, 
+as well as file streaming and chunk processing.
+<br />
+
+<ArticleCodeBlock 
+    code={
+        `import Papa from "papaparse";
+
+    export async function parseCsvVelocity(
+        file: File,
+        setRecordCount?: React.Dispatch<React.SetStateAction<number>>
+    ): Promise<{ 
+        csvDeviceId: string | null, 
+        csvReferenceTime: string | null, 
+        parsedData: number[] 
+    }> {
+
+        return new Promise(resolve => {
+
+            const ret: {
+                csvDeviceId: string | null,
+                csvReferenceTime: string | null,
+                parsedData: number[],
+            } = {
+                csvDeviceId: null,
+                csvReferenceTime: null,
+                parsedData: []
+            }
+
+            Papa.parse(file, {
+
+                // Use a web worker
+                worker: true,
+
+                // And stream the file too
+                chunk: (results, parser) => {
+        
+                    // Yeah I know these run on every chunk but it's not expensive and papa parse doesn't give you the index of a chunk so idk what you want from me :^)
+                    // Plus the beforeFirstChunk callback doesn't work with web workers
+                    if(
+                        !ret.csvDeviceId &&
+                        (results.data as string[][])?.[2]?.[0].startsWith('DeviceID:')
+                    ) {
+                        ret.csvDeviceId = (results.data as string[][])[2][0].split(' ')[1];
+                    }
+
+                    if(
+                        !ret.csvReferenceTime &&
+                        (results.data as string[][])?.[0]?.[0].startsWith('Reference time:')
+                    ) {
+                        ret.csvReferenceTime = (results.data as string[][])[0][0].split('Reference time: ')[1]
+                    }
+
+                    // Loop through all values and only push column 20 (arr index 19) as this is the smoothedVelocity column in the .csv
+                    // Data MUST be parsed in exactly this way, as we don't want chartJs to have to tranform the data itself 
+                    // (for performance, and also as a requirement of the data decimation plugin)
+                    for(let i = 0; i < results.data.length; i++) {
+                        ret.parsedData.push(isNaN(Number((results.data as string[][])[i][19])) ? 0 : parseFloat((results.data as string[][])[i][19]))
+                    }
+
+                    // Keep track of rows processed to give UI feedback
+                    if(setRecordCount)  {
+                        setRecordCount((prevState) => prevState + results.data.length)
+                    }
+                },
+                complete: async (results) => {
+                    resolve(ret);
+                }
+            });
+        })
+    }`
+    }
+/>
+_This function is used to grab a single column from the supplied CSV, for plotting on a chart._
+<br />
+
+This helped immensely with performance, and would handle large files with ease (even on slower machines), as the processing would not block the main thread.
+<br />
+
+<a id={articleIndexHrefEnum.memoryManagement} />
+#### Memory Management
+
+The next hurdle would be to ensure that this whole process would work with multiple files.  Being able to select multiple files at 
+once, and have them all process in sequence, would present another challenge - memory management.
+<br />
+
+Keeping track of variables holding big data sets and where they're being referenced, as well as making sure they're nulled whenever they're 
+finished with, would help ensure that the system could process files endlessly without running out of memory.  Nulling the variable holding the parsed CSV data immediately after it's finished with made for a significant performance improvement.
+<br />
+
+<ArticleCodeBlock 
+    code={
+    `// Upload the parsed file to S3 bucket
+    const uploadedFilePath = await uploadCsvToS3(
+        parsed.file || file.file,
+        parsed.csvDeviceId,
+        parsed.csvReferenceTime,
+        fileValidation.payload.player_name,
+        setUploadProgress,
+        setAbortControllers,
+        setMultipartDetails
+    );
+
+    if(status.aborted) { return }
+
+    // Encourage GC by setting parsed variable to null
+    parsed = null;`
+    }
+/>
+<br />
+
+#### Using IndexedDB
+
+Another optimisation would be the use of the browser's indexed DB to store a csv's parsed data on the disk, and instead of 
+parsing the file again each time it was selected, the system would read from the DB instead!  I decided to leverage the idb 
+package, as it improves the developer experience significantly by turning all indexedDB interactions into promises (hooray!).
+
+<br />
+<ArticleCodeBlock 
+    code={
+        `const db = await openDB(CSV_UPLOAD_DB_NAME, 1, {
+
+            // If DB does not previously exist, create a new one
+            upgrade(db, oldVersion, newVersion, transaction, event) {
+                db
+                .createObjectStore(
+                    // Store configuration in a const elsewhere
+                    CSV_UPLOAD_DB_OBJECTSTORE, 
+                    // Use an enum to keep key names consistent
+                    { keyPath: csvUploadDbIndexEnum.Id }
+                )
+                .createIndex(
+                    csvUploadDbIndexEnum.Velocity, 
+                    csvUploadDbIndexEnum.Velocity, 
+                    { unique: false }
+                );
+            }
+        });
+        // Add the parsed data to the store
+        await db.add(CSV_UPLOAD_DB_OBJECTSTORE, 
+            {
+                [csvUploadDbIndexEnum.Id]: fileList[newActiveFileIndex].id,
+                [csvUploadDbIndexEnum.Velocity]: newParsed.parsedData
+            }
+        )`
+    }
+/>
+_An example of adding data to (and configuring) the indexedDB store, using idb_

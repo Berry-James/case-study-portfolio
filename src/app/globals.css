@@ -2,85 +2,51 @@
 @tailwind components;
 @tailwind utilities;
 
-html {
-  filter: url("#pixelate");
-}
-
 :root {
+  --highlight: 252, 186, 3;
   --foreground-rgb: 0, 0, 0;
-  --highlight: #659e5b;
   --text: #000;
   --border: #6d626d;
   --tw-border-color: #6d626d;
+  --background: #fffbf7;
+  --grey: #c0c0c0;
+  --lightGrey: #eee;
+
+  --win-bezel-box-shadow: 1px 1px #000, -1px -1px #FFF, inset 1px 1px #FFF, inset 2px 2px rgba(255, 255, 255, 0.5);
+  --win-bezel-inverted-box-shadow: 1px 1px #FFF, inset 1px 1px #000, inset 2px 2px rgba(255, 255, 255, 0.5);
 
   list-style: unset;
-
-  background: #fffbf7;
-  background-image: radial-gradient(rgb(175, 175, 175) 1px, transparent 0);
-  background-size: 40px 40px;
-  background-position: -19px -19px;
-
-  font-family: "futura-pt", sans-serif;
-  font-weight: 400;
-  font-style: normal;
-  
   border-color: var(--border);
 }
 
-a {
-  /* color: var(--highlight); */
-  font-weight: 600;
-}
+html {
+  scroll-behavior: smooth;
+  user-select: none;
 
-/* code {
-  color: var(--primary);
-} */
-
-svg {
-  color: var(--highlight);
-}
-
-button {
-  background: #fffbf7;
-  border-radius: 4px;
-  /* background-color: var(--primary); */
-  border: 1px solid;
-  border-color: var(--highlight);
-  color: var(--text);
-}
-
-@media (prefers-color-scheme: dark) {
-
-  :root {
-    background-color: #261825;
-    background-image: radial-gradient(#443543 1px, transparent 0);
-    --highlight: #827882;
-    --text: #eae9ea;
-  }
-
-  h1, h2, h3, h4, h5, h6, span, b, em, p {
-    color: #FFF;
-  }
-
-  button {
-    background-color: #594b58;
-  }
-  
+  cursor: url(./_static/cursors/w98_cursor.png), auto;
 }
 
 body {
+  font-family: var(--font-body);
+  font-weight: 400;
+  font-style: normal;
   color: rgb(var(--foreground-rgb));
 }
 
-@layer utilities {
-  .text-balance {
-    text-wrap: balance;
-  }
+a {
+  font-weight: 600;
+}
+
+ol {
+  list-style: decimal;
+  margin: inherit;
+  padding: 12px 24px;
 }
 
 /* TYPOGRAPHY */
 h1, h2, h3, h4, h5, h6 {
   font-weight: 600;
+  font-family: var(--font-body);
 }
 h1 {
   font-size: 2.5rem;
@@ -107,6 +73,64 @@ h6 {
 }
 
 code {
-  /* padding: 0 2rem; */
   font-size: .8rem;
+}
+
+table {
+  background: var(--lightGrey);
+  padding: 8px;
+}
+
+thead {
+  background: var(--grey);
+}
+
+td {
+  padding: 4px;
+}
+
+/* BUTTONS */
+.text-button {
+  background: var(--grey);
+  padding: 3px 6px;
+  font-family: var(--font-body);
+  border: 1px solid;
+  box-shadow: 1px 1px 1px black, inset 2px 2px 2px white, inset 0 0 2px rgba(0,0,0,0.5);
+  border-color: var(--grey);
+  color: var(--text);
+  min-width: 60px;
+}
+
+.icon-button {
+  background: var(--grey);
+  padding: 3px 6px;
+  font-family: var(--font-body);
+  border: 1px solid;
+  box-shadow: 1px 1px 1px black, inset 2px 2px 2px white, inset 0 0 1px rgba(0,0,0,0.3);
+  border-color: var(--grey);
+  color: var(--text);
+}
+
+/* HELPER CLASSES */
+.win-bezel {
+  box-shadow: var(--win-bezel-box-shadow);
+}
+
+.win-bezel-inverted {
+  box-shadow: var(--win-bezel-inverted-box-shadow);
+}
+
+.win-bezel-thick-inverted {
+  box-shadow: 2px 2px #FFF, inset 2px 2px #767676;
+}
+
+.win-bezel-thick {
+  box-shadow: 3px 3px #767676, -2px -2px #FFF, inset 2px 2px #FFF, inset 2px 2px #767676;
+}
+
+
+@layer utilities {
+  .text-balance {
+    text-wrap: balance;
+  }
 }

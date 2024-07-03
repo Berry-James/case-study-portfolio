@@ -1,0 +1,22 @@
+.Taskbar {
+    width: 100vw;
+    position: fixed;
+    bottom: 0;
+    left: 0;
+    background: var(--grey);
+    border-top: 3px solid #FFF;
+    padding: 2px;
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 12px;
+    z-index: 999999;
+    background-clip: padding-box;
+}
+
+.TaskbarDivider {
+    width: 1px;
+    height: 20px;
+    background-color: #FFF;
+    margin: 0 6px;
+}

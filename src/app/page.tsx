@@ -1,4 +1,4 @@
-import Image from "next/image";
+'use client';
 import { Home } from "./_components/Home";
 
 const HomePage = () => {

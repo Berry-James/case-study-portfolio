@@ -1,5 +1,21 @@
 .Home {
-    background-image: url("/assets/images/computer.avif");
-    background-repeat: no-repeat;
-    background-size: contain;
+    border: 12px solid lightsteelblue;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    padding: 24px;
+    position: relative;
+    background-color: var(--background);
+}
+
+.Button {
+    position: absolute;
+    top: 12px;
+    right: 12px;
+    width: 24px;
+    height: 24px;
+    background: lightsteelblue;
+    border: none;
+    color: #FFF;
 }
