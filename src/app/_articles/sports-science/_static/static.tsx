@@ -1,7 +1,6 @@
 import { FaCode } from "react-icons/fa";
 import { IArticleIndexSection } from "../../_components/ArticleIndex/ArticleIndex.types";
 import { MdMemory, MdOutlineDesignServices } from "react-icons/md";
-import { TbCloud } from "react-icons/tb";
 
 /**
  * @enum

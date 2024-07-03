@@ -51,7 +51,7 @@ export const TaskbarStartMenuApps = () => {
                 <hr className='win-bezel-inverted h-[2px]' style={{ color: 'unset' }}/>
                 
                 {/* SIGN OUT BUTTON */}
-                <li className={`w-full ${Styles.MenuItem}`}>
+                {/* <li className={`w-full ${Styles.MenuItem}`}>
                     <button
                         className='w-full flex items-center justify-start gap-4 px-1 py-2 mb-2'
                         onClick={handleLogOut}    
@@ -66,7 +66,7 @@ export const TaskbarStartMenuApps = () => {
                         </div>
                         Sign Out
                     </button>
-                </li>
+                </li> */}
             </ul>
             
         </div>
