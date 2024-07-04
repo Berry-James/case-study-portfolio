@@ -10,6 +10,20 @@ import { SYSTEM_HIGHLIGHT_COLOURS } from './_static/theme/theme.static';
 import { formatVolume } from '@/utils/audioUtils';
 import { TASKBAR_HEIGHT } from '../Taskbar/Taskbar';
 
+/**
+ * Top level functional context for the site
+ * 
+ * Handles the following:
+ * - Saving/Loading window state
+ * - System Theme
+ * - Window posiitons and active/inactive states
+ * - System volume
+ * 
+ * @implements {ISystemContext}
+ * 
+ * @returns Context
+ * 
+ */
 export const SystemContext = createContext<ISystemContext>({
     windows: {},
     activeWallpaperId: wallpaperIdEnum.clouds,
@@ -31,19 +45,56 @@ export const SystemContext = createContext<ISystemContext>({
     restoreSave: () => undefined,
 });
 
+/**
+ * Provider for the SystemContext
+ * @see SystemContext
+ * 
+ * @param props.children        Child components
+ * @param props.initialState    (alpha) Customise the initial state of the system based on server props
+ *                              This will eventually be used to fetch the system state remotely in order to avoid any
+ *                              pop in of windows or theming 
+ * 
+ * @returns Component
+ */
 export const SystemContextProvider = ({ children, initialState }: ISystemContextProviderProps) => {
 
     // STATE
+
+    /**
+     * Dictionary of all windows/applications which are currently open
+     */
     const [windows, setWindows] = useState<Record<string, IWindow>>({});
+
+    /**
+     * Store the ID of the active wallpaper
+     */
     const [activeWallpaperId, setActiveWallpaperId] = useState<wallpaperIdEnum>(wallpaperIdEnum.clouds);
+
+    /**
+     * Store the instance ID of the active (top visible) window
+     */
     const [activeWindowInstanceId, setActiveWindowInstanceId] = useState<string | null>(null);
+
+    /**
+     * Store the highlight colour (window toolbars/system toolbar items)
+     */
     const [highlightColour, setHighlightColour] = useState<string>(SYSTEM_HIGHLIGHT_COLOURS[0]);
 
     // Audio
+    /**
+     * System volume, 1 = 100%
+     */
     const [volume, setVolume] = useState(.8);
+
+    /**
+     * System muted state
+     */
     const [isMuted, setIsMuted] = useState(false);
 
     // HOOKS
+    /**
+     * Returns the system save, and handles updating save in local storage
+     */
     const legacySave = useSave({
         windows, 
         activeWallpaperId, 
@@ -51,11 +102,19 @@ export const SystemContextProvider = ({ children, initialState }: ISystemContext
         highlightColour
     });
 
+    /**
+     * Listen for highlight colour change and update system CSS variable
+     */
     useEffect(() => {
         const root = document.documentElement;
         root.style.setProperty('--highlight', highlightColour)
     }, [highlightColour]);
 
+    /**
+     * Restores the save in the system from the value of legacySave
+     * This should be called whenever the save is to be restored (i.e. main desktop),
+     * but not when the save should be ignored (i.e. login page)
+     */
     const restoreSave = () => {
 
         if(legacySave) {
@@ -112,17 +171,50 @@ export const SystemContextProvider = ({ children, initialState }: ISystemContext
         // }
     }
 
+    /**
+     * Updates the system volume based on given value
+     * Works with string/number values
+     * 
+     * @param newVolume             New volume, where 1 = 100%
+     */
     const handleSetVolume = (newVolume: number | string) => {
+
+        // Format and validate volume
         const parsedVolume = formatVolume(newVolume);
         if(parsedVolume) {
             setVolume(parsedVolume) 
         }
     }
 
+    /**
+     * Update system volume muted state
+     * 
+     * @param newIsMuted            New muted state
+     * @returns void
+     */
     const handleSetIsMuted = (newIsMuted: boolean) => setIsMuted(newIsMuted);
 
+    /**
+     * Update system highlight colour
+     * Accepts any string, but should be an rgb colour
+     * i.e. '23, 12, 45'
+     * 
+     * @param newHighlightColour            New highlight colour state
+     * @returns void
+     */
     const handleSetHighlightColour = useCallback((newHighlightColour: string) => setHighlightColour(newHighlightColour), []);
 
+    /**
+     * Handles opening a window and setting it to active.
+     * If window already in windows state, set it to open and focussed
+     * Otherwise, add it to windows state, set it to open and and set it to focussed
+     * 
+     * @param id                    ID of window in window dictionary to be opened
+     * @param windowOverride        Custom props to inject the window with
+     *                              For example, the document window can be pre-loaded with a document ID
+     *                              on load
+     * @returns new instanceId for window
+     */
     const handleOpenWindow = (id: windowIdEnum, windowOverride?: Partial<IWindowTemplate>) => {
 
         // If window template is 'solo'
@@ -174,6 +266,12 @@ export const SystemContextProvider = ({ children, initialState }: ISystemContext
 
     }
 
+    /**
+     * Close an open window by its instanceId
+     * Removes specified window from windows state
+     * 
+     * @param instanceId 
+     */
     const handleCloseWindow = (instanceId: string) => {
 
         // Check if a window with this instance ID exists
@@ -189,6 +287,14 @@ export const SystemContextProvider = ({ children, initialState }: ISystemContext
 
     }
 
+    /**
+     * Update the status of a window (open, mininised, closed)
+     * 
+     * @param instanceId            Instance ID of the window to be updated
+     * @param newStatus             New window status value
+     * 
+     * @returns void
+     */
     const handleSetWindowStatus = (instanceId: string, newStatus: windowStatusEnum) => {
         setWindows((prevState) => {
 
@@ -207,10 +313,10 @@ export const SystemContextProvider = ({ children, initialState }: ISystemContext
                         }
 
                     // Otherwise, return previous state
-
                     }
                     return prevState;
                 }
+                // if closing window, remove window from windows array
                 case windowStatusEnum.closed: {
                     const copy = {...prevState};
                     delete copy[instanceId];
@@ -224,8 +330,10 @@ export const SystemContextProvider = ({ children, initialState }: ISystemContext
     /**
      * Update the position of the window by the given ID
      * 
-     * @param id            ID of the window to be updated
-     * @param newPos        Position of the window (x, y, z)
+     * @param instanceId            Instance ID of the window to be updated
+     * @param newPos                Position of the window (x, y, z)
+     * 
+     * @returns void
      */
     const handleSetWindowPosition = (instanceId: string, newPos: Partial<WindowPosition>) => {
 
@@ -245,17 +353,35 @@ export const SystemContextProvider = ({ children, initialState }: ISystemContext
 
     }
 
+    /**
+     * Sets the window with the given instanceId to 'active'
+     * 
+     * @param instanceId            Instance ID of window to be set to active
+     * 
+     * @returns void
+     */
     const handleSetActiveWindowInstanceId = (instanceId: string | null) => setActiveWindowInstanceId(instanceId);
 
+    /**
+     * Sets the active wallpaper ID to the given wallpaperId
+     * 
+     * @param newActiveWallpaperId              New wallpaper ID to be set
+     * @returns void
+     */
     const handleSetActiveWallpaperId = (newActiveWallpaperId: number) => setActiveWallpaperId(newActiveWallpaperId);
 
+    /**
+     * A promise which closes all open windows.
+     * Sets windows state to empty object
+     * 
+     * @returns A promise resolving to void
+     */
     const clearAllWindows = async (): Promise<void> => {
         return new Promise((resolve) => {
             setWindows({});
             setActiveWindowInstanceId(null);
             resolve();
         })
-
     }
 
     return (

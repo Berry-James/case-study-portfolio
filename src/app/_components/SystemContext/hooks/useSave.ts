@@ -6,7 +6,7 @@ import { WINDOWS_DICT } from "../_static/windows/windows.static";
 import { v4 as uuid } from 'uuid';
 
 /**
- * Statkc local storage key name
+ * Static local storage key name
  */
 const LOCAL_STORAGE_SAVE_KEY = 'save';
 

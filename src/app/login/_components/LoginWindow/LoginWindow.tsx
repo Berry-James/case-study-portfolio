@@ -1,3 +1,4 @@
+'use client';
 import React, { useContext, useRef } from 'react';
 import { IDocumentWindowProps } from '@/app/_components/Windows/DocumentWindow/DocumentWindow.types';
 import { WindowActions } from '@/app/_components/Windows/WindowActions/WindowActions';
@@ -12,17 +13,38 @@ import { WINDOWS_DICT } from '@/app/_components/SystemContext/_static/windows/wi
 import BrandingImage from '../../../_static/imgs/branding.png';
 import CloudBg from '../../../_static/imgs/welcome_clouds.jpg';
 
-
+/**
+ * Mock login window, meant to emulate windows 98/2000 (loosely)
+ * No actual auth is implemented as it is unecessary
+ * 
+ * @param props                 Standard doc window props
+ * @returns Component
+ */
 export const LoginWindow = (props: IDocumentWindowProps) => {
 
     // CONTEXT
     const { clearAllWindows, handleOpenWindow } = useContext(SystemContext);
 
     // REFS
+    /**
+     * Ref of password input
+     */
     const passwordRef = useRef<HTMLInputElement | null>(null);
+
+    /**
+     * Ref of user select
+     */
     const userSelectRef = useRef<HTMLSelectElement | null>(null);
 
     // HANDLERS
+    /**
+     * Starts a fake login process
+     * - Clears open windows
+     * - Opens 'loading' dialog, which handles redirecting user to root
+     * 
+     * @param e             The form event
+     * @returns void
+     */
     const handleLogin = async (e: React.FormEvent) => {
         // Cancel form default
         e.preventDefault();
@@ -61,7 +83,6 @@ export const LoginWindow = (props: IDocumentWindowProps) => {
                         className='z-10 relative'
                         
                     />
-                    {/* <div className='w-full left-0 absolute h-[2px] bg-white top-[19px]' /> */}
                 </div>
 
                 {/* USER SELECT */}
@@ -98,7 +119,6 @@ export const LoginWindow = (props: IDocumentWindowProps) => {
                 <WindowActions 
                     actions={{
                         onOkay: handleLogin,
-                        // onCancel: () => {}
                     }}
                 />
             </div>

@@ -1,6 +1,14 @@
 import React from 'react';
 import { IArticleIndexSectionProps } from './ArticleIndexSection.types';
 
+/**
+ * Section within article
+ * 
+ * @param props.section             Section to be rendered as a button
+ * @param props.index               Index of section to be rendered 
+ * 
+ * @returns Component
+ */
 export const ArticleIndexSection = ({ section, index }: IArticleIndexSectionProps) => {
 
     return (
@@ -21,4 +29,4 @@ export const ArticleIndexSection = ({ section, index }: IArticleIndexSectionProp
        
     )
 
-    }
+}

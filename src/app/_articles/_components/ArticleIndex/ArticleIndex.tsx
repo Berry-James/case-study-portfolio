@@ -2,6 +2,13 @@ import React from 'react';
 import { IArticleIndexProps } from './ArticleIndex.types';
 import { ArticleIndexSection } from './ArticleIndexSection/ArticleIndexSection';
 
+/**
+ * Index of article, contains buttons used to jump to various sections in the article
+ * @implements {IArticleIndexProps}
+ * 
+ * @param props.sections            Article sections to render as buttons
+ * @returns Component
+ */
 export const ArticleIndex = ({ sections }: IArticleIndexProps) => {
 
     return (
