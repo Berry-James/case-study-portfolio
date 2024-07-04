@@ -1,7 +1,6 @@
 import { NextResponse } from 'next/server'
 import type { NextRequest } from 'next/server'
 import { PAGE_ROUTES } from './network/pageRoutes';
-import { LOGIN_COOKIE_KEY } from './static/login.static';
 import { getSelectorsByUserAgent } from 'react-device-detect';
 import { headers } from 'next/headers';
  
@@ -43,16 +42,16 @@ export function middleware(request: NextRequest) {
       }
 
       // If we're on the login page, delete the login cookie and continue
-      if(pathname === PAGE_ROUTES.login) {
-        const response = NextResponse.next();
-        response.cookies.delete(LOGIN_COOKIE_KEY);
-        return response;
-      }
+      // if(pathname === PAGE_ROUTES.login) {
+      //   const response = NextResponse.next();
+      //   response.cookies.delete(LOGIN_COOKIE_KEY);
+      //   return response;
+      // }
 
       // if we have no login cookie key, redirect to login
-      if(!request.cookies.has(LOGIN_COOKIE_KEY)) {
-        return redirect(PAGE_ROUTES.login)
-      }
+      // if(!request.cookies.has(LOGIN_COOKIE_KEY)) {
+        // return redirect(PAGE_ROUTES.login)
+      // }
     }
 }
 
